@@ -1,0 +1,45 @@
+followercostbase: 100000
+followerinsurancecost : 500000
+basefailchance: 10
+basedeathchance: 25
+basecashreward: 5000
+basecashchance: 50
+baseitemchance: 50
+baseimprovementchance: 10
+basejackpotchance: 3
+itemrewarditemids:
+  tier1:
+    - 1:0
+    - 2:0
+  tier2:
+    - 2:0
+    - 3:0
+  tier3:
+    - 3:0
+    - 4:0
+  tier4:
+    - 4:0
+    - 5:0
+  tier5:
+    - 5:0
+    - 6:0
+  tier6:
+    - 6:0
+  tier7:
+    - 7:0
+  tier8:
+    - 8:0
+  tier9:
+    - 9:0
+  tier10:
+    - 10:0
+  tier15:
+    - 11:0
+  tier20:
+    - 12:0
+  tier25:
+    - 13:0
+  tier50:
+    - 14:0
+  tier100:
+    - 15:0

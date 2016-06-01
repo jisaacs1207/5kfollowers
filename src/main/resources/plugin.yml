@@ -1,0 +1,12 @@
+name: Followers
+main: io.github.jisaacs1207.followers.Followers
+version: 1.0
+author: jisaacs1207
+website: http://fivekingdoms.net
+description: >
+             Followers follow you followingly.
+
+commands:
+   followers:
+      description: Commands related to the Followers plugin.
+      aliases: fo
