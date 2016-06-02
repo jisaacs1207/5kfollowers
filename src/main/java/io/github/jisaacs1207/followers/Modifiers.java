@@ -1,6 +1,7 @@
 package io.github.jisaacs1207.followers;
 
 import java.util.HashMap;
+import java.util.TreeMap;
 
 import org.bukkit.event.Listener;
 
@@ -129,8 +130,8 @@ Weapon
 
 
 */
-	public static HashMap<String, TranslatedStats> translateOwnedStats(PlayerConfig fConfig){
-		HashMap<String, TranslatedStats> fStats = new HashMap<String, TranslatedStats>();
+	public static TreeMap<Integer, TranslatedStats> translateOwnedStats(PlayerConfig fConfig){
+		TreeMap<Integer, TranslatedStats> fStats = new TreeMap<Integer, TranslatedStats>();
 		TranslatedStats f1 = new TranslatedStats();
 		TranslatedStats f2 = new TranslatedStats();
 		TranslatedStats f3 = new TranslatedStats();
@@ -357,9 +358,9 @@ Weapon
 		else if(fConfig.follower1Weapon==4) f3.followerWeapon="arcane-infused";
 		else f3.followerWeapon="legendary";
 		
-		fStats.put("f1", f1);
-		fStats.put("f2", f2);
-		fStats.put("f3", f3);
+		fStats.put(1, f1);
+		fStats.put(2, f2);
+		fStats.put(3, f3);
 		return fStats;
 	}
 	

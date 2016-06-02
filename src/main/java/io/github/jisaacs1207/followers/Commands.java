@@ -1,6 +1,7 @@
 package io.github.jisaacs1207.followers;
 
 import java.util.HashMap;
+import java.util.TreeMap;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -26,11 +27,7 @@ public class Commands implements Listener, CommandExecutor{
 			else if (args[0].equalsIgnoreCase("help") && args.length==2){
 				player.sendMessage("h1arg");
 			}
-			// help (<empty>,<admin>,<admin commands>,<commands>)
-			else if (args[0].equalsIgnoreCase("list") && args.length==1){
-				PlayerConfig fConfig = Followers.playerStats.get(player.getName());
-				Methods.listPlayerFollowers(player, fConfig);	
-			}
+
 			// hire (<empty>,<help>,<list>,<#>,<#><confirm>,<inspect>,<inspect><#>)
 			else if (args[0].equalsIgnoreCase("hire") && args.length==1){
 				player.sendMessage("help on hire");
@@ -211,10 +208,58 @@ public class Commands implements Listener, CommandExecutor{
 			}
 			// list (<empty>,<help>,<away>,<home>,<#>
 			else if (args[0].equalsIgnoreCase("list") && args.length==1){
-				player.sendMessage("help on list");
+				PlayerConfig fConfig = Followers.playerStats.get(player.getName());
+				Methods.listPlayerFollowers(player, fConfig);
 			}
 			else if (args[0].equalsIgnoreCase("list") && args.length==2){
 				player.sendMessage("list options");
+			}
+			// inspect
+			else if (args[0].equalsIgnoreCase("inspect") && args.length==1){
+				PlayerConfig fConfig = Followers.playerStats.get(player.getName());
+				Methods.listPlayerFollowers(player, fConfig);
+				player.sendMessage("");
+				player.sendMessage("Syntax: /fo inspect <#>");
+			}
+			else if (args[0].equalsIgnoreCase("inspect") && args.length==2){
+				if(Methods.isInt(args[1])){
+					int folNum=Integer.valueOf(args[1]);
+					PlayerConfig fConfig = Followers.playerStats.get(player.getName());
+					TreeMap<Integer, TranslatedStats> translatedStats = Modifiers.translateOwnedStats(fConfig);
+					int folCount=0;
+					for(Integer key : translatedStats.keySet()){
+						if(!translatedStats.get(key).followerName.equalsIgnoreCase("filler")) folCount++;
+					}
+					if(!(folNum>folCount)){
+						if((folNum<4)&&(folNum>0)){
+							TranslatedStats fStats=translatedStats.get(1);
+							if(folNum==1){
+								fStats=translatedStats.get(1);
+							}
+							else if(folNum==2){
+								fStats=translatedStats.get(2);
+							}
+							else {
+								fStats=translatedStats.get(3);
+							}
+							player.sendMessage("");
+							player.sendMessage(ChatColor.YELLOW+"*| "+ChatColor.GREEN+fStats.followerName+ChatColor.YELLOW+" |*");
+							player.sendMessage("");
+							player.sendMessage(ChatColor.YELLOW+"Level: "+ChatColor.GREEN + fStats.followerLevel);
+							player.sendMessage(ChatColor.YELLOW+"Gender: "+ChatColor.GREEN  + fStats.followerGender);
+							player.sendMessage(ChatColor.YELLOW+"Class: "+ChatColor.GREEN  + fStats.followerClass);
+							player.sendMessage(ChatColor.YELLOW+"Gene: "+ChatColor.GREEN  + fStats.followerGene);
+							player.sendMessage(ChatColor.YELLOW+"Perk: "+ChatColor.GREEN  + fStats.followerPerk1);
+							player.sendMessage(ChatColor.YELLOW+"Perk: "+ChatColor.GREEN  + fStats.followerPerk2);
+							player.sendMessage(ChatColor.YELLOW+"Weapon: "+ChatColor.GREEN  + fStats.followerWeapon);
+							player.sendMessage(ChatColor.YELLOW+"Armor: "+ChatColor.GREEN  + fStats.followerArmor);
+							player.sendMessage("");
+						}
+						else player.sendMessage("Syntax: /fo inspect <1-3>");
+					}
+					else player.sendMessage("Syntax: /fo inspect <1-3>");
+				}
+				else player.sendMessage("Syntax: /fo inspect <#>");
 			}
 			// mission (<empty>,<help>,<list>,<list><#>,<type>,<type><level>,
 			//          <type><level><fname>,<type><level><fname><confirm>)

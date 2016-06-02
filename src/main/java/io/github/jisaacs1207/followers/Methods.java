@@ -410,9 +410,9 @@ public class Methods implements Listener{
 		return false;
 	}
 	public static void listPlayerFollowers(Player player,PlayerConfig fConfig){
-		HashMap<String, TranslatedStats> fStats = Modifiers.translateOwnedStats(fConfig);
+		TreeMap<Integer, TranslatedStats> fStats = Modifiers.translateOwnedStats(fConfig);
 		int cur = 0;
-		for(String key : fStats.keySet()){
+		for(Integer key : fStats.keySet()){
 			TranslatedStats stats = fStats.get(key);
 			
 			if(!stats.followerName.equalsIgnoreCase("filler")){
