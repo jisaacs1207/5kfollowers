@@ -3,6 +3,7 @@ package io.github.jisaacs1207.followers;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.TreeMap;
 import org.bukkit.ChatColor;
@@ -407,5 +408,25 @@ public class Methods implements Listener{
 	        if(sToCheck.equalsIgnoreCase(key))return true;
 	    }
 		return false;
+	}
+	public static void listPlayerFollowers(Player player,PlayerConfig fConfig){
+		HashMap<String, TranslatedStats> fStats = Modifiers.translateOwnedStats(fConfig);
+		int cur = 0;
+		for(String key : fStats.keySet()){
+			TranslatedStats stats = fStats.get(key);
+			
+			if(!stats.followerName.equalsIgnoreCase("filler")){
+				cur++;
+				if(stats.followerGender.equalsIgnoreCase("female"))player.sendMessage(ChatColor.YELLOW+
+						String.valueOf(cur)+ ": "+ChatColor.WHITE+"("+ ChatColor.GREEN+stats.followerLevel+
+						ChatColor.WHITE+") "+ChatColor.LIGHT_PURPLE+stats.followerName);
+				if(stats.followerGender.equalsIgnoreCase("male"))player.sendMessage(ChatColor.YELLOW+
+						String.valueOf(cur)+ ": "+ChatColor.WHITE+"("+ ChatColor.GREEN+stats.followerLevel+
+						ChatColor.WHITE+") "+ChatColor.DARK_AQUA+stats.followerName);
+				if(stats.followerGender.equalsIgnoreCase("neuter"))player.sendMessage(ChatColor.YELLOW+
+						String.valueOf(cur)+ ": "+ChatColor.WHITE+"("+ChatColor.GREEN+ stats.followerLevel+
+						ChatColor.WHITE+") "+ChatColor.GRAY+stats.followerName);
+			}
+		}
 	}
 }

@@ -1,5 +1,7 @@
 package io.github.jisaacs1207.followers;
 
+import java.util.HashMap;
+
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -23,6 +25,11 @@ public class Commands implements Listener, CommandExecutor{
 			}
 			else if (args[0].equalsIgnoreCase("help") && args.length==2){
 				player.sendMessage("h1arg");
+			}
+			// help (<empty>,<admin>,<admin commands>,<commands>)
+			else if (args[0].equalsIgnoreCase("list") && args.length==1){
+				PlayerConfig fConfig = Followers.playerStats.get(player.getName());
+				Methods.listPlayerFollowers(player, fConfig);	
 			}
 			// hire (<empty>,<help>,<list>,<#>,<#><confirm>,<inspect>,<inspect><#>)
 			else if (args[0].equalsIgnoreCase("hire") && args.length==1){
