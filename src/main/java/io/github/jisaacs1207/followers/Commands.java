@@ -315,12 +315,102 @@ public class Commands implements Listener, CommandExecutor{
 				}
 				else player.sendMessage("Syntax: /fo inspect <#>");
 			}
-			// mission (<empty>,<help>,<list>,<list><#>,<type>,<type><level>,
-			//          <type><level><fname>,<type><level><fname><confirm>)
+			// mission (<>,<type>,<type> <follower #>,<type> <follower #> <confirm>)
+			// types :
+			// trading (0-1)
+			// harvesting (2-3)
+			// building (4-5)
+			// exploring (6-7)
+			// mining (8-9)
+			// spelunking (10-11)
+			// hunting (12-15)
+			// questing (16-20)
+			// netherquest (21-24)
+			// enderquest (25)
 			else if (args[0].equalsIgnoreCase("mission") && args.length==1){
-				player.sendMessage("help on mission");
+				player.sendMessage("help on mission and types");
 			}
 			else if (args[0].equalsIgnoreCase("mission") && args.length==2){
+				player.sendMessage("mission types descriptions");
+			}
+			else if (args[0].equalsIgnoreCase("mission") && args.length==3){
+				PlayerConfig pConfig = Followers.playerStats.get(player.getName());
+				if(Methods.isInt(args[2])){
+					int followerChoice=Integer.valueOf(args[2]);
+					int followerCount = Methods.ownedfollowerCount(pConfig);
+					if(followerChoice<=followerCount){
+						if((args[1].equalsIgnoreCase("trade"))||(args[1].equalsIgnoreCase("harvest"))||
+								(args[1].equalsIgnoreCase("build"))||(args[1].equalsIgnoreCase("explore"))||
+								(args[1].equalsIgnoreCase("mine"))||(args[1].equalsIgnoreCase("spelunk"))||
+								(args[1].equalsIgnoreCase("hunt"))||(args[1].equalsIgnoreCase("quest"))||
+								(args[1].equalsIgnoreCase("netherquest"))||(args[1].equalsIgnoreCase("enderquest"))){
+							String missionTitle=args[1];
+							int missionValue=0;
+							int followerLevel=0;
+							String followerName="filler";
+							for(Field field: pConfig.getClass().getDeclaredFields()){
+								if(field.getName().toString().equalsIgnoreCase("follower"+followerCount+"Level")){
+									try {
+										followerLevel=field.getInt(pConfig);
+									} catch (IllegalArgumentException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									} catch (IllegalAccessException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+								}
+								if(field.getName().toString().equalsIgnoreCase("follower"+followerCount+"Name")){
+									try {
+										followerName=field.get(pConfig).toString();
+									} catch (IllegalArgumentException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									} catch (IllegalAccessException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+								}
+							}
+							if(missionTitle.equalsIgnoreCase("trade")) missionValue=(1 + (int)(Math.random() * 2));
+							if(missionTitle.equalsIgnoreCase("harvest")) missionValue=(2 + (int)(Math.random() * 3));
+							if(missionTitle.equalsIgnoreCase("build")) missionValue=(4 + (int)(Math.random() * 5));
+							if(missionTitle.equalsIgnoreCase("explore")) missionValue=(6 + (int)(Math.random() * 7));
+							if(missionTitle.equalsIgnoreCase("mine")) missionValue=(8 + (int)(Math.random() * 9));
+							if(missionTitle.equalsIgnoreCase("spelunk")) missionValue=(10 + (int)(Math.random() * 11));
+							if(missionTitle.equalsIgnoreCase("hunt")) missionValue=(12 + (int)(Math.random() * 15));
+							if(missionTitle.equalsIgnoreCase("quest")) missionValue=(16 + (int)(Math.random() * 20));
+							if(missionTitle.equalsIgnoreCase("netherquest")) missionValue=(21 + (int)(Math.random() * 24));
+							if(missionTitle.equalsIgnoreCase("enderquest")) missionValue=25;
+							player.sendMessage("Send " + followerName +
+									" " + Modifiers.translateMission(missionValue) + "?");
+							int chance = Modifiers.getChance(pConfig, followerChoice, missionValue)+5;
+							String chanceString = "filler";
+							if(chance<=0) chanceString = "non-existant";
+							else if((chance>=1)&&(chance<=5))chanceString = "almost non-existant";
+							else if((chance>=6)&&(chance<=10))chanceString = "insignificant";
+							else if((chance>=11)&&(chance<=15))chanceString = "miniscule";
+							else if((chance>=16)&&(chance<=20))chanceString = "tiny";
+							else if((chance>=21)&&(chance<=30))chanceString = "very small";
+							else if((chance>=31)&&(chance<=50))chanceString = "small";
+							else if((chance>=51)&&(chance<=74))chanceString = "below average";
+							else if((chance>=75)&&(chance<=85))chanceString = "average";
+							else if((chance>=86)&&(chance<=89))chanceString = "above average";
+							else if((chance>=90)&&(chance<=94))chanceString = "good";
+							else if((chance>=95)&&(chance<=97))chanceString = "very good";
+							else if((chance>=98)&&(chance<=99))chanceString = "exceptional";
+							else chanceString = "exceptional";
+							player.sendMessage("They seem to have a(n) " + chanceString + " chance at success.");
+							player.sendMessage("Type: /fo mission " + missionTitle.toLowerCase() + 
+									" " + followerChoice+ " confirm");
+						}
+						else player.sendMessage("Syntax: /fo mission <type> <follower #>");
+					}
+					else player.sendMessage("Syntax: /fo mission <type> <follower #>");
+				}
+				else player.sendMessage("Syntax: /fo mission <type> <follower #>");
+			}
+			else if (args[0].equalsIgnoreCase("mission") && args.length==4){
 				player.sendMessage("mission options");
 			}
 			// upgrade (<empty>,<help>,<list>,<list><#>,<armor/weapon>,

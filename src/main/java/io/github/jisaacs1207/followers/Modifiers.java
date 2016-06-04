@@ -1,5 +1,6 @@
 package io.github.jisaacs1207.followers;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.TreeMap;
 
@@ -38,6 +39,17 @@ public static int getChance(int playerLevel, int taskLevel)
 [18]    100 100 100 100 100 100 85  70  55  40      25      10      0  
 [19]    100 100 100 100 100 100 90  75  60  45      30      15      0  
 [20]    100 100 100 100 100 100 95  80  65  50      35      20      5
++5(itemlevel)
+			// trading (0-1)
+			// harvesting (2-3)
+			// building (4-5)
+			// exploring (6-7)
+			// mining (8-9)
+			// spelunking (10-11)
+			// hunting (12-15)
+			// questing (16-20)
+			// netherquest (21-24)
+			// enderquest (25)
 ================================================================================================
 
 Gender
@@ -130,6 +142,47 @@ Weapon
 
 
 */
+	public static int getChance(PlayerConfig pConfig, int followerNumber, int taskLevel)
+	{
+		int finalChance=1;
+		int playerLevel=1;
+		int weapon=1;
+		for(Field field: pConfig.getClass().getDeclaredFields()){
+			if(field.getName().toString().contains("follower"+followerNumber)){
+				if(field.getName().toString().contains("Level"))
+					try {
+						playerLevel = Integer.valueOf(field.get(pConfig).toString());
+					} catch (NumberFormatException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IllegalArgumentException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IllegalAccessException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} 
+				if(field.getName().toString().contains("Weapon"))
+					try {
+						weapon = Integer.valueOf(field.get(pConfig).toString());
+					} catch (NumberFormatException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IllegalArgumentException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IllegalAccessException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} 
+			}
+		}
+		int baseChance=Math.max(Math.min(100 + (playerLevel * 5) - ((taskLevel <= 10 ? taskLevel : 10 + (taskLevel-10)/5) * 15), 100), 0);
+	    int weaponChance=weapon*5;
+	    finalChance=weaponChance+baseChance;
+		return finalChance;
+	}
+	
 	public static TreeMap<Integer, TranslatedStats> translateOwnedStats(PlayerConfig fConfig){
 		TreeMap<Integer, TranslatedStats> fStats = new TreeMap<Integer, TranslatedStats>();
 		TranslatedStats f1 = new TranslatedStats();
@@ -459,5 +512,35 @@ Weapon
 
 		totalPrice=levelPrice+genderPrice+weaponPrice+armorPrice;
 		return totalPrice;
+	}
+	
+	public static String translateMission(int missionInt){
+		String missionTitle;
+		if((missionInt==0)||(missionInt==1)) missionTitle="trading";
+		else if((missionInt==2)||(missionInt==3)) missionTitle="harvesting";
+		else if((missionInt==4)||(missionInt==5)) missionTitle="building";	
+		else if((missionInt==6)||(missionInt==7)) missionTitle="exploring";
+		else if((missionInt==8)||(missionInt==9)) missionTitle="mining";
+		else if((missionInt==10)&&(missionInt==11)) missionTitle="spelunking";
+		else if((missionInt>=12)&&(missionInt<=15)) missionTitle="hunting";
+		else if((missionInt>=16)&&(missionInt<=20)) missionTitle="questing";
+		else if((missionInt>=21)&&(missionInt<=24)) missionTitle="netherquesting";
+		else missionTitle="enderquesting";
+		return missionTitle;
+	}
+	
+	public static int reverseTranslateMission(String missionTitle){
+		int missionInt=0;
+		if((missionInt==0)||(missionInt==1)) missionTitle="trading";
+		else if((missionInt==2)||(missionInt==3)) missionTitle="harvesting";
+		else if((missionInt==4)||(missionInt==5)) missionTitle="building";	
+		else if((missionInt==6)||(missionInt==7)) missionTitle="exploring";
+		else if((missionInt==8)||(missionInt==9)) missionTitle="mining";
+		else if((missionInt==10)&&(missionInt==11)) missionTitle="spelunking";
+		else if((missionInt>=12)&&(missionInt<=15)) missionTitle="hunting";
+		else if((missionInt>=16)&&(missionInt<=20)) missionTitle="questing";
+		else if((missionInt>=21)&&(missionInt<=24)) missionTitle="netherquesting";
+		else missionTitle="enderquesting";
+		return missionInt;
 	}
 }
