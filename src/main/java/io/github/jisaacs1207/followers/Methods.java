@@ -2,6 +2,7 @@ package io.github.jisaacs1207.followers;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -704,5 +705,24 @@ public class Methods implements Listener{
 			pConfig.follower3MissionTimeLeft=follower3MissionTimeLeft;
 		}
 		return pConfig;
+	}
+	public static int ownedfollowerCount(PlayerConfig pConfig){
+		Object value = "test";
+		int followerCount=0;
+		for(Field field : pConfig.getClass().getDeclaredFields()){
+			try {
+				value = field.get(pConfig);
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if((field.getName().toString().contains("Name"))&&(!value.toString().equalsIgnoreCase("filler"))){
+				followerCount++;
+			}
+		}
+		return followerCount;
 	}
 }

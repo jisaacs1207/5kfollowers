@@ -1,6 +1,8 @@
 package io.github.jisaacs1207.followers;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.TreeMap;
 
 import org.bukkit.ChatColor;
@@ -9,6 +11,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
+
+import com.avaje.ebeaninternal.server.persist.BindValues.Value;
 
 public class Commands implements Listener, CommandExecutor{
 	public boolean onCommand(CommandSender sender, Command cmnd, String string, String[] args) {
@@ -325,7 +329,171 @@ public class Commands implements Listener, CommandExecutor{
 				player.sendMessage("help on upgrade");
 			}
 			else if (args[0].equalsIgnoreCase("upgrade") && args.length==2){
-				player.sendMessage(new Message().darkblue("upgrade help").end());
+				if(args[1].equalsIgnoreCase("help")){
+					player.sendMessage("Syntax: /fo upgrade <1-3> <armor/weapon>");
+				}
+				if(Methods.isInt(args[1])){
+					PlayerConfig pConfig=Followers.playerStats.get(player.getName());
+					int followerChoice=Integer.parseInt(args[1]);
+					int followerCount=Methods.ownedfollowerCount(pConfig);
+					if(followerChoice<=followerCount){
+						String name;
+						if(followerChoice==1) name = pConfig.follower1Name;
+						else if(followerChoice==2) name = pConfig.follower2Name;
+						else name = pConfig.follower3Name;
+						player.sendMessage("Upgrade "+name+"'s armor or weapon?");
+						player.sendMessage("Syntax: /fo upgrade <1-3> <armor/weapon>");
+					}
+					else player.sendMessage("Syntax: /fo upgrade <1-3> <armor/weapon>");
+				}
+			}
+			else if (args[0].equalsIgnoreCase("upgrade") && args.length==3){
+				if(Methods.isInt(args[1])){
+					PlayerConfig pConfig=Followers.playerStats.get(player.getName());
+					int followerChoice=Integer.parseInt(args[1]);
+					int followerCount=Methods.ownedfollowerCount(pConfig);
+					if(followerChoice<=followerCount){
+						String name;
+						int weaponLevel=0;
+						int armorLevel=0;
+						String itemChoice=args[2];
+						if(followerChoice==1){ 
+							name = pConfig.follower1Name;
+							weaponLevel=pConfig.follower1Weapon;
+							armorLevel=pConfig.follower1Armor;
+						}
+						else if(followerChoice==2){
+							name = pConfig.follower2Name;
+							weaponLevel=pConfig.follower2Weapon;
+							armorLevel=pConfig.follower2Armor;
+						}
+						else{
+							name = pConfig.follower3Name;
+							weaponLevel=pConfig.follower3Weapon;
+							armorLevel=pConfig.follower3Armor;
+						}
+						int itemCost=0;
+						if((itemChoice.equalsIgnoreCase("armor"))||(itemChoice.equalsIgnoreCase("weapon"))){
+							if((itemChoice.equalsIgnoreCase("armor"))&&(armorLevel<=3)){
+								itemCost=(armorLevel*15000)+15000;
+								player.sendMessage("Upgrade "+name+"'s "+itemChoice.toLowerCase()+" for $" +itemCost+"?");
+								player.sendMessage("Type: /fo upgrade "+followerChoice+" "+itemChoice.toLowerCase()+" confirm");
+							}
+							else if((itemChoice.equalsIgnoreCase("weapon"))&&(weaponLevel<=3)){
+								itemCost=(weaponLevel*10000)+10000;
+								player.sendMessage("Upgrade "+name+"'s "+itemChoice.toLowerCase()+" for $" +itemCost+"?");
+								player.sendMessage("Type: /fo upgrade "+followerChoice+" "+itemChoice.toLowerCase()+" confirm");
+							}
+							else{ 
+								player.sendMessage("You no longer pay to upgrade this follower.");
+								player.sendMessage("Your follower must FIND their LEGENDARY pieces!");
+								player.sendMessage("They can find them on top tier missions.");
+							}
+							
+						}
+						else player.sendMessage("Syntax: /fo upgrade <1-3> <armor/weapon>");
+					}
+					else player.sendMessage("Syntax: /fo upgrade <1-3> <armor/weapon>");
+				}
+				else player.sendMessage("Syntax: /fo upgrade <1-3> <armor/weapon>");
+			}
+			else if (args[0].equalsIgnoreCase("upgrade") && args.length==4){
+				if(Methods.isInt(args[1])){
+					PlayerConfig pConfig=Followers.playerStats.get(player.getName());
+					int followerChoice=Integer.parseInt(args[1]);
+					int followerCount=Methods.ownedfollowerCount(pConfig);
+					if(followerChoice<=followerCount){
+						String name;
+						int weaponLevel=0;
+						int armorLevel=0;
+						String itemChoice=args[2];
+						if(followerChoice==1){ 
+							name = pConfig.follower1Name;
+							weaponLevel=pConfig.follower1Weapon;
+							armorLevel=pConfig.follower1Armor;
+						}
+						else if(followerChoice==2){
+							name = pConfig.follower2Name;
+							weaponLevel=pConfig.follower2Weapon;
+							armorLevel=pConfig.follower2Armor;
+						}
+						else{
+							name = pConfig.follower3Name;
+							weaponLevel=pConfig.follower3Weapon;
+							armorLevel=pConfig.follower3Armor;
+						}
+						int itemCost=0;
+						if((itemChoice.equalsIgnoreCase("armor"))||(itemChoice.equalsIgnoreCase("weapon"))){
+							if((itemChoice.equalsIgnoreCase("armor"))&&(armorLevel<=3)){
+								itemCost=(armorLevel*15000)+15000;
+								String value="filler";
+								String key="filler";
+								int intValue=0;
+								for(Field field:pConfig.getClass().getDeclaredFields()){
+									try {
+										value=field.get(pConfig).toString();
+									} catch (IllegalArgumentException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									} catch (IllegalAccessException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+									key = field.getName().toString();
+									if(Methods.isInt(value)){
+										if(key.contains("follower"+followerChoice+"Armor")){
+											intValue=Integer.valueOf(value)+1;
+										}
+									}
+								}
+								if(followerChoice==1) pConfig.follower1Armor=intValue;
+								if(followerChoice==2) pConfig.follower2Armor=intValue;
+								if(followerChoice==3) pConfig.follower3Armor=intValue;
+								Followers.playerStats.put(player.getName(), pConfig);
+								Methods.saveMapToPFile(player.getName());
+								player.sendMessage("Armor has been upgraded!");
+							}
+							else if((itemChoice.equalsIgnoreCase("weapon"))&&(weaponLevel<=3)){
+								itemCost=(armorLevel*10000)+10000;
+								String value="filler";
+								String key="filler";
+								int intValue=0;
+								for(Field field:pConfig.getClass().getDeclaredFields()){
+									try {
+										value=field.get(pConfig).toString();
+									} catch (IllegalArgumentException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									} catch (IllegalAccessException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+									key = field.getName().toString();
+									if(Methods.isInt(value)){
+										if(key.contains("follower"+followerChoice+"Weapon")){
+											intValue=Integer.valueOf(value)+1;
+										}
+									}
+								}
+								if(followerChoice==1) pConfig.follower1Weapon=intValue;
+								if(followerChoice==2) pConfig.follower2Weapon=intValue;
+								if(followerChoice==3) pConfig.follower3Weapon=intValue;
+								Followers.playerStats.put(player.getName(), pConfig);
+								Methods.saveMapToPFile(player.getName());
+								player.sendMessage("Weapon has been upgraded!");
+							}
+							else{ 
+								player.sendMessage("You no longer pay to upgrade this follower.");
+								player.sendMessage("Your follower must FIND their LEGENDARY pieces!");
+								player.sendMessage("They can find them on top tier missions.");
+							}
+							
+						}
+						else player.sendMessage("Syntax: /fo upgrade <1-3> <armor/weapon>");
+					}
+					else player.sendMessage("Syntax: /fo upgrade <1-3> <armor/weapon>");
+				}
+				else player.sendMessage("Syntax: /fo upgrade <1-3> <armor/weapon>");
 			}
 			// recall (<empty>,<help>,<list>,<list><#>,<#>,<#><confirm>)
 			else if (args[0].equalsIgnoreCase("recall") && args.length==1){
