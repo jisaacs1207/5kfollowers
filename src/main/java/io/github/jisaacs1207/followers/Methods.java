@@ -414,7 +414,6 @@ public class Methods implements Listener{
 		int cur = 0;
 		for(Integer key : fStats.keySet()){
 			TranslatedStats stats = fStats.get(key);
-			
 			if(!stats.followerName.equalsIgnoreCase("filler")){
 				cur++;
 				if(stats.followerGender.equalsIgnoreCase("female"))player.sendMessage(ChatColor.YELLOW+
@@ -428,5 +427,282 @@ public class Methods implements Listener{
 						ChatColor.WHITE+") "+ChatColor.GRAY+stats.followerName);
 			}
 		}
+	}
+	public static PlayerConfig reorderPlayerMap(PlayerConfig pConfig){
+		int p1=0;
+		int p2=0;
+		int p3=0;
+		String follower1Name=pConfig.follower1Name;
+		int follower1Class=pConfig.follower1Class;
+		int follower1Gene=pConfig.follower1Gene;
+		int follower1Gender=pConfig.follower1Gender;
+		int follower1Perk1=pConfig.follower1Perk1;
+		int follower1Perk2=pConfig.follower1Perk2;
+		int follower1Level=pConfig.follower1Level;
+		int follower1Armor=pConfig.follower1Armor;
+		int follower1Weapon=pConfig.follower1Weapon;
+		boolean follower1Insured=pConfig.follower1Insured;
+		int follower1Successes=pConfig.follower1Successes;
+		int follower1Failures=pConfig.follower1Failures;
+		int follower1MissionType=pConfig.follower1MissionType;
+		int follower1MissionLevel=pConfig.follower1MissionLevel;
+		int follower1MissionTimeLeft=pConfig.follower1MissionTimeLeft;
+		String follower2Name=pConfig.follower2Name;
+		int follower2Class=pConfig.follower2Class;
+		int follower2Gene=pConfig.follower2Gene;
+		int follower2Gender=pConfig.follower2Gender;
+		int follower2Perk1=pConfig.follower2Perk1;
+		int follower2Perk2=pConfig.follower2Perk2;
+		int follower2Level=pConfig.follower2Level;
+		int follower2Armor=pConfig.follower2Armor;
+		int follower2Weapon=pConfig.follower2Weapon;
+		boolean follower2Insured=pConfig.follower2Insured;
+		int follower2Successes=pConfig.follower2Successes;
+		int follower2Failures=pConfig.follower2Failures;
+		int follower2MissionType=pConfig.follower2MissionType;
+		int follower2MissionLevel=pConfig.follower2MissionLevel;
+		int follower2MissionTimeLeft=pConfig.follower2MissionTimeLeft;
+		String follower3Name=pConfig.follower3Name;
+		int follower3Class=pConfig.follower3Class;
+		int follower3Gene=pConfig.follower3Gene;
+		int follower3Gender=pConfig.follower3Gender;
+		int follower3Perk1=pConfig.follower3Perk1;
+		int follower3Perk2=pConfig.follower3Perk2;
+		int follower3Level=pConfig.follower3Level;
+		int follower3Armor=pConfig.follower3Armor;
+		int follower3Weapon=pConfig.follower3Weapon;
+		boolean follower3Insured=pConfig.follower3Insured;
+		int follower3Successes=pConfig.follower3Successes;
+		int follower3Failures=pConfig.follower3Failures;
+		int follower3MissionType=pConfig.follower3MissionType;
+		int follower3MissionLevel=pConfig.follower3MissionLevel;
+		int follower3MissionTimeLeft=pConfig.follower3MissionTimeLeft;
+		pConfig.follower1Name="filler";
+		pConfig.follower1Armor=0;
+		pConfig.follower1Class=0;
+		pConfig.follower1Gender=0;
+		pConfig.follower1Gene=0;
+		pConfig.follower1Level=0;
+		pConfig.follower1Perk1=0;
+		pConfig.follower1Perk2=0;
+		pConfig.follower1Weapon=0;
+		pConfig.follower1Insured=false;
+		pConfig.follower1Successes=0;
+		pConfig.follower1Failures=0;
+		pConfig.follower1MissionType=0;
+		pConfig.follower1MissionLevel=0;
+		pConfig.follower1MissionTimeLeft=0;
+		
+		pConfig.follower2Name="filler";
+		pConfig.follower2Armor=0;
+		pConfig.follower2Class=0;
+		pConfig.follower2Gender=0;
+		pConfig.follower2Gene=0;
+		pConfig.follower2Level=0;
+		pConfig.follower2Perk1=0;
+		pConfig.follower2Perk2=0;
+		pConfig.follower2Weapon=0;
+		pConfig.follower2Insured=false;
+		pConfig.follower2Successes=0;
+		pConfig.follower2Failures=0;
+		pConfig.follower2MissionType=0;
+		pConfig.follower2MissionLevel=0;
+		pConfig.follower2MissionTimeLeft=0;
+		
+		pConfig.follower3Name="filler";
+		pConfig.follower3Armor=0;
+		pConfig.follower3Class=0;
+		pConfig.follower3Gender=0;
+		pConfig.follower3Gene=0;
+		pConfig.follower3Level=0;
+		pConfig.follower3Perk1=0;
+		pConfig.follower3Perk2=0;
+		pConfig.follower3Weapon=0;
+		pConfig.follower3Insured=false;
+		pConfig.follower3Successes=0;
+		pConfig.follower3Failures=0;
+		pConfig.follower3MissionType=0;
+		pConfig.follower3MissionLevel=0;
+		pConfig.follower3MissionTimeLeft=0;
+		
+		if(!follower1Name.equalsIgnoreCase("filler")) {
+			p1=1;
+		}
+		
+		if(!follower2Name.equalsIgnoreCase("filler")){
+			if(p1==0){
+				p1=2;
+			}
+			else{
+				p2=2;
+			}
+		}
+
+		if(!follower3Name.equalsIgnoreCase("filler")){
+			if(p1==0){
+				p1=3;
+			}
+			else if(p2==0){
+				p2=3;
+			}
+			else p3=3;
+		}
+		
+		if(p1==1){
+			pConfig.follower1Name=follower1Name;
+			pConfig.follower1Armor=follower1Armor;
+			pConfig.follower1Class=follower1Class;
+			pConfig.follower1Gender=follower1Gender;
+			pConfig.follower1Gene=follower1Gene;
+			pConfig.follower1Level=follower1Level;
+			pConfig.follower1Perk1=follower1Perk1;
+			pConfig.follower1Perk2=follower1Perk2;
+			pConfig.follower1Weapon=follower1Weapon;
+			pConfig.follower1Insured=follower1Insured;
+			pConfig.follower1Successes=follower1Successes;
+			pConfig.follower1Failures=follower1Failures;
+			pConfig.follower1MissionType=follower1MissionType;
+			pConfig.follower1MissionLevel=follower1MissionLevel;
+			pConfig.follower1MissionTimeLeft=follower1MissionTimeLeft;
+		}
+		else if(p1==2){
+			pConfig.follower1Name=follower2Name;
+			pConfig.follower1Armor=follower2Armor;
+			pConfig.follower1Class=follower2Class;
+			pConfig.follower1Gender=follower2Gender;
+			pConfig.follower1Gene=follower2Gene;
+			pConfig.follower1Level=follower2Level;
+			pConfig.follower1Perk1=follower2Perk1;
+			pConfig.follower1Perk2=follower2Perk2;
+			pConfig.follower1Weapon=follower2Weapon;
+			pConfig.follower1Insured=follower2Insured;
+			pConfig.follower1Successes=follower2Successes;
+			pConfig.follower1Failures=follower2Failures;
+			pConfig.follower1MissionType=follower2MissionType;
+			pConfig.follower1MissionLevel=follower2MissionLevel;
+			pConfig.follower1MissionTimeLeft=follower2MissionTimeLeft;
+		}
+		else if(p1==3){
+			pConfig.follower1Name=follower3Name;
+			pConfig.follower1Armor=follower3Armor;
+			pConfig.follower1Class=follower3Class;
+			pConfig.follower1Gender=follower3Gender;
+			pConfig.follower1Gene=follower3Gene;
+			pConfig.follower1Level=follower3Level;
+			pConfig.follower1Perk1=follower3Perk1;
+			pConfig.follower1Perk2=follower3Perk2;
+			pConfig.follower1Weapon=follower3Weapon;
+			pConfig.follower1Insured=follower3Insured;
+			pConfig.follower1Successes=follower3Successes;
+			pConfig.follower1Failures=follower3Failures;
+			pConfig.follower1MissionType=follower3MissionType;
+			pConfig.follower1MissionLevel=follower3MissionLevel;
+			pConfig.follower1MissionTimeLeft=follower3MissionTimeLeft;
+		}
+		
+		if(p2==1){
+			pConfig.follower2Name=follower1Name;
+			pConfig.follower2Armor=follower1Armor;
+			pConfig.follower2Class=follower1Class;
+			pConfig.follower2Gender=follower1Gender;
+			pConfig.follower2Gene=follower1Gene;
+			pConfig.follower2Level=follower1Level;
+			pConfig.follower2Perk1=follower1Perk1;
+			pConfig.follower2Perk2=follower1Perk2;
+			pConfig.follower2Weapon=follower1Weapon;
+			pConfig.follower2Insured=follower1Insured;
+			pConfig.follower2Successes=follower1Successes;
+			pConfig.follower2Failures=follower1Failures;
+			pConfig.follower2MissionType=follower1MissionType;
+			pConfig.follower2MissionLevel=follower1MissionLevel;
+			pConfig.follower2MissionTimeLeft=follower1MissionTimeLeft;
+		}
+		else if(p2==2){
+			pConfig.follower2Name=follower2Name;
+			pConfig.follower2Armor=follower2Armor;
+			pConfig.follower2Class=follower2Class;
+			pConfig.follower2Gender=follower2Gender;
+			pConfig.follower2Gene=follower2Gene;
+			pConfig.follower2Level=follower2Level;
+			pConfig.follower2Perk1=follower2Perk1;
+			pConfig.follower2Perk2=follower2Perk2;
+			pConfig.follower2Weapon=follower2Weapon;
+			pConfig.follower2Insured=follower2Insured;
+			pConfig.follower2Successes=follower2Successes;
+			pConfig.follower2Failures=follower2Failures;
+			pConfig.follower2MissionType=follower2MissionType;
+			pConfig.follower2MissionLevel=follower2MissionLevel;
+			pConfig.follower2MissionTimeLeft=follower2MissionTimeLeft;
+		}
+		else if(p2==3){
+			pConfig.follower2Name=follower3Name;
+			pConfig.follower2Armor=follower3Armor;
+			pConfig.follower2Class=follower3Class;
+			pConfig.follower2Gender=follower3Gender;
+			pConfig.follower2Gene=follower3Gene;
+			pConfig.follower2Level=follower3Level;
+			pConfig.follower2Perk1=follower3Perk1;
+			pConfig.follower2Perk2=follower3Perk2;
+			pConfig.follower2Weapon=follower3Weapon;
+			pConfig.follower2Insured=follower3Insured;
+			pConfig.follower2Successes=follower3Successes;
+			pConfig.follower2Failures=follower3Failures;
+			pConfig.follower2MissionType=follower3MissionType;
+			pConfig.follower2MissionLevel=follower3MissionLevel;
+			pConfig.follower2MissionTimeLeft=follower3MissionTimeLeft;
+		}
+		
+		if(p3==1){
+			pConfig.follower3Name=follower1Name;
+			pConfig.follower3Armor=follower1Armor;
+			pConfig.follower3Class=follower1Class;
+			pConfig.follower3Gender=follower1Gender;
+			pConfig.follower3Gene=follower1Gene;
+			pConfig.follower3Level=follower1Level;
+			pConfig.follower3Perk1=follower1Perk1;
+			pConfig.follower3Perk2=follower1Perk2;
+			pConfig.follower3Weapon=follower1Weapon;
+			pConfig.follower3Insured=follower1Insured;
+			pConfig.follower3Successes=follower1Successes;
+			pConfig.follower3Failures=follower1Failures;
+			pConfig.follower3MissionType=follower1MissionType;
+			pConfig.follower3MissionLevel=follower1MissionLevel;
+			pConfig.follower3MissionTimeLeft=follower1MissionTimeLeft;
+		}
+		else if(p3==2){
+			pConfig.follower3Name=follower2Name;
+			pConfig.follower3Armor=follower2Armor;
+			pConfig.follower3Class=follower2Class;
+			pConfig.follower3Gender=follower2Gender;
+			pConfig.follower3Gene=follower2Gene;
+			pConfig.follower3Level=follower2Level;
+			pConfig.follower3Perk1=follower2Perk1;
+			pConfig.follower3Perk2=follower2Perk2;
+			pConfig.follower3Weapon=follower2Weapon;
+			pConfig.follower3Insured=follower2Insured;
+			pConfig.follower3Successes=follower2Successes;
+			pConfig.follower3Failures=follower2Failures;
+			pConfig.follower3MissionType=follower2MissionType;
+			pConfig.follower3MissionLevel=follower2MissionLevel;
+			pConfig.follower3MissionTimeLeft=follower2MissionTimeLeft;
+		}
+		else if(p3==3){
+			pConfig.follower3Name=follower3Name;
+			pConfig.follower3Armor=follower3Armor;
+			pConfig.follower3Class=follower3Class;
+			pConfig.follower3Gender=follower3Gender;
+			pConfig.follower3Gene=follower3Gene;
+			pConfig.follower3Level=follower3Level;
+			pConfig.follower3Perk1=follower3Perk1;
+			pConfig.follower3Perk2=follower3Perk2;
+			pConfig.follower3Weapon=follower3Weapon;
+			pConfig.follower3Insured=follower3Insured;
+			pConfig.follower3Successes=follower3Successes;
+			pConfig.follower3Failures=follower3Failures;
+			pConfig.follower3MissionType=follower3MissionType;
+			pConfig.follower3MissionLevel=follower3MissionLevel;
+			pConfig.follower3MissionTimeLeft=follower3MissionTimeLeft;
+		}
+		return pConfig;
 	}
 }

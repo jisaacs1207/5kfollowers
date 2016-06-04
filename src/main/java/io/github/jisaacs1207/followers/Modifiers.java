@@ -150,11 +150,11 @@ Weapon
 		if((fConfig.follower1Gender>0)&&(fConfig.follower1Gender<5))f1.followerGender="female";
 		else if((fConfig.follower1Gender>4)&&(fConfig.follower1Gender<9))f1.followerGender="male";
 		else f1.followerGender="neuter";
-		if((fConfig.follower1Gender>0)&&(fConfig.follower1Gender<5))f2.followerGender="female";
-		else if((fConfig.follower1Gender>4)&&(fConfig.follower1Gender<9))f2.followerGender="male";
+		if((fConfig.follower2Gender>0)&&(fConfig.follower2Gender<5))f2.followerGender="female";
+		else if((fConfig.follower2Gender>4)&&(fConfig.follower2Gender<9))f2.followerGender="male";
 		else f2.followerGender="neuter";
-		if((fConfig.follower1Gender>0)&&(fConfig.follower1Gender<5))f3.followerGender="female";
-		else if((fConfig.follower1Gender>4)&&(fConfig.follower1Gender<9))f3.followerGender="male";
+		if((fConfig.follower3Gender>0)&&(fConfig.follower3Gender<5))f3.followerGender="female";
+		else if((fConfig.follower3Gender>4)&&(fConfig.follower3Gender<9))f3.followerGender="male";
 		else f3.followerGender="neuter";
 		//gene
 		if(fConfig.follower1Gene==1) f1.followerGene="gigantic";
@@ -168,26 +168,26 @@ Weapon
 		else if(fConfig.follower1Gene==9) f1.followerGene="overweight";
 		else f1.followerGene="strong";
 		
-		if(fConfig.follower1Gene==1) f2.followerGene="gigantic";
-		else if(fConfig.follower1Gene==2) f2.followerGene="ugly";
-		else if(fConfig.follower1Gene==3) f2.followerGene="beautiful";
-		else if(fConfig.follower1Gene==4) f2.followerGene="dwarf";
-		else if(fConfig.follower1Gene==5) f2.followerGene="mutant";
-		else if(fConfig.follower1Gene==6) f2.followerGene="athletic";
-		else if(fConfig.follower1Gene==7) f2.followerGene="smart";
-		else if(fConfig.follower1Gene==8) f2.followerGene="nimble";
-		else if(fConfig.follower1Gene==9) f2.followerGene="overweight";
+		if(fConfig.follower2Gene==1) f2.followerGene="gigantic";
+		else if(fConfig.follower2Gene==2) f2.followerGene="ugly";
+		else if(fConfig.follower2Gene==3) f2.followerGene="beautiful";
+		else if(fConfig.follower2Gene==4) f2.followerGene="dwarf";
+		else if(fConfig.follower2Gene==5) f2.followerGene="mutant";
+		else if(fConfig.follower2Gene==6) f2.followerGene="athletic";
+		else if(fConfig.follower2Gene==7) f2.followerGene="smart";
+		else if(fConfig.follower2Gene==8) f2.followerGene="nimble";
+		else if(fConfig.follower2Gene==9) f2.followerGene="overweight";
 		else f2.followerGene="strong";
 		
-		if(fConfig.follower1Gene==1) f3.followerGene="gigantic";
-		else if(fConfig.follower1Gene==2) f3.followerGene="ugly";
-		else if(fConfig.follower1Gene==3) f3.followerGene="beautiful";
-		else if(fConfig.follower1Gene==4) f3.followerGene="dwarf";
-		else if(fConfig.follower1Gene==5) f3.followerGene="mutant";
-		else if(fConfig.follower1Gene==6) f3.followerGene="athletic";
-		else if(fConfig.follower1Gene==7) f3.followerGene="smart";
-		else if(fConfig.follower1Gene==8) f3.followerGene="nimble";
-		else if(fConfig.follower1Gene==9) f3.followerGene="overweight";
+		if(fConfig.follower3Gene==1) f3.followerGene="gigantic";
+		else if(fConfig.follower3Gene==2) f3.followerGene="ugly";
+		else if(fConfig.follower3Gene==3) f3.followerGene="beautiful";
+		else if(fConfig.follower3Gene==4) f3.followerGene="dwarf";
+		else if(fConfig.follower3Gene==5) f3.followerGene="mutant";
+		else if(fConfig.follower3Gene==6) f3.followerGene="athletic";
+		else if(fConfig.follower3Gene==7) f3.followerGene="smart";
+		else if(fConfig.follower3Gene==8) f3.followerGene="nimble";
+		else if(fConfig.follower3Gene==9) f3.followerGene="overweight";
 		else f3.followerGene="strong";
 		// class
 		if(fConfig.follower1Class==1) f1.followerClass="fighter";
@@ -201,27 +201,27 @@ Weapon
 		else if(fConfig.follower1Class==9) f1.followerClass="merchant";
 		else f1.followerClass="vagrant";
 
-		if(fConfig.follower1Class==1) f2.followerClass="fighter";
-		else if(fConfig.follower1Class==2) f2.followerClass="mage";
-		else if(fConfig.follower1Class==3) f2.followerClass="thief";
-		else if(fConfig.follower1Class==4) f2.followerClass="cleric";
-		else if(fConfig.follower1Class==5) f2.followerClass="miner";
-		else if(fConfig.follower1Class==6) f2.followerClass="idiot";
-		else if(fConfig.follower1Class==7) f2.followerClass="technician";
-		else if(fConfig.follower1Class==8) f2.followerClass="moderator";
-		else if(fConfig.follower1Class==9) f2.followerClass="merchant";
+		if(fConfig.follower2Class==1) f2.followerClass="fighter";
+		else if(fConfig.follower2Class==2) f2.followerClass="mage";
+		else if(fConfig.follower2Class==3) f2.followerClass="thief";
+		else if(fConfig.follower2Class==4) f2.followerClass="cleric";
+		else if(fConfig.follower2Class==5) f2.followerClass="miner";
+		else if(fConfig.follower2Class==6) f2.followerClass="idiot";
+		else if(fConfig.follower2Class==7) f2.followerClass="technician";
+		else if(fConfig.follower2Class==8) f2.followerClass="moderator";
+		else if(fConfig.follower2Class==9) f2.followerClass="merchant";
 		else f2.followerClass="vagrant";
 
 		
-		if(fConfig.follower1Class==1) f3.followerClass="fighter";
-		else if(fConfig.follower1Class==2) f3.followerClass="mage";
-		else if(fConfig.follower1Class==3) f3.followerClass="thief";
-		else if(fConfig.follower1Class==4) f3.followerClass="cleric";
-		else if(fConfig.follower1Class==5) f3.followerClass="miner";
-		else if(fConfig.follower1Class==6) f3.followerClass="idiot";
-		else if(fConfig.follower1Class==7) f3.followerClass="technician";
-		else if(fConfig.follower1Class==8) f3.followerClass="moderator";
-		else if(fConfig.follower1Class==9) f3.followerClass="merchant";
+		if(fConfig.follower3Class==1) f3.followerClass="fighter";
+		else if(fConfig.follower3Class==2) f3.followerClass="mage";
+		else if(fConfig.follower3Class==3) f3.followerClass="thief";
+		else if(fConfig.follower3Class==4) f3.followerClass="cleric";
+		else if(fConfig.follower3Class==5) f3.followerClass="miner";
+		else if(fConfig.follower3Class==6) f3.followerClass="idiot";
+		else if(fConfig.follower3Class==7) f3.followerClass="technician";
+		else if(fConfig.follower3Class==8) f3.followerClass="moderator";
+		else if(fConfig.follower3Class==9) f3.followerClass="merchant";
 		else f3.followerClass="vagrant";
 
 		// perk1
@@ -241,36 +241,36 @@ Weapon
 		else if(fConfig.follower1Perk1==14) f1.followerPerk1="artistic";
 		else f1.followerPerk1="honest";
 		
-		if(fConfig.follower1Perk1==1) f2.followerPerk1="pious";
-		else if(fConfig.follower1Perk1==2) f2.followerPerk1="miser";
-		else if(fConfig.follower1Perk1==3) f2.followerPerk1="magical";
-		else if(fConfig.follower1Perk1==4) f2.followerPerk1="addict";
-		else if(fConfig.follower1Perk1==5) f2.followerPerk1="alcoholic";
-		else if(fConfig.follower1Perk1==6) f2.followerPerk1="charismatic";
-		else if(fConfig.follower1Perk1==7) f2.followerPerk1="educated";
-		else if(fConfig.follower1Perk1==8) f2.followerPerk1="shady";
-		else if(fConfig.follower1Perk1==9) f2.followerPerk1="heroic";
-		else if(fConfig.follower1Perk1==10) f2.followerPerk1="lucky";
-		else if(fConfig.follower1Perk1==11) f2.followerPerk1="inquisitive";
-		else if(fConfig.follower1Perk1==12) f2.followerPerk1="perceptive";
-		else if(fConfig.follower1Perk1==13) f2.followerPerk1="musical";
-		else if(fConfig.follower1Perk1==14) f2.followerPerk1="artistic";
+		if(fConfig.follower2Perk1==1) f2.followerPerk1="pious";
+		else if(fConfig.follower2Perk1==2) f2.followerPerk1="miser";
+		else if(fConfig.follower2Perk1==3) f2.followerPerk1="magical";
+		else if(fConfig.follower2Perk1==4) f2.followerPerk1="addict";
+		else if(fConfig.follower2Perk1==5) f2.followerPerk1="alcoholic";
+		else if(fConfig.follower2Perk1==6) f2.followerPerk1="charismatic";
+		else if(fConfig.follower2Perk1==7) f2.followerPerk1="educated";
+		else if(fConfig.follower2Perk1==8) f2.followerPerk1="shady";
+		else if(fConfig.follower2Perk1==9) f2.followerPerk1="heroic";
+		else if(fConfig.follower2Perk1==10) f2.followerPerk1="lucky";
+		else if(fConfig.follower2Perk1==11) f2.followerPerk1="inquisitive";
+		else if(fConfig.follower2Perk1==12) f2.followerPerk1="perceptive";
+		else if(fConfig.follower2Perk1==13) f2.followerPerk1="musical";
+		else if(fConfig.follower2Perk1==14) f2.followerPerk1="artistic";
 		else f2.followerPerk1="honest";
 		
-		if(fConfig.follower1Perk1==1) f3.followerPerk1="pious";
-		else if(fConfig.follower1Perk1==2) f3.followerPerk1="miser";
-		else if(fConfig.follower1Perk1==3) f3.followerPerk1="magical";
-		else if(fConfig.follower1Perk1==4) f3.followerPerk1="addict";
-		else if(fConfig.follower1Perk1==5) f3.followerPerk1="alcoholic";
-		else if(fConfig.follower1Perk1==6) f3.followerPerk1="charismatic";
-		else if(fConfig.follower1Perk1==7) f3.followerPerk1="educated";
-		else if(fConfig.follower1Perk1==8) f3.followerPerk1="shady";
-		else if(fConfig.follower1Perk1==9) f3.followerPerk1="heroic";
-		else if(fConfig.follower1Perk1==10) f3.followerPerk1="lucky";
-		else if(fConfig.follower1Perk1==11) f3.followerPerk1="inquisitive";
-		else if(fConfig.follower1Perk1==12) f3.followerPerk1="perceptive";
-		else if(fConfig.follower1Perk1==13) f3.followerPerk1="musical";
-		else if(fConfig.follower1Perk1==14) f3.followerPerk1="artistic";
+		if(fConfig.follower3Perk1==1) f3.followerPerk1="pious";
+		else if(fConfig.follower3Perk1==2) f3.followerPerk1="miser";
+		else if(fConfig.follower3Perk1==3) f3.followerPerk1="magical";
+		else if(fConfig.follower3Perk1==4) f3.followerPerk1="addict";
+		else if(fConfig.follower3Perk1==5) f3.followerPerk1="alcoholic";
+		else if(fConfig.follower3Perk1==6) f3.followerPerk1="charismatic";
+		else if(fConfig.follower3Perk1==7) f3.followerPerk1="educated";
+		else if(fConfig.follower3Perk1==8) f3.followerPerk1="shady";
+		else if(fConfig.follower3Perk1==9) f3.followerPerk1="heroic";
+		else if(fConfig.follower3Perk1==10) f3.followerPerk1="lucky";
+		else if(fConfig.follower3Perk1==11) f3.followerPerk1="inquisitive";
+		else if(fConfig.follower3Perk1==12) f3.followerPerk1="perceptive";
+		else if(fConfig.follower3Perk1==13) f3.followerPerk1="musical";
+		else if(fConfig.follower3Perk1==14) f3.followerPerk1="artistic";
 		else f3.followerPerk1="honest";
 		// perk2
 		if(fConfig.follower1Perk2==1) f1.followerPerk2="pious";
@@ -289,36 +289,36 @@ Weapon
 		else if(fConfig.follower1Perk2==14) f1.followerPerk2="artistic";
 		else f1.followerPerk2="honest";
 		
-		if(fConfig.follower1Perk2==1) f2.followerPerk2="pious";
-		else if(fConfig.follower1Perk2==2) f2.followerPerk2="miser";
-		else if(fConfig.follower1Perk2==3) f2.followerPerk2="magical";
-		else if(fConfig.follower1Perk2==4) f2.followerPerk2="addict";
-		else if(fConfig.follower1Perk2==5) f2.followerPerk2="alcoholic";
-		else if(fConfig.follower1Perk2==6) f2.followerPerk2="charismatic";
-		else if(fConfig.follower1Perk2==7) f2.followerPerk2="educated";
-		else if(fConfig.follower1Perk2==8) f2.followerPerk2="shady";
-		else if(fConfig.follower1Perk2==9) f2.followerPerk2="heroic";
-		else if(fConfig.follower1Perk2==10) f2.followerPerk2="lucky";
-		else if(fConfig.follower1Perk2==11) f2.followerPerk2="inquisitive";
-		else if(fConfig.follower1Perk2==12) f2.followerPerk2="perceptive";
-		else if(fConfig.follower1Perk2==13) f2.followerPerk2="musical";
-		else if(fConfig.follower1Perk2==14) f2.followerPerk2="artistic";
+		if(fConfig.follower2Perk2==1) f2.followerPerk2="pious";
+		else if(fConfig.follower2Perk2==2) f2.followerPerk2="miser";
+		else if(fConfig.follower2Perk2==3) f2.followerPerk2="magical";
+		else if(fConfig.follower2Perk2==4) f2.followerPerk2="addict";
+		else if(fConfig.follower2Perk2==5) f2.followerPerk2="alcoholic";
+		else if(fConfig.follower2Perk2==6) f2.followerPerk2="charismatic";
+		else if(fConfig.follower2Perk2==7) f2.followerPerk2="educated";
+		else if(fConfig.follower2Perk2==8) f2.followerPerk2="shady";
+		else if(fConfig.follower2Perk2==9) f2.followerPerk2="heroic";
+		else if(fConfig.follower2Perk2==10) f2.followerPerk2="lucky";
+		else if(fConfig.follower2Perk2==11) f2.followerPerk2="inquisitive";
+		else if(fConfig.follower2Perk2==12) f2.followerPerk2="perceptive";
+		else if(fConfig.follower2Perk2==13) f2.followerPerk2="musical";
+		else if(fConfig.follower2Perk2==14) f2.followerPerk2="artistic";
 		else f2.followerPerk2="honest";
 		
-		if(fConfig.follower1Perk2==1) f3.followerPerk2="pious";
-		else if(fConfig.follower1Perk2==2) f3.followerPerk2="miser";
-		else if(fConfig.follower1Perk2==3) f3.followerPerk2="magical";
-		else if(fConfig.follower1Perk2==4) f3.followerPerk2="addict";
-		else if(fConfig.follower1Perk2==5) f3.followerPerk2="alcoholic";
-		else if(fConfig.follower1Perk2==6) f3.followerPerk2="charismatic";
-		else if(fConfig.follower1Perk2==7) f3.followerPerk2="educated";
-		else if(fConfig.follower1Perk2==8) f3.followerPerk2="shady";
-		else if(fConfig.follower1Perk2==9) f3.followerPerk2="heroic";
-		else if(fConfig.follower1Perk2==10) f3.followerPerk2="lucky";
-		else if(fConfig.follower1Perk2==11) f3.followerPerk2="inquisitive";
-		else if(fConfig.follower1Perk2==12) f3.followerPerk2="perceptive";
-		else if(fConfig.follower1Perk2==13) f3.followerPerk2="musical";
-		else if(fConfig.follower1Perk2==14) f3.followerPerk2="artistic";
+		if(fConfig.follower3Perk2==1) f3.followerPerk2="pious";
+		else if(fConfig.follower3Perk2==2) f3.followerPerk2="miser";
+		else if(fConfig.follower3Perk2==3) f3.followerPerk2="magical";
+		else if(fConfig.follower3Perk2==4) f3.followerPerk2="addict";
+		else if(fConfig.follower3Perk2==5) f3.followerPerk2="alcoholic";
+		else if(fConfig.follower3Perk2==6) f3.followerPerk2="charismatic";
+		else if(fConfig.follower3Perk2==7) f3.followerPerk2="educated";
+		else if(fConfig.follower3Perk2==8) f3.followerPerk2="shady";
+		else if(fConfig.follower3Perk2==9) f3.followerPerk2="heroic";
+		else if(fConfig.follower3Perk2==10) f3.followerPerk2="lucky";
+		else if(fConfig.follower3Perk2==11) f3.followerPerk2="inquisitive";
+		else if(fConfig.follower3Perk2==12) f3.followerPerk2="perceptive";
+		else if(fConfig.follower3Perk2==13) f3.followerPerk2="musical";
+		else if(fConfig.follower3Perk2==14) f3.followerPerk2="artistic";
 		else f3.followerPerk2="honest";
 		// armor
 		if(fConfig.follower1Armor==1) f1.followerArmor="defenseless";
@@ -327,16 +327,16 @@ Weapon
 		else if(fConfig.follower1Armor==4) f1.followerArmor="blessed";
 		else f1.followerArmor="legendary";
 		
-		if(fConfig.follower1Armor==1) f2.followerArmor="defenseless";
-		else if(fConfig.follower1Armor==2) f2.followerArmor="standard";
-		else if(fConfig.follower1Armor==3) f2.followerArmor="masterpiece";
-		else if(fConfig.follower1Armor==4) f2.followerArmor="blessed";
+		if(fConfig.follower2Armor==1) f2.followerArmor="defenseless";
+		else if(fConfig.follower2Armor==2) f2.followerArmor="standard";
+		else if(fConfig.follower2Armor==3) f2.followerArmor="masterpiece";
+		else if(fConfig.follower2Armor==4) f2.followerArmor="blessed";
 		else f2.followerArmor="legendary";
 		
-		if(fConfig.follower1Armor==1) f3.followerArmor="defenseless";
-		else if(fConfig.follower1Armor==2) f3.followerArmor="standard";
-		else if(fConfig.follower1Armor==3) f3.followerArmor="masterpiece";
-		else if(fConfig.follower1Armor==4) f3.followerArmor="blessed";
+		if(fConfig.follower3Armor==1) f3.followerArmor="defenseless";
+		else if(fConfig.follower3Armor==2) f3.followerArmor="standard";
+		else if(fConfig.follower3Armor==3) f3.followerArmor="masterpiece";
+		else if(fConfig.follower3Armor==4) f3.followerArmor="blessed";
 		else f3.followerArmor="legendary";
 		
 		// weapon
@@ -346,16 +346,16 @@ Weapon
 		else if(fConfig.follower1Weapon==4) f1.followerWeapon="arcane-infused";
 		else f1.followerWeapon="legendary";
 		
-		if(fConfig.follower1Weapon==1) f2.followerWeapon="barehanded";
-		else if(fConfig.follower1Weapon==2) f2.followerWeapon="standard";
-		else if(fConfig.follower1Weapon==3) f2.followerWeapon="mastersword";
-		else if(fConfig.follower1Weapon==4) f2.followerWeapon="arcane-infused";
+		if(fConfig.follower2Weapon==1) f2.followerWeapon="barehanded";
+		else if(fConfig.follower2Weapon==2) f2.followerWeapon="standard";
+		else if(fConfig.follower2Weapon==3) f2.followerWeapon="mastersword";
+		else if(fConfig.follower2Weapon==4) f2.followerWeapon="arcane-infused";
 		else f2.followerWeapon="legendary";
 		
-		if(fConfig.follower1Weapon==1) f3.followerWeapon="barehanded";
-		else if(fConfig.follower1Weapon==2) f3.followerWeapon="standard";
-		else if(fConfig.follower1Weapon==3) f3.followerWeapon="mastersword";
-		else if(fConfig.follower1Weapon==4) f3.followerWeapon="arcane-infused";
+		if(fConfig.follower3Weapon==1) f3.followerWeapon="barehanded";
+		else if(fConfig.follower3Weapon==2) f3.followerWeapon="standard";
+		else if(fConfig.follower3Weapon==3) f3.followerWeapon="mastersword";
+		else if(fConfig.follower3Weapon==4) f3.followerWeapon="arcane-infused";
 		else f3.followerWeapon="legendary";
 		
 		fStats.put(1, f1);

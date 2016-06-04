@@ -88,8 +88,6 @@ public class Commands implements Listener, CommandExecutor{
 							if(choice<=curFollowers){
 								AvailableFollowers fConfig=Followers.availableFollowers.get(sChoice);
 								PlayerConfig pConfig=Followers.playerStats.get(player.getName());		
-								player.sendMessage(pConfig.follower1Name);
-								player.sendMessage("above");
 								if(pConfig.follower1Name.equalsIgnoreCase("filler")){
 									pConfig.follower1Name=fConfig.follower1Name;
 									pConfig.follower1Level=fConfig.follower1Level;
@@ -149,10 +147,62 @@ public class Commands implements Listener, CommandExecutor{
 			}
 			// fire (<empty>,<help>,<list>,<#>,<#><confirm>,<inspect>,<inspect><#>)
 			else if (args[0].equalsIgnoreCase("fire") && args.length==1){
-				player.sendMessage("help on fire");
+				player.sendMessage("Syntax : /fo fire <1-3>");
 			}
 			else if (args[0].equalsIgnoreCase("fire") && args.length==2){
-				player.sendMessage("fire options");
+				if(Methods.isInt(args[1])){
+					int folNum=Integer.valueOf(args[1]);
+					PlayerConfig fConfig = Followers.playerStats.get(player.getName());
+					TreeMap<Integer, TranslatedStats> translatedStats = Modifiers.translateOwnedStats(fConfig);
+					int folCount=0;
+					for(Integer key : translatedStats.keySet()){
+						if(!translatedStats.get(key).followerName.equalsIgnoreCase("filler")) folCount++;
+					}
+					if(!(folNum>folCount)){
+						TranslatedStats stats = translatedStats.get(folNum);
+						player.sendMessage("Do you really want to fire: ");
+						if(stats.followerGender.equalsIgnoreCase("female"))player.sendMessage(ChatColor.WHITE+"("+ ChatColor.GREEN+stats.followerLevel+
+								ChatColor.WHITE+") "+ChatColor.LIGHT_PURPLE+stats.followerName);
+						if(stats.followerGender.equalsIgnoreCase("male"))player.sendMessage(ChatColor.WHITE+"("+ ChatColor.GREEN+stats.followerLevel+
+								ChatColor.WHITE+") "+ChatColor.DARK_AQUA+stats.followerName);
+						if(stats.followerGender.equalsIgnoreCase("neuter"))player.sendMessage(ChatColor.WHITE+"("+ChatColor.GREEN+ stats.followerLevel+
+								ChatColor.WHITE+") "+ChatColor.GRAY+stats.followerName);
+						player.sendMessage("To confirm, type: '/fo fire "+folNum+" confirm'");
+					}
+				}
+				else player.sendMessage("Syntax : /fo fire <1-3>");
+			}
+			else if (args[0].equalsIgnoreCase("fire") && args.length==3){
+				if(Methods.isInt(args[1])){
+					if(args[2].equalsIgnoreCase("confirm")){
+						int folNum=Integer.valueOf(args[1]);
+						PlayerConfig fConfig = Followers.playerStats.get(player.getName());
+						TreeMap<Integer, TranslatedStats> translatedStats = Modifiers.translateOwnedStats(fConfig);
+						int folCount=0;
+						for(Integer key : translatedStats.keySet()){
+							if(!translatedStats.get(key).followerName.equalsIgnoreCase("filler")) folCount++;
+						}
+						if(!(folNum>folCount)){
+							TranslatedStats stats = translatedStats.get(folNum);
+							player.sendMessage("You've successfully fired " + stats.followerName + "!");
+							if(folNum==1){
+								fConfig.follower1Name="filler";
+							}
+							else if(folNum==2){
+								fConfig.follower2Name="filler";
+							}
+							else{
+								fConfig.follower3Name="filler";
+							}
+							PlayerConfig reorderedConfig = Methods.reorderPlayerMap(fConfig);
+							Followers.playerStats.put(player.getName().toString(), reorderedConfig);
+							Methods.saveMapToPFile(player.getName().toString());
+						}
+						else player.sendMessage("Syntax : /fo fire <1-3> confirm"); 
+					} 
+					else player.sendMessage("Syntax : /fo fire <1-3> confirm");
+				}
+				else player.sendMessage("Syntax : /fo fire <1-3> confirm");
 			}
 			// sell (<empty>,<help>,<list>,<#>,<#><pname>,<#><pname><confirm>,<inspect>,<inspect><#>)
 			else if (args[0].equalsIgnoreCase("sell") && args.length==1){
