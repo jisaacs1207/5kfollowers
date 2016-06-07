@@ -346,32 +346,7 @@ public class Commands implements Listener, CommandExecutor{
 								(args[1].equalsIgnoreCase("netherquest"))||(args[1].equalsIgnoreCase("enderquest"))){
 							String missionTitle=args[1];
 							int missionValue=0;
-							int followerLevel=0;
-							String followerName="filler";
-							for(Field field: pConfig.getClass().getDeclaredFields()){
-								if(field.getName().toString().equalsIgnoreCase("follower"+followerChoice+"Level")){
-									try {
-										followerLevel=field.getInt(pConfig);
-									} catch (IllegalArgumentException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
-									} catch (IllegalAccessException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
-									}
-								}
-								if(field.getName().toString().equalsIgnoreCase("follower"+followerChoice+"Name")){
-									try {
-										followerName=field.get(pConfig).toString();
-									} catch (IllegalArgumentException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
-									} catch (IllegalAccessException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
-									}
-								}
-							}
+							String followerName= Methods.findOwnedStat(pConfig, followerChoice, "name");
 							if(missionTitle.equalsIgnoreCase("trade")) missionValue=2;
 							if(missionTitle.equalsIgnoreCase("harvest")) missionValue=3;
 							if(missionTitle.equalsIgnoreCase("build")) missionValue=5;
@@ -452,25 +427,10 @@ public class Commands implements Listener, CommandExecutor{
 					int followerChoice=Integer.parseInt(args[1]);
 					int followerCount=Methods.ownedfollowerCount(pConfig);
 					if(followerChoice<=followerCount){
-						String name;
-						int weaponLevel=0;
-						int armorLevel=0;
+						String name = Methods.findOwnedStat(pConfig, followerChoice, "name");
+						int weaponLevel = Integer.valueOf(Methods.findOwnedStat(pConfig, followerChoice, "weapon"));
+						int armorLevel = Integer.valueOf(Methods.findOwnedStat(pConfig, followerChoice, "armor"));
 						String itemChoice=args[2];
-						if(followerChoice==1){ 
-							name = pConfig.follower1Name;
-							weaponLevel=pConfig.follower1Weapon;
-							armorLevel=pConfig.follower1Armor;
-						}
-						else if(followerChoice==2){
-							name = pConfig.follower2Name;
-							weaponLevel=pConfig.follower2Weapon;
-							armorLevel=pConfig.follower2Armor;
-						}
-						else{
-							name = pConfig.follower3Name;
-							weaponLevel=pConfig.follower3Weapon;
-							armorLevel=pConfig.follower3Armor;
-						}
 						int itemCost=0;
 						if((itemChoice.equalsIgnoreCase("armor"))||(itemChoice.equalsIgnoreCase("weapon"))){
 							if((itemChoice.equalsIgnoreCase("armor"))&&(armorLevel<=3)){
@@ -502,49 +462,15 @@ public class Commands implements Listener, CommandExecutor{
 					int followerChoice=Integer.parseInt(args[1]);
 					int followerCount=Methods.ownedfollowerCount(pConfig);
 					if(followerChoice<=followerCount){
-						String name;
-						int weaponLevel=0;
-						int armorLevel=0;
+						String name = Methods.findOwnedStat(pConfig, followerChoice, "name");
+						int weaponLevel = Integer.valueOf(Methods.findOwnedStat(pConfig, followerChoice, "weapon"));
+						int armorLevel = Integer.valueOf(Methods.findOwnedStat(pConfig, followerChoice, "armor"));
 						String itemChoice=args[2];
-						if(followerChoice==1){ 
-							name = pConfig.follower1Name;
-							weaponLevel=pConfig.follower1Weapon;
-							armorLevel=pConfig.follower1Armor;
-						}
-						else if(followerChoice==2){
-							name = pConfig.follower2Name;
-							weaponLevel=pConfig.follower2Weapon;
-							armorLevel=pConfig.follower2Armor;
-						}
-						else{
-							name = pConfig.follower3Name;
-							weaponLevel=pConfig.follower3Weapon;
-							armorLevel=pConfig.follower3Armor;
-						}
-						int itemCost=0;
 						if((itemChoice.equalsIgnoreCase("armor"))||(itemChoice.equalsIgnoreCase("weapon"))){
 							if((itemChoice.equalsIgnoreCase("armor"))&&(armorLevel<=3)){
-								itemCost=(armorLevel*15000)+15000;
-								String value="filler";
-								String key="filler";
-								int intValue=0;
-								for(Field field:pConfig.getClass().getDeclaredFields()){
-									try {
-										value=field.get(pConfig).toString();
-									} catch (IllegalArgumentException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
-									} catch (IllegalAccessException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
-									}
-									key = field.getName().toString();
-									if(Methods.isInt(value)){
-										if(key.contains("follower"+followerChoice+"Armor")){
-											intValue=Integer.valueOf(value)+1;
-										}
-									}
-								}
+								int itemCost=(armorLevel*15000)+15000;
+								String value=Methods.findOwnedStat(pConfig, followerChoice, "armor");
+								int intValue=Integer.valueOf(value)+1;
 								if(followerChoice==1) pConfig.follower1Armor=intValue;
 								if(followerChoice==2) pConfig.follower2Armor=intValue;
 								if(followerChoice==3) pConfig.follower3Armor=intValue;
@@ -553,27 +479,9 @@ public class Commands implements Listener, CommandExecutor{
 								player.sendMessage("Armor has been upgraded!");
 							}
 							else if((itemChoice.equalsIgnoreCase("weapon"))&&(weaponLevel<=3)){
-								itemCost=(armorLevel*10000)+10000;
-								String value="filler";
-								String key="filler";
-								int intValue=0;
-								for(Field field:pConfig.getClass().getDeclaredFields()){
-									try {
-										value=field.get(pConfig).toString();
-									} catch (IllegalArgumentException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
-									} catch (IllegalAccessException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
-									}
-									key = field.getName().toString();
-									if(Methods.isInt(value)){
-										if(key.contains("follower"+followerChoice+"Weapon")){
-											intValue=Integer.valueOf(value)+1;
-										}
-									}
-								}
+								int itemCost=(weaponLevel*10000)+10000;
+								String value=Methods.findOwnedStat(pConfig, followerChoice, "weapon");
+								int intValue=Integer.valueOf(value)+1;
 								if(followerChoice==1) pConfig.follower1Weapon=intValue;
 								if(followerChoice==2) pConfig.follower2Weapon=intValue;
 								if(followerChoice==3) pConfig.follower3Weapon=intValue;

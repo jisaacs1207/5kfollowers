@@ -1,11 +1,9 @@
 package io.github.jisaacs1207.followers;
 
-import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.TreeMap;
-
 import org.bukkit.event.Listener;
-import org.bukkit.plugin.Plugin;
+
 
 public class Modifiers implements Listener {
 /* Modifier Explanations
@@ -143,79 +141,19 @@ Weapon
 
 
 */	public static int getDeathChance(PlayerConfig pConfig, int followerNumber, int taskLevel){
-	int finalChance=1;
-	int playerLevel=1;
-	int armor=1;
-	for(Field field: pConfig.getClass().getDeclaredFields()){
-		if(field.getName().toString().contains("follower"+followerNumber)){
-			if((field.getName().toString().contains("Level"))&&(!field.getName().toString().contains("Mission")))
-				try {
-					playerLevel = Integer.valueOf(field.get(pConfig).toString());
-				} catch (NumberFormatException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IllegalArgumentException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IllegalAccessException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} 
-			if(field.getName().toString().contains("Armor"))
-				try {
-					armor = Integer.valueOf(field.get(pConfig).toString());
-				} catch (NumberFormatException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IllegalArgumentException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IllegalAccessException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} 
-		}
-	}
-	int baseChance=((taskLevel*10)-(playerLevel*8));
-    int armorChance=armor*5;
-    finalChance=baseChance-armorChance;
-	return finalChance;
+		int finalChance=1;
+		int playerLevel=Integer.valueOf(Methods.findOwnedStat(pConfig, followerNumber, "level"));
+		int armor=Integer.valueOf(Methods.findOwnedStat(pConfig, followerNumber, "armor"));
+		int baseChance=((taskLevel*10)-(playerLevel*8));
+	    int armorChance=armor*5;
+	    finalChance=baseChance-armorChance;
+		return finalChance;
 	}
 	public static int getChance(PlayerConfig pConfig, int followerNumber, int taskLevel)
 	{
 		int finalChance=1;
-		int playerLevel=1;
-		int weapon=1;
-		for(Field field: pConfig.getClass().getDeclaredFields()){
-			if(field.getName().toString().contains("follower"+followerNumber)){
-				if((field.getName().toString().contains("Level"))&&(!field.getName().toString().contains("Mission")))
-					try {
-						playerLevel = Integer.valueOf(field.get(pConfig).toString());
-					} catch (NumberFormatException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IllegalArgumentException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IllegalAccessException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} 
-				if(field.getName().toString().contains("Weapon"))
-					try {
-						weapon = Integer.valueOf(field.get(pConfig).toString());
-					} catch (NumberFormatException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IllegalArgumentException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IllegalAccessException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} 
-			}
-		}
+		int playerLevel=Integer.valueOf(Methods.findOwnedStat(pConfig, followerNumber, "level"));
+		int weapon=Integer.valueOf(Methods.findOwnedStat(pConfig, followerNumber, "weapon"));
 		int baseChance=Math.max(Math.min(100 + (playerLevel * 5) -
 				((taskLevel <= 10 ? taskLevel : 10 + (taskLevel-10)/5) * 15), 100), 0);
 		int weaponChance=weapon*5; 

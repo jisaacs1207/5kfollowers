@@ -724,5 +724,73 @@ public class Methods implements Listener{
 		}
 		return followerCount;
 	}
-	
+	public static String findOwnedStat(PlayerConfig pConfig, int followerChoice, String stat){
+		String value="filler";
+		for(Field field: pConfig.getClass().getDeclaredFields()){
+			
+			if(stat.equalsIgnoreCase("level")){
+				if(field.getName().toString().equalsIgnoreCase("follower"+followerChoice+"Level")){
+					try {
+						value=field.get(pConfig).toString();
+					} catch (IllegalArgumentException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IllegalAccessException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+			if(stat.equalsIgnoreCase("name")){
+				if(field.getName().toString().equalsIgnoreCase("follower"+followerChoice+"Name")){
+					try {
+						value=field.get(pConfig).toString();
+					} catch (IllegalArgumentException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IllegalAccessException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+			if(stat.equalsIgnoreCase("armor")){
+				if(field.getName().toString().contains("Armor")){
+					try {
+						value = field.get(pConfig).toString();
+					} catch (NumberFormatException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IllegalArgumentException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IllegalAccessException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} 
+				}
+			}
+			if(stat.equalsIgnoreCase("weapon")){
+				if(field.getName().toString().contains("Weapon")){
+					try {
+						value = field.get(pConfig).toString();
+					} catch (NumberFormatException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IllegalArgumentException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IllegalAccessException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} 
+				}
+			}
+		}
+		
+		
+		
+		return value;
+		
+	}
 }
