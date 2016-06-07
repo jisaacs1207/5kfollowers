@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.TreeMap;
 
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.Plugin;
 
 public class Modifiers implements Listener {
 /* Modifier Explanations
@@ -141,7 +142,45 @@ Weapon
 =================================================================================================
 
 
-*/
+*/	public static int getDeathChance(PlayerConfig pConfig, int followerNumber, int taskLevel){
+	int finalChance=1;
+	int playerLevel=1;
+	int armor=1;
+	for(Field field: pConfig.getClass().getDeclaredFields()){
+		if(field.getName().toString().contains("follower"+followerNumber)){
+			if((field.getName().toString().contains("Level"))&&(!field.getName().toString().contains("Mission")))
+				try {
+					playerLevel = Integer.valueOf(field.get(pConfig).toString());
+				} catch (NumberFormatException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalArgumentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} 
+			if(field.getName().toString().contains("Armor"))
+				try {
+					armor = Integer.valueOf(field.get(pConfig).toString());
+				} catch (NumberFormatException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalArgumentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} 
+		}
+	}
+	int baseChance=((taskLevel*10)-(playerLevel*8));
+    int armorChance=armor*5;
+    finalChance=baseChance-armorChance;
+	return finalChance;
+	}
 	public static int getChance(PlayerConfig pConfig, int followerNumber, int taskLevel)
 	{
 		int finalChance=1;
@@ -149,7 +188,7 @@ Weapon
 		int weapon=1;
 		for(Field field: pConfig.getClass().getDeclaredFields()){
 			if(field.getName().toString().contains("follower"+followerNumber)){
-				if(field.getName().toString().contains("Level"))
+				if((field.getName().toString().contains("Level"))&&(!field.getName().toString().contains("Mission")))
 					try {
 						playerLevel = Integer.valueOf(field.get(pConfig).toString());
 					} catch (NumberFormatException e) {
@@ -177,9 +216,13 @@ Weapon
 					} 
 			}
 		}
-		int baseChance=Math.max(Math.min(100 + (playerLevel * 5) - ((taskLevel <= 10 ? taskLevel : 10 + (taskLevel-10)/5) * 15), 100), 0);
-	    int weaponChance=weapon*5;
+		int baseChance=Math.max(Math.min(100 + (playerLevel * 5) -
+				((taskLevel <= 10 ? taskLevel : 10 + (taskLevel-10)/5) * 15), 100), 0);
+		int weaponChance=weapon*5; 
 	    finalChance=weaponChance+baseChance;
+		if(playerLevel>taskLevel) finalChance=finalChance+10*(playerLevel-taskLevel);
+		if(playerLevel==taskLevel) finalChance=finalChance+10;
+		if(finalChance>100) finalChance=100;
 		return finalChance;
 	}
 	
@@ -516,11 +559,11 @@ Weapon
 	
 	public static String translateMission(int missionInt){
 		String missionTitle;
-		if((missionInt==0)||(missionInt==1)) missionTitle="trading";
-		else if((missionInt==2)||(missionInt==3)) missionTitle="harvesting";
-		else if((missionInt==4)||(missionInt==5)) missionTitle="building";	
-		else if((missionInt==6)||(missionInt==7)) missionTitle="exploring";
-		else if((missionInt==8)||(missionInt==9)) missionTitle="mining";
+		if((missionInt==1)||(missionInt==2)) missionTitle="trading";
+		else if((missionInt==3)||(missionInt==4)) missionTitle="harvesting";
+		else if((missionInt==5)||(missionInt==6)) missionTitle="building";	
+		else if((missionInt==7)||(missionInt==8)) missionTitle="exploring";
+		else if((missionInt==9)||(missionInt==10)) missionTitle="mining";
 		else if((missionInt==10)&&(missionInt==11)) missionTitle="spelunking";
 		else if((missionInt>=12)&&(missionInt<=15)) missionTitle="hunting";
 		else if((missionInt>=16)&&(missionInt<=20)) missionTitle="questing";
@@ -531,11 +574,11 @@ Weapon
 	
 	public static int reverseTranslateMission(String missionTitle){
 		int missionInt=0;
-		if((missionInt==0)||(missionInt==1)) missionTitle="trading";
-		else if((missionInt==2)||(missionInt==3)) missionTitle="harvesting";
-		else if((missionInt==4)||(missionInt==5)) missionTitle="building";	
-		else if((missionInt==6)||(missionInt==7)) missionTitle="exploring";
-		else if((missionInt==8)||(missionInt==9)) missionTitle="mining";
+		if((missionInt==1)||(missionInt==2)) missionTitle="trading";
+		else if((missionInt==3)||(missionInt==4)) missionTitle="harvesting";
+		else if((missionInt==5)||(missionInt==6)) missionTitle="building";	
+		else if((missionInt==7)||(missionInt==8)) missionTitle="exploring";
+		else if((missionInt==9)||(missionInt==10)) missionTitle="mining";
 		else if((missionInt==10)&&(missionInt==11)) missionTitle="spelunking";
 		else if((missionInt>=12)&&(missionInt<=15)) missionTitle="hunting";
 		else if((missionInt>=16)&&(missionInt<=20)) missionTitle="questing";

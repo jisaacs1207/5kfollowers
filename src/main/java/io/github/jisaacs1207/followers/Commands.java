@@ -338,7 +338,7 @@ public class Commands implements Listener, CommandExecutor{
 				if(Methods.isInt(args[2])){
 					int followerChoice=Integer.valueOf(args[2]);
 					int followerCount = Methods.ownedfollowerCount(pConfig);
-					if(followerChoice<=followerCount){
+					if((followerChoice<=followerCount)&&(followerChoice>0)){
 						if((args[1].equalsIgnoreCase("trade"))||(args[1].equalsIgnoreCase("harvest"))||
 								(args[1].equalsIgnoreCase("build"))||(args[1].equalsIgnoreCase("explore"))||
 								(args[1].equalsIgnoreCase("mine"))||(args[1].equalsIgnoreCase("spelunk"))||
@@ -349,7 +349,7 @@ public class Commands implements Listener, CommandExecutor{
 							int followerLevel=0;
 							String followerName="filler";
 							for(Field field: pConfig.getClass().getDeclaredFields()){
-								if(field.getName().toString().equalsIgnoreCase("follower"+followerCount+"Level")){
+								if(field.getName().toString().equalsIgnoreCase("follower"+followerChoice+"Level")){
 									try {
 										followerLevel=field.getInt(pConfig);
 									} catch (IllegalArgumentException e) {
@@ -360,7 +360,7 @@ public class Commands implements Listener, CommandExecutor{
 										e.printStackTrace();
 									}
 								}
-								if(field.getName().toString().equalsIgnoreCase("follower"+followerCount+"Name")){
+								if(field.getName().toString().equalsIgnoreCase("follower"+followerChoice+"Name")){
 									try {
 										followerName=field.get(pConfig).toString();
 									} catch (IllegalArgumentException e) {
@@ -372,35 +372,44 @@ public class Commands implements Listener, CommandExecutor{
 									}
 								}
 							}
-							if(missionTitle.equalsIgnoreCase("trade")) missionValue=(1 + (int)(Math.random() * 2));
-							if(missionTitle.equalsIgnoreCase("harvest")) missionValue=(2 + (int)(Math.random() * 3));
-							if(missionTitle.equalsIgnoreCase("build")) missionValue=(4 + (int)(Math.random() * 5));
-							if(missionTitle.equalsIgnoreCase("explore")) missionValue=(6 + (int)(Math.random() * 7));
-							if(missionTitle.equalsIgnoreCase("mine")) missionValue=(8 + (int)(Math.random() * 9));
-							if(missionTitle.equalsIgnoreCase("spelunk")) missionValue=(10 + (int)(Math.random() * 11));
-							if(missionTitle.equalsIgnoreCase("hunt")) missionValue=(12 + (int)(Math.random() * 15));
-							if(missionTitle.equalsIgnoreCase("quest")) missionValue=(16 + (int)(Math.random() * 20));
-							if(missionTitle.equalsIgnoreCase("netherquest")) missionValue=(21 + (int)(Math.random() * 24));
+							if(missionTitle.equalsIgnoreCase("trade")) missionValue=2;
+							if(missionTitle.equalsIgnoreCase("harvest")) missionValue=3;
+							if(missionTitle.equalsIgnoreCase("build")) missionValue=5;
+							if(missionTitle.equalsIgnoreCase("explore")) missionValue=7;
+							if(missionTitle.equalsIgnoreCase("mine")) missionValue=9;
+							if(missionTitle.equalsIgnoreCase("spelunk")) missionValue=11;
+							if(missionTitle.equalsIgnoreCase("hunt")) missionValue=15;
+							if(missionTitle.equalsIgnoreCase("quest")) missionValue=20;
+							if(missionTitle.equalsIgnoreCase("netherquest")) missionValue=24;
 							if(missionTitle.equalsIgnoreCase("enderquest")) missionValue=25;
 							player.sendMessage("Send " + followerName +
 									" " + Modifiers.translateMission(missionValue) + "?");
-							int chance = Modifiers.getChance(pConfig, followerChoice, missionValue)+5;
+							int chance = Modifiers.getChance(pConfig, followerChoice, missionValue);
+							int deathChance=Modifiers.getDeathChance(pConfig, followerChoice, missionValue);
 							String chanceString = "filler";
+							String deathChanceString = "filler";
 							if(chance<=0) chanceString = "non-existant";
-							else if((chance>=1)&&(chance<=5))chanceString = "almost non-existant";
-							else if((chance>=6)&&(chance<=10))chanceString = "insignificant";
+							else if((chance>=1)&&(chance<=5))chanceString = "near non-existant";
+							else if((chance>=6)&&(chance<=10))chanceString = "negligible";
 							else if((chance>=11)&&(chance<=15))chanceString = "miniscule";
 							else if((chance>=16)&&(chance<=20))chanceString = "tiny";
 							else if((chance>=21)&&(chance<=30))chanceString = "very small";
 							else if((chance>=31)&&(chance<=50))chanceString = "small";
-							else if((chance>=51)&&(chance<=74))chanceString = "below average";
-							else if((chance>=75)&&(chance<=85))chanceString = "average";
-							else if((chance>=86)&&(chance<=89))chanceString = "above average";
+							else if((chance>=51)&&(chance<=74))chanceString = "below-moderate";
+							else if((chance>=75)&&(chance<=85))chanceString = "moderate";
+							else if((chance>=86)&&(chance<=89))chanceString = "beyond-moderate";
 							else if((chance>=90)&&(chance<=94))chanceString = "good";
 							else if((chance>=95)&&(chance<=97))chanceString = "very good";
-							else if((chance>=98)&&(chance<=99))chanceString = "exceptional";
-							else chanceString = "exceptional";
-							player.sendMessage("They seem to have a(n) " + chanceString + " chance at success.");
+							else if((chance>=98)&&(chance<=99))chanceString = "remarkable";
+							else chanceString = "perfect";
+							if(deathChance<=0) deathChanceString = "non-existant";
+							else if((deathChance>=1)&&(deathChance<=25)) deathChanceString = "possible";
+							else if((deathChance>=26)&&(deathChance<=50)) deathChanceString = "highly possible";
+							else if((deathChance>=51)&&(deathChance<=75)) deathChanceString = "likely";
+							else if((deathChance>=76)&&(deathChance<=99)) deathChanceString = "highly likely";
+							else deathChanceString = "certain";
+							player.sendMessage("They seem to have a " + chanceString + " chance at success.");
+							player.sendMessage("There is a " + deathChanceString + " chance of dying if they fail.");
 							player.sendMessage("Type: /fo mission " + missionTitle.toLowerCase() + 
 									" " + followerChoice+ " confirm");
 						}
