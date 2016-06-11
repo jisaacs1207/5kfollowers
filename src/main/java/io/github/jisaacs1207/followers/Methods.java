@@ -118,7 +118,7 @@ public class Methods implements Listener{
 			pConfig.follower1Insured=playerfileyaml.getBoolean("follower1Insured");
 			pConfig.follower1Successes=playerfileyaml.getInt("follower1Successes");
 			pConfig.follower1Failures=playerfileyaml.getInt("follower1Failures");
-			pConfig.follower1MissionType=playerfileyaml.getInt("follower1MissionType");
+			pConfig.follower1MissionType=playerfileyaml.getString("follower1MissionType");
 			pConfig.follower1MissionLevel=playerfileyaml.getInt("follower1MissionLevel");
 			pConfig.follower1MissionTimeLeft=playerfileyaml.getInt("follower1MissionTimeLeft");
 			pConfig.follower2Name=playerfileyaml.getString("follower2Name");
@@ -133,7 +133,7 @@ public class Methods implements Listener{
 			pConfig.follower2Insured=playerfileyaml.getBoolean("follower2Insured");
 			pConfig.follower2Successes=playerfileyaml.getInt("follower2Successes");
 			pConfig.follower2Failures=playerfileyaml.getInt("follower2Failures");
-			pConfig.follower2MissionType=playerfileyaml.getInt("follower2MissionType");
+			pConfig.follower2MissionType=playerfileyaml.getString("follower2MissionType");
 			pConfig.follower2MissionLevel=playerfileyaml.getInt("follower2MissionLevel");
 			pConfig.follower2MissionTimeLeft=playerfileyaml.getInt("follower2MissionTimeLeft");
 			pConfig.follower3Name=playerfileyaml.getString("follower3Name");
@@ -148,7 +148,7 @@ public class Methods implements Listener{
 			pConfig.follower3Insured=playerfileyaml.getBoolean("follower3Insured");
 			pConfig.follower3Successes=playerfileyaml.getInt("follower3Successes");
 			pConfig.follower3Failures=playerfileyaml.getInt("follower3Failures");
-			pConfig.follower3MissionType=playerfileyaml.getInt("follower3MissionType");
+			pConfig.follower3MissionType=playerfileyaml.getString("follower3MissionType");
 			pConfig.follower3MissionLevel=playerfileyaml.getInt("follower3MissionLevel");
 			pConfig.follower3MissionTimeLeft=playerfileyaml.getInt("follower3MissionTimeLeft");
 			
@@ -448,9 +448,9 @@ public class Methods implements Listener{
 		boolean follower1Insured=pConfig.follower1Insured;
 		int follower1Successes=pConfig.follower1Successes;
 		int follower1Failures=pConfig.follower1Failures;
-		int follower1MissionType=pConfig.follower1MissionType;
+		String follower1MissionType=pConfig.follower1MissionType;
 		int follower1MissionLevel=pConfig.follower1MissionLevel;
-		int follower1MissionTimeLeft=pConfig.follower1MissionTimeLeft;
+		long follower1MissionTimeLeft=pConfig.follower1MissionTimeLeft;
 		String follower2Name=pConfig.follower2Name;
 		int follower2Class=pConfig.follower2Class;
 		int follower2Gene=pConfig.follower2Gene;
@@ -463,9 +463,9 @@ public class Methods implements Listener{
 		boolean follower2Insured=pConfig.follower2Insured;
 		int follower2Successes=pConfig.follower2Successes;
 		int follower2Failures=pConfig.follower2Failures;
-		int follower2MissionType=pConfig.follower2MissionType;
+		String follower2MissionType=pConfig.follower2MissionType;
 		int follower2MissionLevel=pConfig.follower2MissionLevel;
-		int follower2MissionTimeLeft=pConfig.follower2MissionTimeLeft;
+		long follower2MissionTimeLeft=pConfig.follower2MissionTimeLeft;
 		String follower3Name=pConfig.follower3Name;
 		int follower3Class=pConfig.follower3Class;
 		int follower3Gene=pConfig.follower3Gene;
@@ -478,9 +478,9 @@ public class Methods implements Listener{
 		boolean follower3Insured=pConfig.follower3Insured;
 		int follower3Successes=pConfig.follower3Successes;
 		int follower3Failures=pConfig.follower3Failures;
-		int follower3MissionType=pConfig.follower3MissionType;
+		String follower3MissionType=pConfig.follower3MissionType;
 		int follower3MissionLevel=pConfig.follower3MissionLevel;
-		int follower3MissionTimeLeft=pConfig.follower3MissionTimeLeft;
+		long follower3MissionTimeLeft=pConfig.follower3MissionTimeLeft;
 		pConfig.follower1Name="filler";
 		pConfig.follower1Armor=0;
 		pConfig.follower1Class=0;
@@ -493,7 +493,7 @@ public class Methods implements Listener{
 		pConfig.follower1Insured=false;
 		pConfig.follower1Successes=0;
 		pConfig.follower1Failures=0;
-		pConfig.follower1MissionType=0;
+		pConfig.follower1MissionType="filler";
 		pConfig.follower1MissionLevel=0;
 		pConfig.follower1MissionTimeLeft=0;
 		
@@ -509,7 +509,7 @@ public class Methods implements Listener{
 		pConfig.follower2Insured=false;
 		pConfig.follower2Successes=0;
 		pConfig.follower2Failures=0;
-		pConfig.follower2MissionType=0;
+		pConfig.follower2MissionType="filler";
 		pConfig.follower2MissionLevel=0;
 		pConfig.follower2MissionTimeLeft=0;
 		
@@ -525,7 +525,7 @@ public class Methods implements Listener{
 		pConfig.follower3Insured=false;
 		pConfig.follower3Successes=0;
 		pConfig.follower3Failures=0;
-		pConfig.follower3MissionType=0;
+		pConfig.follower3MissionType="filler";
 		pConfig.follower3MissionLevel=0;
 		pConfig.follower3MissionTimeLeft=0;
 		
@@ -728,6 +728,82 @@ public class Methods implements Listener{
 		}
 		return followerCount;
 	}
+	
+	public static void setOwnedStat(String playerName,int followerChoice, String stat, String statValue){
+	PlayerConfig pConfig=Followers.playerStats.get(playerName);
+	/* stats :
+	Name
+	Class
+	Gene
+	Gender
+	Perk1
+	Perk2
+	Level
+	Armor
+	Weapon
+	Insured
+	Successes
+	Failures
+	MissionType
+	MissionLevel
+	MissionTimeLeft
+	 */
+		for(Field field: pConfig.getClass().getDeclaredFields()){			
+			if(field.getName().toString().equalsIgnoreCase("follower"+followerChoice+stat)){
+				if((stat.equalsIgnoreCase("name"))||(stat.equalsIgnoreCase("MissionType"))){
+					Object statObj = statValue;
+					try {
+						field.set(pConfig, statObj);
+					} catch (IllegalArgumentException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IllegalAccessException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				else if(stat.equalsIgnoreCase("insured")){
+					Boolean statObj = Boolean.valueOf(statValue);
+					try {
+						field.setBoolean(pConfig, statObj);
+					} catch (IllegalArgumentException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IllegalAccessException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				else if(stat.equalsIgnoreCase("MissionTimeLeft")){
+					long statObj = Long.valueOf(statValue);
+					try {
+						field.setLong(pConfig, statObj);
+					} catch (IllegalArgumentException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IllegalAccessException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				else{
+					int statObj = Integer.parseInt(statValue);
+					try {
+						field.setInt(pConfig, statObj);
+					} catch (IllegalArgumentException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IllegalAccessException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+			Followers.playerStats.put(playerName, pConfig);
+			Methods.saveMapToPFile(playerName);
+		}
+	}
+	
 	public static String findOwnedStat(PlayerConfig pConfig, int followerChoice, String stat){
 		String value="filler";
 		for(Field field: pConfig.getClass().getDeclaredFields()){

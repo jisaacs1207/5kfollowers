@@ -1,6 +1,7 @@
 package io.github.jisaacs1207.followers;
 
 import java.util.TreeMap;
+import java.util.concurrent.TimeUnit;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -394,7 +395,115 @@ public class Commands implements Listener, CommandExecutor{
 				else player.sendMessage("Syntax: /fo mission <type> <follower #>");
 			}
 			else if (args[0].equalsIgnoreCase("mission") && args.length==4){
-				player.sendMessage("mission options");
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				if(args[3].equalsIgnoreCase("confirm")){
+					PlayerConfig pConfig = Followers.playerStats.get(player.getName());
+					if(Methods.isInt(args[2])){
+						int followerChoice=Integer.valueOf(args[2]);
+						int followerCount = Methods.ownedfollowerCount(pConfig);
+						if((followerChoice<=followerCount)&&(followerChoice>0)){
+							if((args[1].equalsIgnoreCase("trade"))||(args[1].equalsIgnoreCase("harvest"))||
+									(args[1].equalsIgnoreCase("build"))||(args[1].equalsIgnoreCase("explore"))||
+									(args[1].equalsIgnoreCase("mine"))||(args[1].equalsIgnoreCase("spelunk"))||
+									(args[1].equalsIgnoreCase("hunt"))||(args[1].equalsIgnoreCase("quest"))||
+									(args[1].equalsIgnoreCase("netherquest"))||(args[1].equalsIgnoreCase("enderquest"))){
+								String missionTitle=args[1];
+								int missionValue=0;
+								long finishTime=0;
+								long currentTime=System.currentTimeMillis();
+								String followerName= Methods.findOwnedStat(pConfig, followerChoice, "name");
+								if(missionTitle.equalsIgnoreCase("trade")){
+									missionValue=2;
+									finishTime=currentTime+3600000;
+								}
+								else if(missionTitle.equalsIgnoreCase("harvest")){
+									missionValue=3;
+									finishTime=currentTime+21600000;
+								}
+								else if(missionTitle.equalsIgnoreCase("build")){
+									missionValue=5;
+									finishTime=currentTime+21600000;
+								}
+								else if(missionTitle.equalsIgnoreCase("explore")){
+									missionValue=7;
+									finishTime=currentTime+43200000;
+								}
+								else if(missionTitle.equalsIgnoreCase("mine")){
+									missionValue=9;
+									finishTime=currentTime+86400000;
+								}
+								else if(missionTitle.equalsIgnoreCase("spelunk")){
+									missionValue=11;
+									finishTime=currentTime+172800000;
+								}
+								else if(missionTitle.equalsIgnoreCase("hunt")){
+									missionValue=15;
+									finishTime=currentTime+172800000;
+								}
+								else if(missionTitle.equalsIgnoreCase("quest")){
+									missionValue=20;
+									finishTime=currentTime+259200000;
+								}
+								else if(missionTitle.equalsIgnoreCase("netherquest")){
+									missionValue=24;
+									finishTime=currentTime+432000000;
+								}
+								else{
+									missionValue=25;
+									finishTime=currentTime+604800000;
+								}
+								player.sendMessage("You've sent " + followerName +
+										" " + Modifiers.translateMission(missionValue) + ".");
+								player.sendMessage("With luck, they will return alive in about " + TimeUnit.MILLISECONDS.toHours(finishTime-currentTime) +
+										" hours.");
+								player.sendMessage(String.valueOf(missionValue));
+								Methods.setOwnedStat(player.getName(), followerChoice, "MissionTimeLeft", String.valueOf(finishTime));
+								Methods.setOwnedStat(player.getName(), followerChoice, "MissionLevel", String.valueOf(missionValue));
+								Methods.setOwnedStat(player.getName(), followerChoice, "MissionType", missionTitle);
+							}
+							else player.sendMessage("Syntax: /fo mission <type> <follower #> confirm");
+						}
+						else player.sendMessage("Syntax: /fo mission <type> <follower #> confirm");
+					}
+					else player.sendMessage("Syntax: /fo mission <type> <follower #> confirm");
+				}
+				else player.sendMessage("Syntax: /fo mission <type> <follower #> confirm");
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
 			}
 			// upgrade (<empty>,<help>,<list>,<list><#>,<armor/weapon>,
 			//          <armor/weapon><#>,<armor/weapon><#><confirm>)

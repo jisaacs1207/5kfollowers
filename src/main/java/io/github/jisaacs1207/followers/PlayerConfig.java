@@ -23,9 +23,9 @@ public class PlayerConfig  implements Listener{
 	boolean follower1Insured;
 	int follower1Successes;
 	int follower1Failures;
-	int follower1MissionType;
+	String follower1MissionType;
 	int follower1MissionLevel;
-	int follower1MissionTimeLeft;
+	long follower1MissionTimeLeft;
 	String follower2Name;
 	int follower2Class;
 	int follower2Gene;
@@ -38,9 +38,9 @@ public class PlayerConfig  implements Listener{
 	boolean follower2Insured;
 	int follower2Successes;
 	int follower2Failures;
-	int follower2MissionType;
+	String follower2MissionType;
 	int follower2MissionLevel;
-	int follower2MissionTimeLeft;
+	long follower2MissionTimeLeft;
 	String follower3Name;
 	int follower3Class;
 	int follower3Gene;
@@ -53,7 +53,7 @@ public class PlayerConfig  implements Listener{
 	boolean follower3Insured;
 	int follower3Successes;
 	int follower3Failures;
-	int follower3MissionType;
+	String follower3MissionType;
 	int follower3MissionLevel;
-	int follower3MissionTimeLeft;
+	long follower3MissionTimeLeft;
 }
