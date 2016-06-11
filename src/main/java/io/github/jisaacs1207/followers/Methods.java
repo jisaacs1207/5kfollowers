@@ -236,13 +236,17 @@ public class Methods implements Listener{
 		Methods.saveMapToPFile(playerName); 
 	}
 	
-	public static void populateFollowers(){
-		int curFollowers = 0;
-		int maxFollowers = 3;
-		int needFollowers;
+	public static int countAvailableFollowers(){
+		int curFollowers=0;
 		for(String key: Followers.availableFollowers.keySet()){
 	        curFollowers++;
 	    }
+		return curFollowers;
+	}
+	public static void populateFollowers(){
+		int curFollowers = countAvailableFollowers();
+		int maxFollowers = 3;
+		int needFollowers;
 		needFollowers = maxFollowers-curFollowers;
 		AvailableFollowers fConfig = new AvailableFollowers();	
 		if(needFollowers>0){

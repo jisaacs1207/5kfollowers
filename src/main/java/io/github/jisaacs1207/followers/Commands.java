@@ -1,8 +1,5 @@
 package io.github.jisaacs1207.followers;
 
-import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.TreeMap;
 
 import org.bukkit.ChatColor;
@@ -12,9 +9,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
-import com.avaje.ebeaninternal.server.persist.BindValues.Value;
-
 public class Commands implements Listener, CommandExecutor{
+	@SuppressWarnings("deprecation")
 	public boolean onCommand(CommandSender sender, Command cmnd, String string, String[] args) {
 		String cmd = cmnd.getName();
 		if ((cmd.equalsIgnoreCase("followers"))||(cmd.equalsIgnoreCase("fo"))){
@@ -44,10 +40,7 @@ public class Commands implements Listener, CommandExecutor{
 					int choice = Integer.valueOf(args[1]);
 					String sChoice = args[1];
 					if((choice>0)&&(choice<4)){
-						int curFollowers=0;
-						for(String key: Followers.availableFollowers.keySet()){
-					        curFollowers++;
-					    }
+						int curFollowers=Methods.countAvailableFollowers();
 						if(choice<=curFollowers){
 							AvailableFollowers fConfig = Followers.availableFollowers.get(sChoice);
 							Methods.longListAvailableFollowers(player,fConfig);
@@ -85,62 +78,68 @@ public class Commands implements Listener, CommandExecutor{
 						int choice=Integer.valueOf(args[1]);
 						String sChoice=args[1];
 						if((choice>0)&&(choice<4)){
-							int curFollowers=0;
-							for(String key: Followers.availableFollowers.keySet()){
-						        curFollowers++;
-							}
+							int curFollowers=Methods.countAvailableFollowers();
 							if(choice<=curFollowers){
-								AvailableFollowers fConfig=Followers.availableFollowers.get(sChoice);
-								PlayerConfig pConfig=Followers.playerStats.get(player.getName());		
-								if(pConfig.follower1Name.equalsIgnoreCase("filler")){
-									pConfig.follower1Name=fConfig.follower1Name;
-									pConfig.follower1Level=fConfig.follower1Level;
-									pConfig.follower1Class=fConfig.follower1Class;
-									pConfig.follower1Gene=fConfig.follower1Gene;
-									pConfig.follower1Gender=fConfig.follower1Gender;
-									pConfig.follower1Perk1=fConfig.follower1Perk1;
-									pConfig.follower1Perk2=fConfig.follower1Perk2;
-									pConfig.follower1Armor=fConfig.follower1Armor;
-									pConfig.follower1Weapon=fConfig.follower1Weapon;
-									pConfig.currentFollowers=pConfig.currentFollowers++;
-									Followers.playerStats.put(player.getName(), pConfig);
-									Methods.saveMapToPFile(player.getName());
+								double playerBalance = Followers.econ.getBalance(player.getName());
+								int followerPrice = Modifiers.findFollowerPrice(Followers.availableFollowers.get(args[1]));
+								if(playerBalance>=followerPrice){
+									Followers.econ.withdrawPlayer(player.getName(), followerPrice);
+									AvailableFollowers fConfig=Followers.availableFollowers.get(sChoice);
+									PlayerConfig pConfig=Followers.playerStats.get(player.getName());
+									String fName = fConfig.follower1Name;
+									player.sendMessage("You've successfully hired " + fName + "!");
+									player.sendMessage("You've been charged $" +followerPrice+".");
+									if(pConfig.follower1Name.equalsIgnoreCase("filler")){
+										pConfig.follower1Name=fConfig.follower1Name;
+										pConfig.follower1Level=fConfig.follower1Level;
+										pConfig.follower1Class=fConfig.follower1Class;
+										pConfig.follower1Gene=fConfig.follower1Gene;
+										pConfig.follower1Gender=fConfig.follower1Gender;
+										pConfig.follower1Perk1=fConfig.follower1Perk1;
+										pConfig.follower1Perk2=fConfig.follower1Perk2;
+										pConfig.follower1Armor=fConfig.follower1Armor;
+										pConfig.follower1Weapon=fConfig.follower1Weapon;
+										pConfig.currentFollowers=pConfig.currentFollowers++;
+										Followers.playerStats.put(player.getName(), pConfig);
+										Methods.saveMapToPFile(player.getName());
+									}
+									else if(pConfig.follower2Name.equalsIgnoreCase("filler")){
+										pConfig.follower2Name=fConfig.follower1Name;
+										pConfig.follower2Level=fConfig.follower1Level;
+										pConfig.follower2Class=fConfig.follower1Class;
+										pConfig.follower2Gene=fConfig.follower1Gene;
+										pConfig.follower2Gender=fConfig.follower1Gender;
+										pConfig.follower2Perk1=fConfig.follower1Perk1;
+										pConfig.follower2Perk2=fConfig.follower1Perk2;
+										pConfig.follower2Armor=fConfig.follower1Armor;
+										pConfig.follower2Weapon=fConfig.follower1Weapon;
+										pConfig.currentFollowers=pConfig.currentFollowers++;
+										Followers.playerStats.put(player.getName(), pConfig);
+										Methods.saveMapToPFile(player.getName());
+									}
+									else if(pConfig.follower3Name.equalsIgnoreCase("filler")){
+										pConfig.follower3Name=fConfig.follower1Name;
+										pConfig.follower3Level=fConfig.follower1Level;
+										pConfig.follower3Class=fConfig.follower1Class;
+										pConfig.follower3Gene=fConfig.follower1Gene;
+										pConfig.follower3Gender=fConfig.follower1Gender;
+										pConfig.follower3Perk1=fConfig.follower1Perk1;
+										pConfig.follower3Perk2=fConfig.follower1Perk2;
+										pConfig.follower3Armor=fConfig.follower1Armor;
+										pConfig.follower3Weapon=fConfig.follower1Weapon;
+										pConfig.currentFollowers=pConfig.currentFollowers++;
+										Followers.playerStats.put(player.getName(), pConfig);
+										Methods.saveMapToPFile(player.getName());
+										fName = fConfig.follower1Name;
+									}
+									
+									else{
+										player.sendMessage(ChatColor.RED+"You've no available slots for that follower!");
+										player.sendMessage(ChatColor.YELLOW+"Fire someone first, and then try again.");
+									}
+									Methods.wipeAvailableFollower(player, choice);
 								}
-								else if(pConfig.follower2Name.equalsIgnoreCase("filler")){
-									pConfig.follower2Name=fConfig.follower1Name;
-									pConfig.follower2Level=fConfig.follower1Level;
-									pConfig.follower2Class=fConfig.follower1Class;
-									pConfig.follower2Gene=fConfig.follower1Gene;
-									pConfig.follower2Gender=fConfig.follower1Gender;
-									pConfig.follower2Perk1=fConfig.follower1Perk1;
-									pConfig.follower2Perk2=fConfig.follower1Perk2;
-									pConfig.follower2Armor=fConfig.follower1Armor;
-									pConfig.follower2Weapon=fConfig.follower1Weapon;
-									pConfig.currentFollowers=pConfig.currentFollowers++;
-									Followers.playerStats.put(player.getName(), pConfig);
-									Methods.saveMapToPFile(player.getName());
-								}
-								else if(pConfig.follower3Name.equalsIgnoreCase("filler")){
-									pConfig.follower3Name=fConfig.follower1Name;
-									pConfig.follower3Level=fConfig.follower1Level;
-									pConfig.follower3Class=fConfig.follower1Class;
-									pConfig.follower3Gene=fConfig.follower1Gene;
-									pConfig.follower3Gender=fConfig.follower1Gender;
-									pConfig.follower3Perk1=fConfig.follower1Perk1;
-									pConfig.follower3Perk2=fConfig.follower1Perk2;
-									pConfig.follower3Armor=fConfig.follower1Armor;
-									pConfig.follower3Weapon=fConfig.follower1Weapon;
-									pConfig.currentFollowers=pConfig.currentFollowers++;
-									Followers.playerStats.put(player.getName(), pConfig);
-									Methods.saveMapToPFile(player.getName());
-								}
-								
-								else{
-									player.sendMessage(ChatColor.RED+"You've no available slots for that follower!");
-									player.sendMessage(ChatColor.YELLOW+"Fire someone first, and then try again.");
-								}
-								Methods.wipeAvailableFollower(player, choice);
-								
+								else player.sendMessage("You don't have enough shards for that follower!");
 							}
 							else player.sendMessage(ChatColor.RED+"That follower doesn't exist.");
 						}
@@ -467,27 +466,41 @@ public class Commands implements Listener, CommandExecutor{
 						int armorLevel = Integer.valueOf(Methods.findOwnedStat(pConfig, followerChoice, "armor"));
 						String itemChoice=args[2];
 						if((itemChoice.equalsIgnoreCase("armor"))||(itemChoice.equalsIgnoreCase("weapon"))){
-							if((itemChoice.equalsIgnoreCase("armor"))&&(armorLevel<=3)){
+							if((itemChoice.equalsIgnoreCase("armor"))&&(armorLevel<=3)){				
 								int itemCost=(armorLevel*15000)+15000;
-								String value=Methods.findOwnedStat(pConfig, followerChoice, "armor");
-								int intValue=Integer.valueOf(value)+1;
-								if(followerChoice==1) pConfig.follower1Armor=intValue;
-								if(followerChoice==2) pConfig.follower2Armor=intValue;
-								if(followerChoice==3) pConfig.follower3Armor=intValue;
-								Followers.playerStats.put(player.getName(), pConfig);
-								Methods.saveMapToPFile(player.getName());
-								player.sendMessage("Armor has been upgraded!");
+								if(Followers.econ.getBalance(player.getName())>itemCost){
+									Followers.econ.withdrawPlayer(player.getName(), itemCost);
+									String value=Methods.findOwnedStat(pConfig, followerChoice, "armor");
+									int intValue=Integer.valueOf(value)+1;
+									if(followerChoice==1) pConfig.follower1Armor=intValue;
+									if(followerChoice==2) pConfig.follower2Armor=intValue;
+									if(followerChoice==3) pConfig.follower3Armor=intValue;
+									Followers.playerStats.put(player.getName(), pConfig);
+									Methods.saveMapToPFile(player.getName());
+									player.sendMessage(name + "'s armor has been upgraded successfully!");
+									player.sendMessage("A total of $" + itemCost + " has been withdrawn from your balance.");
+								}
+								else{
+									player.sendMessage("You don't have enough shards to do that.");
+								}
 							}
 							else if((itemChoice.equalsIgnoreCase("weapon"))&&(weaponLevel<=3)){
 								int itemCost=(weaponLevel*10000)+10000;
-								String value=Methods.findOwnedStat(pConfig, followerChoice, "weapon");
-								int intValue=Integer.valueOf(value)+1;
-								if(followerChoice==1) pConfig.follower1Weapon=intValue;
-								if(followerChoice==2) pConfig.follower2Weapon=intValue;
-								if(followerChoice==3) pConfig.follower3Weapon=intValue;
-								Followers.playerStats.put(player.getName(), pConfig);
-								Methods.saveMapToPFile(player.getName());
-								player.sendMessage("Weapon has been upgraded!");
+								if(Followers.econ.getBalance(player.getName())>itemCost){
+									Followers.econ.withdrawPlayer(player.getName(), itemCost);
+									String value=Methods.findOwnedStat(pConfig, followerChoice, "weapon");
+									int intValue=Integer.valueOf(value)+1;
+									if(followerChoice==1) pConfig.follower1Weapon=intValue;
+									if(followerChoice==2) pConfig.follower2Weapon=intValue;
+									if(followerChoice==3) pConfig.follower3Weapon=intValue;
+									Followers.playerStats.put(player.getName(), pConfig);
+									Methods.saveMapToPFile(player.getName());
+									player.sendMessage(name + "'s weapon has been upgraded successfully!");
+									player.sendMessage("A total of $" + itemCost + " has been withdrawn from your balance.");
+								}
+								else{
+									player.sendMessage("You don't have enough shards to do that.");
+								}
 							}
 							else{ 
 								player.sendMessage("You no longer pay to upgrade this follower.");
