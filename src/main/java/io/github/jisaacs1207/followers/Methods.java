@@ -123,7 +123,7 @@ public class Methods implements Listener{
 			pConfig.follower1Failures=playerfileyaml.getInt("follower1Failures");
 			pConfig.follower1MissionType=playerfileyaml.getString("follower1MissionType");
 			pConfig.follower1MissionLevel=playerfileyaml.getInt("follower1MissionLevel");
-			pConfig.follower1MissionTimeLeft=playerfileyaml.getInt("follower1MissionTimeLeft");
+			pConfig.follower1MissionTimeLeft=playerfileyaml.getLong("follower1MissionTimeLeft");
 			pConfig.follower2Name=playerfileyaml.getString("follower2Name");
 			pConfig.follower2Class=playerfileyaml.getInt("follower2Class");
 			pConfig.follower2Gene=playerfileyaml.getInt("follower2Gene");
@@ -138,7 +138,7 @@ public class Methods implements Listener{
 			pConfig.follower2Failures=playerfileyaml.getInt("follower2Failures");
 			pConfig.follower2MissionType=playerfileyaml.getString("follower2MissionType");
 			pConfig.follower2MissionLevel=playerfileyaml.getInt("follower2MissionLevel");
-			pConfig.follower2MissionTimeLeft=playerfileyaml.getInt("follower2MissionTimeLeft");
+			pConfig.follower2MissionTimeLeft=playerfileyaml.getLong("follower2MissionTimeLeft");
 			pConfig.follower3Name=playerfileyaml.getString("follower3Name");
 			pConfig.follower3Class=playerfileyaml.getInt("follower3Class");
 			pConfig.follower3Gene=playerfileyaml.getInt("follower3Gene");
@@ -153,7 +153,7 @@ public class Methods implements Listener{
 			pConfig.follower3Failures=playerfileyaml.getInt("follower3Failures");
 			pConfig.follower3MissionType=playerfileyaml.getString("follower3MissionType");
 			pConfig.follower3MissionLevel=playerfileyaml.getInt("follower3MissionLevel");
-			pConfig.follower3MissionTimeLeft=playerfileyaml.getInt("follower3MissionTimeLeft");
+			pConfig.follower3MissionTimeLeft=playerfileyaml.getLong("follower3MissionTimeLeft");
 			
 		}
 		return pConfig;
