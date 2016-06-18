@@ -72,6 +72,7 @@ public class Schedules implements Listener {
 										+ChatColor.BLUE+pConfig.follower1MissionType+ChatColor.YELLOW+".");
 								player.sendMessage(ChatColor.GREEN+"Congratulations!"+ChatColor.YELLOW
 										+" The mission was a complete"+ChatColor.GREEN+" SUCCESS"+ChatColor.YELLOW+"!");
+								Methods.getMissionReward(pConfig.follower1MissionType, pConfig.follower1MissionLevel, pConfig.follower1Level, player);
 								player.sendMessage("");
 								pConfig.completedAdventures++;
 								pConfig.follower1Successes++;
@@ -143,6 +144,7 @@ public class Schedules implements Listener {
 										+ChatColor.BLUE+pConfig.follower2MissionType+ChatColor.YELLOW+".");
 								player.sendMessage(ChatColor.GREEN+"Congratulations!"+ChatColor.YELLOW
 										+" The mission was a complete"+ChatColor.GREEN+" SUCCESS"+ChatColor.YELLOW+"!");
+								Methods.getMissionReward(pConfig.follower2MissionType, pConfig.follower2MissionLevel, pConfig.follower2Level, player);
 								player.sendMessage("");
 								pConfig.completedAdventures++;
 								pConfig.follower2Successes++;
@@ -214,6 +216,7 @@ public class Schedules implements Listener {
 										+ChatColor.BLUE+pConfig.follower3MissionType+ChatColor.YELLOW+".");
 								player.sendMessage(ChatColor.GREEN+"Congratulations!"+ChatColor.YELLOW
 										+" The mission was a complete"+ChatColor.GREEN+" SUCCESS"+ChatColor.YELLOW+"!");
+								Methods.getMissionReward(pConfig.follower3MissionType, pConfig.follower3MissionLevel, pConfig.follower3Level, player);
 								player.sendMessage("");
 								pConfig.completedAdventures++;
 								pConfig.follower3Successes++;

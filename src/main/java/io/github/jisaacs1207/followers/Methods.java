@@ -4,11 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.TreeMap;
 import java.util.concurrent.ThreadLocalRandom;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -882,7 +882,7 @@ public class Methods implements Listener{
 		return ThreadLocalRandom.current().nextInt(min, max + 1);
 	}
 	
-	public static void getMissionReward (String missionType,int missionLevel, int followerLevel,Player sender,Player owner){
+	public static void getMissionReward (String missionType,int missionLevel, int followerLevel,Player owner){
 		// hundred-thousands place = voucher pool
 		// ten-thousands place = item reward pool
 		// thousands place = item reward pool
@@ -895,13 +895,34 @@ public class Methods implements Listener{
 				(missionType.equalsIgnoreCase("explore"))||
 				(missionType.equalsIgnoreCase("spelunk"))||(missionType.equalsIgnoreCase("quest"))||
 				(missionType.equalsIgnoreCase("netherquest"))||(missionType.equalsIgnoreCase("enderquest"))){
+			int levelMissionDifference = followerLevel-missionLevel;
+			if(levelMissionDifference<1) levelMissionDifference=1;
+			int rewardAmount;	
+			owner.sendMessage("You've been given your followers findings!");
+			for(int x=1;x<=Methods.randomNumber(1, 5);x++){
+				rewardAmount = Methods.randomNumber(1, levelMissionDifference*10);
+				if(rewardAmount>64) rewardAmount=64;	
+				ItemStack itemReward = pullRandomTreasure(missionLevel, rewardAmount);
+				
+				if(owner.getInventory().firstEmpty()!=-1){
+					owner.getInventory().addItem(itemReward);
+				}
+				else{
+					Location loc = owner.getLocation();
+					owner.getWorld().dropItem(loc, itemReward);
+					owner.sendMessage("You've dropped some of the items on the ground.");
+				}
+				
+			}
 		}
 		// money
 		if((missionType.equalsIgnoreCase("trade"))||(missionType.equalsIgnoreCase("build"))||
 				(missionType.equalsIgnoreCase("mine"))||
 				(missionType.equalsIgnoreCase("hunt"))||(missionType.equalsIgnoreCase("quest"))||
 				(missionType.equalsIgnoreCase("netherquest"))||(missionType.equalsIgnoreCase("enderquest"))){
-
+			int reward=Methods.pullRandomCash(missionLevel);
+			Followers.econ.depositPlayer(owner, reward);
+			owner.sendMessage("A bounty of $" + reward + " has been deposited in your account!");
 		}
 			
 	}
@@ -920,5 +941,10 @@ public class Methods implements Listener{
 		ItemStack rewardStack = new ItemStack(type, amount);
 		rewardStack.setDurability((short)data);
 		return rewardStack;	
+	}
+	public static int pullRandomCash(int missionLevel){
+		List<String> rewardList = Followers.configData.get("rewardCash"+missionLevel);
+		int reward = Methods.randomNumber(Integer.valueOf(rewardList.get(0)), Integer.valueOf(rewardList.get(1)));
+		return reward;
 	}
 }
