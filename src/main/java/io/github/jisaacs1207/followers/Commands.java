@@ -260,6 +260,49 @@ public class Commands implements Listener, CommandExecutor{
 					else player.sendMessage("Correct syntax: /fo admin wipe <#>");
 				}
 			}
+			else if (args[0].equalsIgnoreCase("admin")&& args.length==4){
+				if(args[1].equalsIgnoreCase("finish")){
+					if(Methods.playerFileExists(args[2])){
+						String playerName = args[2];
+						if(Methods.isInt(args[3])){
+							int fChoice=Integer.valueOf(args[3]);
+							if((fChoice>=1)&&(fChoice<=3)){
+								PlayerConfig pConfig = Followers.playerStats.get(playerName);
+								Boolean saveMe=false;
+								if(fChoice==1){
+									if(pConfig.follower1MissionTimeLeft!=0){
+										pConfig.follower1MissionTimeLeft=System.currentTimeMillis();
+										saveMe=true;
+									}
+									else player.sendMessage("That follower isn't on a mission.");
+								}
+								else if(fChoice==2){
+									if(pConfig.follower2MissionTimeLeft!=0){
+										pConfig.follower2MissionTimeLeft=System.currentTimeMillis();
+										saveMe=true;
+									}
+									else player.sendMessage("That follower isn't on a mission.");
+								}
+								else{
+									if(pConfig.follower3MissionTimeLeft!=0){
+										pConfig.follower3MissionTimeLeft=System.currentTimeMillis();
+										saveMe=true;
+									}
+									else player.sendMessage("That follower isn't on a mission.");
+								}
+								if(saveMe){
+									player.sendMessage("Their mission will end within a minute.");
+									Followers.playerStats.put(playerName, pConfig);
+									Methods.saveMapToPFile(playerName);
+								}					
+							}
+							else player.sendMessage("Follower choice must be 1-3.");
+						}
+						else player.sendMessage(args[2]+" is not a valid integer.");
+					}
+					else player.sendMessage("Player '" + args[2] + "' does not exist.");
+				}
+			}
 			// list (<empty>,<help>,<away>,<home>,<#>
 			else if (args[0].equalsIgnoreCase("list") && args.length==1){
 				PlayerConfig fConfig = Followers.playerStats.get(player.getName());
