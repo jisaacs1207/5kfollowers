@@ -1,9 +1,9 @@
 package io.github.jisaacs1207.followers;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.TreeMap;
 import java.util.logging.Logger;
-
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -26,6 +26,7 @@ public final class Followers extends JavaPlugin implements Listener{
 	//me
 	public static Followers plugin;
 	public static HashMap<String, PlayerConfig> playerStats = new HashMap<String, PlayerConfig>();
+	public static HashMap<String, List<String>> configData = new HashMap<String, List<String>>();
 	public static TreeMap<String, AvailableFollowers> availableFollowers = new TreeMap<String, AvailableFollowers>();
 	
 	@Override
@@ -42,6 +43,8 @@ public final class Followers extends JavaPlugin implements Listener{
 		}
 		Methods.populateFollowers();
 		Schedules.startFollowerExchange();
+		Schedules.startFollowerReturnTimer();
+		Methods.configToMap();
 		//vault
 		if (!setupEconomy() ) {
             log.severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
@@ -57,6 +60,7 @@ public final class Followers extends JavaPlugin implements Listener{
 		playerStats = null;
 		availableFollowers = null;
 		plugin = null;
+		configData=null;
 	}
 	
 	public static void registerEvents(org.bukkit.plugin.Plugin plugin, Listener... listeners) {

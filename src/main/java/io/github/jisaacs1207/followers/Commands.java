@@ -428,7 +428,7 @@ public class Commands implements Listener, CommandExecutor{
 								long currentTime=System.currentTimeMillis();
 								String followerName= Methods.findOwnedStat(pConfig, followerChoice, "name");
 								if(missionTitle.equalsIgnoreCase("trade")){
-									missionValue=2;
+									missionValue=Methods.randomNumber(1,2);
 									finishTime=currentTime+3600000;
 								}
 								else if(missionTitle.equalsIgnoreCase("harvest")){
@@ -436,31 +436,31 @@ public class Commands implements Listener, CommandExecutor{
 									finishTime=currentTime+21600000;
 								}
 								else if(missionTitle.equalsIgnoreCase("build")){
-									missionValue=5;
+									missionValue=Methods.randomNumber(4,5);
 									finishTime=currentTime+21600000;
 								}
 								else if(missionTitle.equalsIgnoreCase("explore")){
-									missionValue=7;
+									missionValue=Methods.randomNumber(6,7);
 									finishTime=currentTime+43200000;
 								}
 								else if(missionTitle.equalsIgnoreCase("mine")){
-									missionValue=9;
+									missionValue=Methods.randomNumber(8,9);
 									finishTime=currentTime+86400000;
 								}
 								else if(missionTitle.equalsIgnoreCase("spelunk")){
-									missionValue=11;
+									missionValue=Methods.randomNumber(10,11);
 									finishTime=currentTime+172800000;
 								}
 								else if(missionTitle.equalsIgnoreCase("hunt")){
-									missionValue=15;
+									missionValue=Methods.randomNumber(12,15);
 									finishTime=currentTime+172800000;
 								}
 								else if(missionTitle.equalsIgnoreCase("quest")){
-									missionValue=20;
+									missionValue=Methods.randomNumber(16,20);
 									finishTime=currentTime+259200000;
 								}
 								else if(missionTitle.equalsIgnoreCase("netherquest")){
-									missionValue=24;
+									missionValue=Methods.randomNumber(21,24);
 									finishTime=currentTime+432000000;
 								}
 								else{
@@ -468,10 +468,9 @@ public class Commands implements Listener, CommandExecutor{
 									finishTime=currentTime+604800000;
 								}
 								player.sendMessage("You've sent " + followerName +
-										" " + Modifiers.translateMission(missionValue) + ".");
-								player.sendMessage("With luck, they will return alive in about " + TimeUnit.MILLISECONDS.toHours(finishTime-currentTime) +
+										" to " + missionTitle + ".");
+								player.sendMessage("With luck, they will return in about " + TimeUnit.MILLISECONDS.toHours(finishTime-currentTime) +
 										" hours.");
-								player.sendMessage(String.valueOf(missionValue));
 								Methods.setOwnedStat(player.getName(), followerChoice, "MissionTimeLeft", String.valueOf(finishTime));
 								Methods.setOwnedStat(player.getName(), followerChoice, "MissionLevel", String.valueOf(missionValue));
 								Methods.setOwnedStat(player.getName(), followerChoice, "MissionType", missionTitle);

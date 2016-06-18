@@ -6,10 +6,12 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
+import java.util.concurrent.ThreadLocalRandom;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
+import org.bukkit.inventory.ItemStack;
 import io.github.jisaacs1207.followers.Followers;
 import io.github.jisaacs1207.followers.Methods;
 import io.github.jisaacs1207.followers.PlayerConfig;
@@ -872,5 +874,48 @@ public class Methods implements Listener{
 		
 		return value;
 		
+	}
+	public static int randomNumber(int min, int max){		
+		return ThreadLocalRandom.current().nextInt(min, max + 1);
+	}
+	
+	public static void getMissionReward (String missionType,int missionLevel, int followerLevel,Player sender,Player owner){
+		// hundred-thousands place = voucher pool
+		// ten-thousands place = item reward pool
+		// thousands place = item reward pool
+		// hundreds place = item reward pool
+		// tens place = money reward pool
+		// ones place = money reward pool 
+		// items
+		
+		if((missionType.equalsIgnoreCase("harvest"))||(missionType.equalsIgnoreCase("hunt"))||
+				(missionType.equalsIgnoreCase("explore"))||
+				(missionType.equalsIgnoreCase("spelunk"))||(missionType.equalsIgnoreCase("quest"))||
+				(missionType.equalsIgnoreCase("netherquest"))||(missionType.equalsIgnoreCase("enderquest"))){
+		}
+		// money
+		if((missionType.equalsIgnoreCase("trade"))||(missionType.equalsIgnoreCase("build"))||
+				(missionType.equalsIgnoreCase("mine"))||
+				(missionType.equalsIgnoreCase("hunt"))||(missionType.equalsIgnoreCase("quest"))||
+				(missionType.equalsIgnoreCase("netherquest"))||(missionType.equalsIgnoreCase("enderquest"))){
+
+		}
+			
+	}
+	public static void configToMap(){
+		for(int x=1;x<=25;x++){
+			Followers.configData.put("rewardItem"+x, (List<String>) Followers.plugin.getConfig().getStringList("ItemRewards."+x));
+			Followers.configData.put("rewardCash"+x, (List<String>) Followers.plugin.getConfig().getStringList("CashRewards."+x));
+		}
+	}
+	@SuppressWarnings("deprecation")
+	public static ItemStack pullRandomTreasure(int missionLevel, int amount){
+		List<String> rewardList = Followers.configData.get("rewardItem"+missionLevel);
+		String[] randomEntry=rewardList.get(Methods.randomNumber(0, rewardList.size()-1)).split(":");
+		int type = Integer.parseInt(randomEntry[0]);
+		int data = Integer.parseInt(randomEntry[1]);
+		ItemStack rewardStack = new ItemStack(type, amount);
+		rewardStack.setDurability((short)data);
+		return rewardStack;	
 	}
 }

@@ -16,7 +16,7 @@ public static int getChance(int playerLevel, int taskLevel)
 {
     return Math.max(Math.min(100 + (playerLevel * 5) - ((taskLevel <= 10 ? taskLevel : 10 + (taskLevel-10)/5) * 15), 100), 0);
 }
- 
+ ss
         [1] [2] [3] [4] [5] [6] [7] [8] [9] [10]    [15]    [20]    [25]   
 [1]     90  75  60  45  30  15  0   0   0   0       0       0       0  
 [2]     95  80  65  50  35  20  5   0   0   0       0       0       0  
@@ -39,16 +39,16 @@ public static int getChance(int playerLevel, int taskLevel)
 [19]    100 100 100 100 100 100 90  75  60  45      30      15      0  
 [20]    100 100 100 100 100 100 95  80  65  50      35      20      5
 +5(itemlevel)
-			// trading (0-1)
-			// harvesting (2-3)
-			// building (4-5)
-			// exploring (6-7)
-			// mining (8-9)
-			// spelunking (10-11)
-			// hunting (12-15)
-			// questing (16-20)
-			// netherquest (21-24)
-			// enderquest (25)
+			// trading (0-1) - money 1-3
+			// harvesting (2-3) - item 1-3
+			// building (4-5) - money 4-6
+			// exploring (6-7) - item 4-6
+			// mining (8-9) - money 7-9
+			// spelunking (10-11) - item 7-9
+			// hunting (12-15) - money,item 10-13
+			// questing (16-20) - item, money 14-16
+			// netherquest (21-24) - item, money 17-19
+			// enderquest (25) - item, money, voucher 20
 ================================================================================================
 
 Gender
