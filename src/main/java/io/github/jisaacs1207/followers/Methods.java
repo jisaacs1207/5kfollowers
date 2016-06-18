@@ -947,4 +947,14 @@ public class Methods implements Listener{
 		int reward = Methods.randomNumber(Integer.valueOf(rewardList.get(0)), Integer.valueOf(rewardList.get(1)));
 		return reward;
 	}
+	public static boolean ownedFollowerExists(String playerName,int fChoice){
+		boolean validFollower=false;
+		if(Methods.playerFileExists(playerName)){
+			PlayerConfig pConfig = Followers.playerStats.get(playerName);
+			if((fChoice==1)&&(!pConfig.follower1Name.equalsIgnoreCase("filler"))) validFollower=true;
+			if((fChoice==2)&&(!pConfig.follower2Name.equalsIgnoreCase("filler"))) validFollower=true;
+			if((fChoice==3)&&(!pConfig.follower3Name.equalsIgnoreCase("filler"))) validFollower=true;
+		}
+		return validFollower;
+	}
 }

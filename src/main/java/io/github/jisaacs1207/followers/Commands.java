@@ -303,6 +303,25 @@ public class Commands implements Listener, CommandExecutor{
 					else player.sendMessage("Player '" + args[2] + "' does not exist.");
 				}
 			}
+			else if (args[0].equalsIgnoreCase("admin")&& args.length==6){
+				if(args[1].equalsIgnoreCase("set")){
+					String playerName=args[2];
+					if(Methods.playerFileExists(playerName)){
+						if(Methods.isInt(args[3])){
+							int fChoice=Integer.valueOf(args[3]);
+							if((fChoice>=1)&&(fChoice<=3)){
+								if(Methods.ownedFollowerExists(playerName, fChoice)){
+									player.sendMessage("Yatta!");
+								}
+								else player.sendMessage("Follower does not exist.");
+							}
+							else player.sendMessage("Not a valid follower number (1-3).");
+						}
+						else player.sendMessage(args[2]+ " is not a valid integer.");
+					}
+					else player.sendMessage("That player doesn't exist.");
+				}
+			}
 			// list (<empty>,<help>,<away>,<home>,<#>
 			else if (args[0].equalsIgnoreCase("list") && args.length==1){
 				PlayerConfig fConfig = Followers.playerStats.get(player.getName());
