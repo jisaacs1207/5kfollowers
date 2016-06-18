@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.TreeMap;
 import java.util.concurrent.ThreadLocalRandom;
@@ -238,6 +239,8 @@ public class Methods implements Listener{
 		Methods.saveMapToPFile(playerName); 
 	}
 	
+
+	@SuppressWarnings("unused")
 	public static int countAvailableFollowers(){
 		int curFollowers=0;
 		for(String key: Followers.availableFollowers.keySet()){
