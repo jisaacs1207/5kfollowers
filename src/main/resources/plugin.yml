@@ -1,7 +1,7 @@
 name: Followers
 main: io.github.jisaacs1207.followers.Followers
 version: 1.0
-author: jisaacs1207
+author: [jisaacs1207,homiedion]
 website: http://fivekingdoms.net
 depend: [Vault]
 description: >
