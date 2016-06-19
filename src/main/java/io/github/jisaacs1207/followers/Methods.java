@@ -957,4 +957,11 @@ public class Methods implements Listener{
 		}
 		return validFollower;
 	}
+	public static boolean isOnMission(PlayerConfig pConfig, int fChoice){
+		boolean onMission=false;
+		if((fChoice==1)&&(pConfig.follower1MissionTimeLeft!=0)) onMission=true;
+		if((fChoice==2)&&(pConfig.follower2MissionTimeLeft!=0)) onMission=true;
+		if((fChoice==3)&&(pConfig.follower3MissionTimeLeft!=0)) onMission=true;
+		return onMission;
+	}
 }
