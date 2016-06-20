@@ -812,7 +812,6 @@ public class Methods implements Listener{
 	public static String findOwnedStat(PlayerConfig pConfig, int followerChoice, String stat){
 		String value="filler";
 		for(Field field: pConfig.getClass().getDeclaredFields()){
-			
 			if(stat.equalsIgnoreCase("level")){
 				if(field.getName().toString().equalsIgnoreCase("follower"+followerChoice+"Level")){
 					try {
@@ -840,7 +839,7 @@ public class Methods implements Listener{
 				}
 			}
 			if(stat.equalsIgnoreCase("armor")){
-				if(field.getName().toString().contains("Armor")){
+				if(field.getName().toString().equalsIgnoreCase("follower"+followerChoice+"Armor")){
 					try {
 						value = field.get(pConfig).toString();
 					} catch (NumberFormatException e) {
@@ -856,7 +855,7 @@ public class Methods implements Listener{
 				}
 			}
 			if(stat.equalsIgnoreCase("weapon")){
-				if(field.getName().toString().contains("Weapon")){
+				if(field.getName().toString().equalsIgnoreCase("follower"+followerChoice+"Weapon")){
 					try {
 						value = field.get(pConfig).toString();
 					} catch (NumberFormatException e) {
@@ -872,9 +871,6 @@ public class Methods implements Listener{
 				}
 			}
 		}
-		
-		
-		
 		return value;
 		
 	}

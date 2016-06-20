@@ -460,22 +460,6 @@ public class Commands implements Listener, CommandExecutor{
 				else player.sendMessage("Syntax: /fo mission <type> <follower #>");
 			}
 			else if (args[0].equalsIgnoreCase("mission") && args.length==4){
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
 				if(args[3].equalsIgnoreCase("confirm")){
 					PlayerConfig pConfig = Followers.playerStats.get(player.getName());
 					if(Methods.isInt(args[2])){
@@ -549,28 +533,7 @@ public class Commands implements Listener, CommandExecutor{
 					}
 					else player.sendMessage("Syntax: /fo mission <type> <follower #> confirm");
 				}
-				else player.sendMessage("Syntax: /fo mission <type> <follower #> confirm");
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
+				else player.sendMessage("Syntax: /fo mission <type> <follower #> confirm");	
 			}
 			// upgrade (<empty>,<help>,<list>,<list><#>,<armor/weapon>,
 			//          <armor/weapon><#>,<armor/weapon><#><confirm>)
