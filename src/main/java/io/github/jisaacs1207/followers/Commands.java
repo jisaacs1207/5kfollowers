@@ -303,6 +303,7 @@ public class Commands implements Listener, CommandExecutor{
 					else player.sendMessage("Player '" + args[2] + "' does not exist.");
 				}
 			}
+			// admin set pname follower stat value
 			else if (args[0].equalsIgnoreCase("admin")&& args.length==6){
 				if(args[1].equalsIgnoreCase("set")){
 					String playerName=args[2];
@@ -311,7 +312,38 @@ public class Commands implements Listener, CommandExecutor{
 							int fChoice=Integer.valueOf(args[3]);
 							if((fChoice>=1)&&(fChoice<=3)){
 								if(Methods.ownedFollowerExists(playerName, fChoice)){
-									player.sendMessage("Yatta!");
+									String stat=args[4];
+									String statValue=args[5];
+									if(Methods.setStatValidCheck(stat, statValue)){
+										Methods.setOwnedStat(playerName, fChoice, args[4], args[5]);
+										player.sendMessage("Successfully set " + stat + " to " + statValue + ".");
+									}
+									else player.sendMessage("Invalid stat/value combination.");
+								}
+								else player.sendMessage("Follower does not exist.");
+							}
+							else player.sendMessage("Not a valid follower number (1-3).");
+						}
+						else player.sendMessage(args[2]+ " is not a valid integer.");
+					}
+					else player.sendMessage("That player doesn't exist.");
+				}
+			}
+			else if (args[0].equalsIgnoreCase("admin")&& args.length==7){
+				if(args[1].equalsIgnoreCase("set")){
+					String playerName=args[2];
+					if(Methods.playerFileExists(playerName)){
+						if(Methods.isInt(args[3])){
+							int fChoice=Integer.valueOf(args[3]);
+							if((fChoice>=1)&&(fChoice<=3)){
+								if(Methods.ownedFollowerExists(playerName, fChoice)){
+									String stat=args[4];
+									String statValue=args[5]+" "+args[6];
+									if(Methods.setStatValidCheck(stat, statValue)){
+										Methods.setOwnedStat(playerName, fChoice, stat, statValue);
+										player.sendMessage("Successfully set " + stat + " to " + statValue + ".");
+									}
+									else player.sendMessage("Invalid stat/value combination.");
 								}
 								else player.sendMessage("Follower does not exist.");
 							}

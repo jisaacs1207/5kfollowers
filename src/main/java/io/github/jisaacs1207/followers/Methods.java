@@ -733,7 +733,28 @@ public class Methods implements Listener{
 		}
 		return followerCount;
 	}
-	
+	public static boolean setStatValidCheck(String stat, String statValue){
+		boolean valid = false;
+		if((stat.equalsIgnoreCase("class"))||(stat.equalsIgnoreCase("gene"))||(stat.equalsIgnoreCase("gender"))||
+				(stat.equalsIgnoreCase("perk1"))||(stat.equalsIgnoreCase("perk2"))||(stat.equalsIgnoreCase("level"))||
+				(stat.equalsIgnoreCase("armor"))||(stat.equalsIgnoreCase("weapon"))||(stat.equalsIgnoreCase("successes"))||
+				(stat.equalsIgnoreCase("failures"))||(stat.equalsIgnoreCase("missiontype"))||
+				(stat.equalsIgnoreCase("missionlevel"))||(stat.equalsIgnoreCase("missiontimeleft"))){
+			
+		    try
+		    {
+		        Long.parseLong(statValue);
+		        valid=true;
+		    } catch (NumberFormatException ex)
+		    {
+		        valid=false;
+		    }
+			
+		}
+		else if((stat.equalsIgnoreCase("insured"))&&(Boolean.parseBoolean(statValue))) valid=true;
+		else if(stat.equalsIgnoreCase("name")) valid=true;
+		return valid;
+	}
 	public static void setOwnedStat(String playerName,int followerChoice, String stat, String statValue){
 	PlayerConfig pConfig=Followers.playerStats.get(playerName);
 	/* stats :
