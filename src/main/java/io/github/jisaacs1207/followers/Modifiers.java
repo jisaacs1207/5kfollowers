@@ -174,7 +174,12 @@ Weapon
 		f1.followerName=fConfig.follower1Name;
 		f2.followerName=fConfig.follower2Name;
 		f3.followerName=fConfig.follower3Name;
-
+		
+		//missionTimeLeft
+		f1.followerMissionTimeLeft=fConfig.follower1MissionTimeLeft;
+		f2.followerMissionTimeLeft=fConfig.follower2MissionTimeLeft;
+		f3.followerMissionTimeLeft=fConfig.follower3MissionTimeLeft;
+		
 		//level		
 		f1.followerLevel=fConfig.follower1Level;
 		f2.followerLevel=fConfig.follower2Level;

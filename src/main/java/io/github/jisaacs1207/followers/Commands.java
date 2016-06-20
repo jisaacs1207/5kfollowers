@@ -390,6 +390,12 @@ public class Commands implements Listener, CommandExecutor{
 							else {
 								fStats=translatedStats.get(3);
 							}
+							String awayString;
+							if(fStats.followerMissionTimeLeft!=0){
+								int hoursLeft= (int) (((fStats.followerMissionTimeLeft-System.currentTimeMillis()) / (1000*60*60)) % 24);
+								awayString="away: "+hoursLeft+"h";
+							}
+							else awayString="home";
 							player.sendMessage("");
 							player.sendMessage(ChatColor.YELLOW+"*| "+ChatColor.GREEN+fStats.followerName+ChatColor.YELLOW+" |*");
 							player.sendMessage("");
@@ -401,6 +407,7 @@ public class Commands implements Listener, CommandExecutor{
 							player.sendMessage(ChatColor.YELLOW+"Perk: "+ChatColor.GREEN  + fStats.followerPerk2);
 							player.sendMessage(ChatColor.YELLOW+"Weapon: "+ChatColor.GREEN  + fStats.followerWeapon);
 							player.sendMessage(ChatColor.YELLOW+"Armor: "+ChatColor.GREEN  + fStats.followerArmor);
+							player.sendMessage(ChatColor.YELLOW+"Location: "+ChatColor.GREEN  + awayString);
 							player.sendMessage("");
 						}
 						else player.sendMessage("Syntax: /fo inspect <1-3>");

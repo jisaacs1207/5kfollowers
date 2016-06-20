@@ -12,4 +12,5 @@ public class TranslatedStats implements Listener{
 	int followerLevel;
 	String followerArmor;
 	String followerWeapon;
+	long followerMissionTimeLeft;
 }

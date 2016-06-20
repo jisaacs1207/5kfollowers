@@ -421,19 +421,28 @@ public class Methods implements Listener{
 	public static void listPlayerFollowers(Player player,PlayerConfig fConfig){
 		TreeMap<Integer, TranslatedStats> fStats = Modifiers.translateOwnedStats(fConfig);
 		int cur = 0;
+		String awayString;
 		for(Integer key : fStats.keySet()){
 			TranslatedStats stats = fStats.get(key);
 			if(!stats.followerName.equalsIgnoreCase("filler")){
+				if(stats.followerMissionTimeLeft!=0){
+					int hoursLeft= (int) (((stats.followerMissionTimeLeft-System.currentTimeMillis()) / (1000*60*60)) % 24);
+					awayString="AWAY: "+hoursLeft+"h";
+				}
+				else awayString="HOME";
 				cur++;
 				if(stats.followerGender.equalsIgnoreCase("female"))player.sendMessage(ChatColor.YELLOW+
 						String.valueOf(cur)+ ": "+ChatColor.WHITE+"("+ ChatColor.GREEN+stats.followerLevel+
-						ChatColor.WHITE+") "+ChatColor.LIGHT_PURPLE+stats.followerName);
+						ChatColor.WHITE+") "+ChatColor.LIGHT_PURPLE+stats.followerName+
+						ChatColor.WHITE+" ("+ChatColor.GOLD+awayString+ChatColor.WHITE+")");
 				if(stats.followerGender.equalsIgnoreCase("male"))player.sendMessage(ChatColor.YELLOW+
 						String.valueOf(cur)+ ": "+ChatColor.WHITE+"("+ ChatColor.GREEN+stats.followerLevel+
-						ChatColor.WHITE+") "+ChatColor.DARK_AQUA+stats.followerName);
+						ChatColor.WHITE+") "+ChatColor.DARK_AQUA+stats.followerName+
+						ChatColor.WHITE+" ("+ChatColor.GOLD+awayString+ChatColor.WHITE+")");
 				if(stats.followerGender.equalsIgnoreCase("neuter"))player.sendMessage(ChatColor.YELLOW+
 						String.valueOf(cur)+ ": "+ChatColor.WHITE+"("+ChatColor.GREEN+ stats.followerLevel+
-						ChatColor.WHITE+") "+ChatColor.GRAY+stats.followerName);
+						ChatColor.WHITE+") "+ChatColor.GRAY+stats.followerName+
+						ChatColor.WHITE+" ("+ChatColor.GOLD+awayString+ChatColor.WHITE+")");
 			}
 		}
 	}
@@ -833,6 +842,19 @@ public class Methods implements Listener{
 	public static String findOwnedStat(PlayerConfig pConfig, int followerChoice, String stat){
 		String value="filler";
 		for(Field field: pConfig.getClass().getDeclaredFields()){
+			if(stat.equalsIgnoreCase("missiontimeleft")){
+				if(field.getName().toString().equalsIgnoreCase("follower"+followerChoice+"MissionTimeLeft")){
+					try {
+						value=field.get(pConfig).toString();
+					} catch (IllegalArgumentException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IllegalAccessException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
 			if(stat.equalsIgnoreCase("level")){
 				if(field.getName().toString().equalsIgnoreCase("follower"+followerChoice+"Level")){
 					try {
