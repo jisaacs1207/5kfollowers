@@ -194,7 +194,7 @@ public class Commands implements Listener, CommandExecutor{
 			}
 			// fire (<empty>,<help>,<list>,<#>,<#><confirm>,<inspect>,<inspect><#>)
 			else if (args[0].equalsIgnoreCase("fire") && args.length==1){
-				player.sendMessage("Syntax : /fo fire <1-3>");
+				Help.fire(player);
 			}
 			else if (args[0].equalsIgnoreCase("fire") && args.length==2){
 				if(Methods.isInt(args[1])){
@@ -216,8 +216,15 @@ public class Commands implements Listener, CommandExecutor{
 								ChatColor.WHITE+") "+ChatColor.GRAY+stats.followerName);
 						player.sendMessage("To confirm, type: '/fo fire "+folNum+" confirm'");
 					}
+					else{
+						Methods.listPlayerFollowers(player, fConfig);
+						Help.warningPrinter(player, String.valueOf(folNum)+" isn't a valid follower.");
+					}
 				}
-				else player.sendMessage("Syntax : /fo fire <1-3>");
+				else{
+					Help.fire(player);
+					Help.warningPrinter(player, "Invalid argument.");
+				}
 			}
 			else if (args[0].equalsIgnoreCase("fire") && args.length==3){
 				if(Methods.isInt(args[1])){
@@ -245,11 +252,17 @@ public class Commands implements Listener, CommandExecutor{
 							Followers.playerStats.put(player.getName().toString(), reorderedConfig);
 							Methods.saveMapToPFile(player.getName().toString());
 						}
-						else player.sendMessage("Syntax : /fo fire <1-3> confirm"); 
+						else{
+							Methods.listPlayerFollowers(player, fConfig);
+							Help.warningPrinter(player, String.valueOf(folNum)+" isn't a valid follower.");
+						}
 					} 
-					else player.sendMessage("Syntax : /fo fire <1-3> confirm");
+					else Help.syntaxPrinter(player, "fo fire "+args[1]+" confirm");
 				}
-				else player.sendMessage("Syntax : /fo fire <1-3> confirm");
+				else{
+					Help.fire(player);
+					Help.warningPrinter(player, "Invalid argument.");
+				}
 			}
 			// sell (<empty>,<help>,<list>,<#>,<#><pname>,<#><pname><confirm>,<inspect>,<inspect><#>)
 			else if (args[0].equalsIgnoreCase("sell") && args.length==1){
@@ -269,10 +282,10 @@ public class Commands implements Listener, CommandExecutor{
 			//        <delete>,<delete><pname>,<delete><pname><#>,<create>,
 			//        <create><pname>,<create><pname><fname>,<set>,<set><pname>,
 			//        <set><pname><#>,<set><pname><#><attribute>)
-			else if (args[0].equalsIgnoreCase("admin") && args.length==1){
+			else if ((args[0].equalsIgnoreCase("admin")) && (args.length==1)&&((player.hasPermission("followers.admin"))||(player.isOp()))){
 				player.sendMessage("help on admin");
 			}
-			else if (args[0].equalsIgnoreCase("admin") && args.length==2){
+			else if ((args[0].equalsIgnoreCase("admin")) && (args.length==2)&&((player.hasPermission("followers.admin"))||(player.isOp()))){
 				if(args[1].equalsIgnoreCase("wipelist")){
 					Followers.availableFollowers.clear();	
 					player.sendMessage("Available followers wiped.");
@@ -289,7 +302,7 @@ public class Commands implements Listener, CommandExecutor{
 				}
 				else player.sendMessage("admin options");
 			}
-			else if (args[0].equalsIgnoreCase("admin") && args.length==3){
+			else if ((args[0].equalsIgnoreCase("admin")) && (args.length==3)&&((player.hasPermission("followers.admin"))||(player.isOp()))){
 				if(args[1].equalsIgnoreCase("wipe")){
 					if(Methods.isInt(args[2])){
 						int listNumber = Integer.valueOf(args[2]);
@@ -303,7 +316,7 @@ public class Commands implements Listener, CommandExecutor{
 					else player.sendMessage("Correct syntax: /fo admin wipe <#>");
 				}
 			}
-			else if (args[0].equalsIgnoreCase("admin")&& args.length==4){
+			else if ((args[0].equalsIgnoreCase("admin"))&& (args.length==4)&&((player.hasPermission("followers.admin"))||(player.isOp()))){
 				if(args[1].equalsIgnoreCase("finish")){
 					if(Methods.playerFileExists(args[2])){
 						String playerName = args[2];
@@ -347,7 +360,7 @@ public class Commands implements Listener, CommandExecutor{
 				}
 			}
 			// admin set pname follower stat value
-			else if (args[0].equalsIgnoreCase("admin")&& args.length==6){
+			else if ((args[0].equalsIgnoreCase("admin"))&& (args.length==6)&&((player.hasPermission("followers.admin"))||(player.isOp()))){
 				if(args[1].equalsIgnoreCase("set")){
 					String playerName=args[2];
 					if(Methods.playerFileExists(playerName)){
@@ -372,7 +385,7 @@ public class Commands implements Listener, CommandExecutor{
 					else player.sendMessage("That player doesn't exist.");
 				}
 			}
-			else if (args[0].equalsIgnoreCase("admin")&& args.length==7){
+			else if ((args[0].equalsIgnoreCase("admin"))&& (args.length==7)&&((player.hasPermission("followers.admin"))||(player.isOp()))){
 				if(args[1].equalsIgnoreCase("set")){
 					String playerName=args[2];
 					if(Methods.playerFileExists(playerName)){
