@@ -19,19 +19,39 @@ public class Commands implements Listener, CommandExecutor{
 			// no args
 			//
 			if (args.length==0){
-				player.sendMessage("Chickenpotpie");
+				Help.followers(player);
 			}
 			// help (<empty>,<admin>,<admin commands>,<commands>)
 			else if (args[0].equalsIgnoreCase("help") && args.length==1){
-				player.sendMessage("h0args");
+				Help.help(player);
 			}
 			else if (args[0].equalsIgnoreCase("help") && args.length==2){
-				player.sendMessage("h1arg");
+				if(args[1].equalsIgnoreCase("hire")){
+					Help.hire(player);
+				}
+				else if(args[1].equalsIgnoreCase("list")){
+					Help.list(player);
+				}
+				else if(args[1].equalsIgnoreCase("inspect")){
+					Help.inspect(player);
+				}
+				else if(args[1].equalsIgnoreCase("stats")){
+					Help.stats(player);
+				}
+				else if(args[1].equalsIgnoreCase("mission")){
+					Help.mission(player);
+				}
+				else if(args[1].equalsIgnoreCase("upgrade")){
+					Help.upgrade(player);
+				}
+				else if(args[1].equalsIgnoreCase("fire")){
+					Help.fire(player);
+				}
 			}
 
 			// hire (<empty>,<help>,<list>,<#>,<#><confirm>,<inspect>,<inspect><#>)
 			else if (args[0].equalsIgnoreCase("hire") && args.length==1){
-				player.sendMessage("help on hire");
+				Help.hire(player);
 			}
 			else if (args[0].equalsIgnoreCase("hire") && args.length==2){
 				if(args[1].equalsIgnoreCase("list")){
@@ -47,14 +67,23 @@ public class Commands implements Listener, CommandExecutor{
 							Methods.longListAvailableFollowers(player,fConfig);
 							player.sendMessage(ChatColor.YELLOW+ "Type : '"+ChatColor.DARK_PURPLE+"/fo hire " + choice + " confirm"+ChatColor.YELLOW+"' to confirm purchase.");
 						}
-						else player.sendMessage(ChatColor.RED+"That follower doesn't exist.");
+						else{
+							Methods.shortListAvailableFollowers(player);
+							Help.warningPrinter(player, "That follower does not exist!");
+							Help.syntaxPrinter(player, "fo hire inspect <1-3>");
+						}
 					}
-					else player.sendMessage(ChatColor.RED+"That follower doesn't exist.");
+					else{
+						Methods.shortListAvailableFollowers(player);
+						Help.warningPrinter(player, "That follower does not exist!");
+						Help.syntaxPrinter(player, "fo hire inspect <1-3>");
+					}
 				}
 				else if(args[1].equalsIgnoreCase("inspect")){
-					player.sendMessage("Syntax: /fo hire inspect <#>");
+					Methods.shortListAvailableFollowers(player);
+					Help.syntaxPrinter(player, "fo hire inspect <1-3>");
 				}
-				else player.sendMessage("hire options");
+				else Help.hire(player);
 			}
 			else if (args[0].equalsIgnoreCase("hire") && args.length==3){
 				if(args[1].equalsIgnoreCase("inspect")){
@@ -66,9 +95,9 @@ public class Commands implements Listener, CommandExecutor{
 							Methods.longListAvailableFollowers(player,fConfig);
 						}
 						else{
-							player.sendMessage("That follower doesn't exist.");
 							Methods.shortListAvailableFollowers(player);
-							player.sendMessage("Syntax: /fo hire inspect <#>");
+							Help.warningPrinter(player, "That follower does not exist!");
+							Help.syntaxPrinter(player, "fo hire inspect <1-3>");
 						}
 						
 					}

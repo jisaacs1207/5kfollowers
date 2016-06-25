@@ -35,7 +35,8 @@ public final class Followers extends JavaPlugin implements Listener{
 		getServer().getPluginManager().registerEvents(this, this);
 		saveDefaultConfig();
 		registerEvents(this, new Commands(), new Listeners(), new Methods(), new PlayerConfig(), 
-				new Schedules(), new Timers(), new RandomNames(), new Modifiers(), new TranslatedStats());
+				new Schedules(), new Timers(), new RandomNames(), new Modifiers(), new TranslatedStats(),
+				new Help());
 		getCommand("followers").setExecutor(new Commands());
 		getCommand("fo").setExecutor(new Commands());
 		for (Player p : plugin.getServer().getOnlinePlayers()) {
