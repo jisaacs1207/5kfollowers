@@ -480,14 +480,11 @@ public class Commands implements Listener, CommandExecutor{
 				Methods.listPlayerFollowers(player, fConfig);
 			}
 			else if (args[0].equalsIgnoreCase("list") && args.length==2){
-				player.sendMessage("list options");
+				Help.list(player);
 			}
 			// inspect
 			else if (args[0].equalsIgnoreCase("inspect") && args.length==1){
-				PlayerConfig fConfig = Followers.playerStats.get(player.getName());
-				Methods.listPlayerFollowers(player, fConfig);
-				player.sendMessage("");
-				player.sendMessage("Syntax: /fo inspect <#>");
+				Help.inspect(player);
 			}
 			else if (args[0].equalsIgnoreCase("inspect") && args.length==2){
 				if(Methods.isInt(args[1])){
@@ -530,11 +527,22 @@ public class Commands implements Listener, CommandExecutor{
 							player.sendMessage(ChatColor.YELLOW+"Location: "+ChatColor.GREEN  + awayString);
 							player.sendMessage("");
 						}
-						else player.sendMessage("Syntax: /fo inspect <1-3>");
+						else{
+							Methods.listPlayerFollowers(player, fConfig);
+							Help.warningPrinter(player, "Invalid follower!");
+							Help.syntaxPrinter(player, "fo inspect <#>");
+						}
 					}
-					else player.sendMessage("Syntax: /fo inspect <1-3>");
+					else{
+						Methods.listPlayerFollowers(player, fConfig);
+						Help.warningPrinter(player, "Invalid follower!");
+						Help.syntaxPrinter(player, "fo inspect <#>");
+					}
 				}
-				else player.sendMessage("Syntax: /fo inspect <#>");
+				else{
+					Help.warningPrinter(player, "Invalid argument.");
+					Help.syntaxPrinter(player, "fo inspect <#>");
+				}
 			}
 			// mission (<>,<type>,<type> <follower #>,<type> <follower #> <confirm>)
 			// types :
@@ -549,10 +557,10 @@ public class Commands implements Listener, CommandExecutor{
 			// netherquest (21-24)
 			// enderquest (25)
 			else if (args[0].equalsIgnoreCase("mission") && args.length==1){
-				player.sendMessage("help on mission and types");
+				Help.mission(player);
 			}
 			else if (args[0].equalsIgnoreCase("mission") && args.length==2){
-				player.sendMessage("mission types descriptions");
+				Help.mission(player);
 			}
 			else if (args[0].equalsIgnoreCase("mission") && args.length==3){
 				PlayerConfig pConfig = Followers.playerStats.get(player.getName());
@@ -605,18 +613,34 @@ public class Commands implements Listener, CommandExecutor{
 								else if((deathChance>=51)&&(deathChance<=75)) deathChanceString = "likely";
 								else if((deathChance>=76)&&(deathChance<=99)) deathChanceString = "highly likely";
 								else deathChanceString = "certain";
-								player.sendMessage("They seem to have a " + chanceString + " chance at success.");
-								player.sendMessage("There is a " + deathChanceString + " chance of dying if they fail.");
-								player.sendMessage("Type: /fo mission " + missionTitle.toLowerCase() + 
-										" " + followerChoice+ " confirm");
+								player.sendMessage("");
+								player.sendMessage("They seem to have a "+ChatColor.RED + chanceString +ChatColor.WHITE +" chance at success.");
+								player.sendMessage("There is a "+ChatColor.RED + deathChanceString + ChatColor.WHITE+" chance of dying if they fail.");
+								player.sendMessage(ChatColor.DARK_PURPLE+"Type: "+ChatColor.LIGHT_PURPLE+"'/fo mission " + missionTitle.toLowerCase() + 
+										" " + followerChoice+ " confirm"+ChatColor.DARK_PURPLE+"'");
+								player.sendMessage("");
 							}
-							else player.sendMessage("Syntax: /fo mission <type> <follower #>");
+							else{
+								Help.mission(player);
+								Help.warningPrinter(player, "Invalid mission type.");
+							}
 						}
-						else player.sendMessage("Syntax: /fo mission <type> <follower #>");
+						else{
+							Help.warningPrinter(player, "Invalid follower!");
+							Help.syntaxPrinter(player, "fo mission <type> <follower #>");
+							Help.learnPrinter(player, "fo help mission");
+						}
 					}
-					else player.sendMessage("They are already on a mission!");
+					else{
+						Methods.listPlayerFollowers(player, pConfig);
+						Help.warningPrinter(player, "Follower is already on a mission!");
+					}
 				}
-				else player.sendMessage("Syntax: /fo mission <type> <follower #>");
+				else{
+					Help.warningPrinter(player, "Invalid integer!");
+					Help.syntaxPrinter(player, "fo mission <type> <follower #>");
+					Help.learnPrinter(player, "fo help mission");
+				}
 			}
 			else if (args[0].equalsIgnoreCase("mission") && args.length==4){
 				if(args[3].equalsIgnoreCase("confirm")){
@@ -676,32 +700,51 @@ public class Commands implements Listener, CommandExecutor{
 										missionValue=25;
 										finishTime=currentTime+604800000;
 									}
-									player.sendMessage("You've sent " + followerName +
-											" to " + missionTitle + ".");
-									player.sendMessage("With luck, they will return in about " + TimeUnit.MILLISECONDS.toHours(finishTime-currentTime) +
-											" hours.");
+									player.sendMessage("");
+									player.sendMessage(ChatColor.YELLOW+ "You've sent " + ChatColor.GREEN+followerName +
+											ChatColor.YELLOW+	" to " +ChatColor.GREEN+ missionTitle + ChatColor.YELLOW+".");
+									player.sendMessage(ChatColor.YELLOW+"With luck, they will return in about "+ChatColor.GREEN + TimeUnit.MILLISECONDS.toHours(finishTime-currentTime) +
+											" hours"+ChatColor.YELLOW+".");
 									Methods.setOwnedStat(player.getName(), followerChoice, "MissionTimeLeft", String.valueOf(finishTime));
 									Methods.setOwnedStat(player.getName(), followerChoice, "MissionLevel", String.valueOf(missionValue));
 									Methods.setOwnedStat(player.getName(), followerChoice, "MissionType", missionTitle);
+									player.sendMessage("");
 								}
-								else player.sendMessage("Syntax: /fo mission <type> <follower #> confirm");
+								else{
+									Help.mission(player);
+									Help.warningPrinter(player, "Invalid mission type.");
+								}
 							}
-							else player.sendMessage("Syntax: /fo mission <type> <follower #> confirm");
+							else{
+								Help.warningPrinter(player, "Invalid follower!");
+								Help.syntaxPrinter(player, "fo mission <type> <follower #> confirm");
+								Help.learnPrinter(player, "fo help mission");
+							}
 						}
-						else player.sendMessage("They are already on a mission!");
+						else{
+							Methods.listPlayerFollowers(player, pConfig);
+							Help.warningPrinter(player, "Follower is already on a mission!");
+						}
 					}
-					else player.sendMessage("Syntax: /fo mission <type> <follower #> confirm");
+					else{
+						Help.warningPrinter(player, "Invalid integer!");
+						Help.syntaxPrinter(player, "fo mission <type> <follower #> confirm");
+						Help.learnPrinter(player, "fo help mission");
+					}
 				}
-				else player.sendMessage("Syntax: /fo mission <type> <follower #> confirm");	
+				else{
+					Help.warningPrinter(player, "You must confirm your mission!");
+					Help.syntaxPrinter(player, "fo mission <type> <follower #> confirm");
+				}
 			}
 			// upgrade (<empty>,<help>,<list>,<list><#>,<armor/weapon>,
 			//          <armor/weapon><#>,<armor/weapon><#><confirm>)
 			else if (args[0].equalsIgnoreCase("upgrade") && args.length==1){
-				player.sendMessage("help on upgrade");
+				Help.upgrade(player);
 			}
 			else if (args[0].equalsIgnoreCase("upgrade") && args.length==2){
 				if(args[1].equalsIgnoreCase("help")){
-					player.sendMessage("Syntax: /fo upgrade <1-3> <armor/weapon>");
+					Help.upgrade(player);
 				}
 				if(Methods.isInt(args[1])){
 					PlayerConfig pConfig=Followers.playerStats.get(player.getName());
@@ -712,10 +755,16 @@ public class Commands implements Listener, CommandExecutor{
 						if(followerChoice==1) name = pConfig.follower1Name;
 						else if(followerChoice==2) name = pConfig.follower2Name;
 						else name = pConfig.follower3Name;
-						player.sendMessage("Upgrade "+name+"'s armor or weapon?");
-						player.sendMessage("Syntax: /fo upgrade <1-3> <armor/weapon>");
+						player.sendMessage("");
+						Help.warningPrinter(player, "Upgrade "+name+"'s armor or weapon?");
+						Help.syntaxPrinter(player, "fo upgrade <1-3> <armor/weapon>");
+						player.sendMessage("");
 					}
-					else player.sendMessage("Syntax: /fo upgrade <1-3> <armor/weapon>");
+					else{
+						Help.warningPrinter(player, "Invalid follower!");
+						Help.syntaxPrinter(player, "fo mission <type> <follower #> confirm");
+						Help.learnPrinter(player, "fo help mission");
+					}
 				}
 			}
 			else if (args[0].equalsIgnoreCase("upgrade") && args.length==3){
@@ -732,86 +781,131 @@ public class Commands implements Listener, CommandExecutor{
 						if((itemChoice.equalsIgnoreCase("armor"))||(itemChoice.equalsIgnoreCase("weapon"))){
 							if((itemChoice.equalsIgnoreCase("armor"))&&(armorLevel<=3)){
 								itemCost=(armorLevel*15000)+15000;
-								player.sendMessage("Upgrade "+name+"'s "+itemChoice.toLowerCase()+" for $" +itemCost+"?");
-								player.sendMessage("Type: /fo upgrade "+followerChoice+" "+itemChoice.toLowerCase()+" confirm");
+								player.sendMessage("");
+								player.sendMessage(ChatColor.YELLOW+"Upgrade "+ChatColor.GREEN+name+"'s "+itemChoice.toLowerCase()+ChatColor.YELLOW+" for "+ChatColor.RED+"$" +itemCost+ChatColor.YELLOW+"?");
+								player.sendMessage(ChatColor.DARK_PURPLE+"Type: '"+ChatColor.LIGHT_PURPLE+"/fo upgrade "+followerChoice+" "+itemChoice.toLowerCase()+" confirm"+ChatColor.LIGHT_PURPLE+"'");
+								player.sendMessage("");
 							}
 							else if((itemChoice.equalsIgnoreCase("weapon"))&&(weaponLevel<=3)){
 								itemCost=(weaponLevel*10000)+10000;
-								player.sendMessage("Upgrade "+name+"'s "+itemChoice.toLowerCase()+" for $" +itemCost+"?");
-								player.sendMessage("Type: /fo upgrade "+followerChoice+" "+itemChoice.toLowerCase()+" confirm");
+								player.sendMessage("");
+								player.sendMessage(ChatColor.YELLOW+"Upgrade "+ChatColor.GREEN+name+"'s "+itemChoice.toLowerCase()+ChatColor.YELLOW+" for "+ChatColor.RED+"$" +itemCost+ChatColor.YELLOW+"?");
+								player.sendMessage(ChatColor.DARK_PURPLE+"Type: '"+ChatColor.LIGHT_PURPLE+"/fo upgrade "+followerChoice+" "+itemChoice.toLowerCase()+" confirm"+ChatColor.LIGHT_PURPLE+"'");
+								player.sendMessage("");
 							}
 							else{ 
-								player.sendMessage("You no longer pay to upgrade this follower.");
-								player.sendMessage("Your follower must FIND their LEGENDARY pieces!");
-								player.sendMessage("They can find them on top tier missions.");
+								player.sendMessage("");
+								player.sendMessage("You no longer can pay to upgrade this follower.");
+								player.sendMessage("Your follower must "+ChatColor.RED+"FIND"+ChatColor.WHITE+" their LEGENDARY pieces!");
+								player.sendMessage("They can find them on "+ChatColor.RED+"top tier"+ChatColor.WHITE+" missions.");
+								player.sendMessage("");
 							}
 							
 						}
-						else player.sendMessage("Syntax: /fo upgrade <1-3> <armor/weapon>");
+						else{
+							Help.warningPrinter(player, "Item choice must be armor or weapon.");
+							Help.syntaxPrinter(player, "fo upgrade <#> <item choice>");
+							Help.learnPrinter(player, "fo help upgrade");
+						}
 					}
-					else player.sendMessage("Syntax: /fo upgrade <1-3> <armor/weapon>");
+					else{
+						Help.warningPrinter(player, "Invalid follower!");
+						Help.syntaxPrinter(player, "fo upgrade <#> <item choice>");
+						Help.learnPrinter(player, "fo help upgrade");
+					}
 				}
-				else player.sendMessage("Syntax: /fo upgrade <1-3> <armor/weapon>");
+				else{
+					Help.warningPrinter(player, "Invalid integer!");
+					Help.syntaxPrinter(player, "fo mission <type> <follower #> confirm");
+					Help.learnPrinter(player, "fo help mission");
+				}
 			}
 			else if (args[0].equalsIgnoreCase("upgrade") && args.length==4){
-				if(Methods.isInt(args[1])){
-					PlayerConfig pConfig=Followers.playerStats.get(player.getName());
-					int followerChoice=Integer.parseInt(args[1]);
-					int followerCount=Methods.ownedfollowerCount(pConfig);
-					if(followerChoice<=followerCount){
-						String name = Methods.findOwnedStat(pConfig, followerChoice, "name");
-						int weaponLevel = Integer.valueOf(Methods.findOwnedStat(pConfig, followerChoice, "weapon"));
-						int armorLevel = Integer.valueOf(Methods.findOwnedStat(pConfig, followerChoice, "armor"));
-						String itemChoice=args[2];
-						if((itemChoice.equalsIgnoreCase("armor"))||(itemChoice.equalsIgnoreCase("weapon"))){
-							if((itemChoice.equalsIgnoreCase("armor"))&&(armorLevel<=3)){				
-								int itemCost=(armorLevel*15000)+15000;
-								if(Followers.econ.getBalance(player.getName())>itemCost){
-									Followers.econ.withdrawPlayer(player.getName(), itemCost);
-									String value=Methods.findOwnedStat(pConfig, followerChoice, "armor");
-									int intValue=Integer.valueOf(value)+1;
-									if(followerChoice==1) pConfig.follower1Armor=intValue;
-									if(followerChoice==2) pConfig.follower2Armor=intValue;
-									if(followerChoice==3) pConfig.follower3Armor=intValue;
-									Followers.playerStats.put(player.getName(), pConfig);
-									Methods.saveMapToPFile(player.getName());
-									player.sendMessage(name + "'s armor has been upgraded successfully!");
-									player.sendMessage("A total of $" + itemCost + " has been withdrawn from your balance.");
+				if(args[3].equalsIgnoreCase("confirm")){
+					if(Methods.isInt(args[1])){
+						PlayerConfig pConfig=Followers.playerStats.get(player.getName());
+						int followerChoice=Integer.parseInt(args[1]);
+						int followerCount=Methods.ownedfollowerCount(pConfig);
+						if(followerChoice<=followerCount){
+							String name = Methods.findOwnedStat(pConfig, followerChoice, "name");
+							int weaponLevel = Integer.valueOf(Methods.findOwnedStat(pConfig, followerChoice, "weapon"));
+							int armorLevel = Integer.valueOf(Methods.findOwnedStat(pConfig, followerChoice, "armor"));
+							String itemChoice=args[2];
+							if((itemChoice.equalsIgnoreCase("armor"))||(itemChoice.equalsIgnoreCase("weapon"))){
+								if((itemChoice.equalsIgnoreCase("armor"))&&(armorLevel<=3)){				
+									int itemCost=(armorLevel*15000)+15000;
+									if(Followers.econ.getBalance(player.getName())>itemCost){
+										Followers.econ.withdrawPlayer(player.getName(), itemCost);
+										String value=Methods.findOwnedStat(pConfig, followerChoice, "armor");
+										int intValue=Integer.valueOf(value)+1;
+										if(followerChoice==1) pConfig.follower1Armor=intValue;
+										if(followerChoice==2) pConfig.follower2Armor=intValue;
+										if(followerChoice==3) pConfig.follower3Armor=intValue;
+										Followers.playerStats.put(player.getName(), pConfig);
+										Methods.saveMapToPFile(player.getName());
+										player.sendMessage("");
+										player.sendMessage(ChatColor.GREEN+name + "'s armor has been upgraded successfully!");
+										player.sendMessage("A total of "+ChatColor.RED+"$" + itemCost + ChatColor.WHITE+" has been withdrawn from your balance.");
+										player.sendMessage("");
+									}
+									else{
+										player.sendMessage("");
+										Help.warningPrinter(player, "You don't have enough shards for that.");
+										player.sendMessage("");
+									}
 								}
-								else{
-									player.sendMessage("You don't have enough shards to do that.");
+								else if((itemChoice.equalsIgnoreCase("weapon"))&&(weaponLevel<=3)){
+									int itemCost=(weaponLevel*10000)+10000;
+									if(Followers.econ.getBalance(player.getName())>itemCost){
+										Followers.econ.withdrawPlayer(player.getName(), itemCost);
+										String value=Methods.findOwnedStat(pConfig, followerChoice, "weapon");
+										int intValue=Integer.valueOf(value)+1;
+										if(followerChoice==1) pConfig.follower1Weapon=intValue;
+										if(followerChoice==2) pConfig.follower2Weapon=intValue;
+										if(followerChoice==3) pConfig.follower3Weapon=intValue;
+										Followers.playerStats.put(player.getName(), pConfig);
+										Methods.saveMapToPFile(player.getName());
+										player.sendMessage("");
+										player.sendMessage(ChatColor.GREEN+name + "'s weapon has been upgraded successfully!");
+										player.sendMessage("A total of "+ChatColor.RED+"$" + itemCost + ChatColor.WHITE+" has been withdrawn from your balance.");
+										player.sendMessage("");
+									}
+									else{
+										player.sendMessage("");
+										Help.warningPrinter(player, "You don't have enough shards for that.");
+										player.sendMessage("");
+									}
 								}
+								else{ 
+									player.sendMessage("");
+									player.sendMessage("You no longer can pay to upgrade this follower.");
+									player.sendMessage("Your follower must "+ChatColor.RED+"FIND"+ChatColor.WHITE+" their LEGENDARY pieces!");
+									player.sendMessage("They can find them on "+ChatColor.RED+"top tier"+ChatColor.WHITE+" missions.");
+									player.sendMessage("");
+								}
+								
 							}
-							else if((itemChoice.equalsIgnoreCase("weapon"))&&(weaponLevel<=3)){
-								int itemCost=(weaponLevel*10000)+10000;
-								if(Followers.econ.getBalance(player.getName())>itemCost){
-									Followers.econ.withdrawPlayer(player.getName(), itemCost);
-									String value=Methods.findOwnedStat(pConfig, followerChoice, "weapon");
-									int intValue=Integer.valueOf(value)+1;
-									if(followerChoice==1) pConfig.follower1Weapon=intValue;
-									if(followerChoice==2) pConfig.follower2Weapon=intValue;
-									if(followerChoice==3) pConfig.follower3Weapon=intValue;
-									Followers.playerStats.put(player.getName(), pConfig);
-									Methods.saveMapToPFile(player.getName());
-									player.sendMessage(name + "'s weapon has been upgraded successfully!");
-									player.sendMessage("A total of $" + itemCost + " has been withdrawn from your balance.");
-								}
-								else{
-									player.sendMessage("You don't have enough shards to do that.");
-								}
+							else{
+								Help.warningPrinter(player, "Item choice must be armor or weapon.");
+								Help.syntaxPrinter(player, "fo upgrade <#> <item choice>");
+								Help.learnPrinter(player, "fo help upgrade");
 							}
-							else{ 
-								player.sendMessage("You no longer pay to upgrade this follower.");
-								player.sendMessage("Your follower must FIND their LEGENDARY pieces!");
-								player.sendMessage("They can find them on top tier missions.");
-							}
-							
 						}
-						else player.sendMessage("Syntax: /fo upgrade <1-3> <armor/weapon>");
+						else{
+							Help.warningPrinter(player, "Invalid follower!");
+							Help.syntaxPrinter(player, "fo upgrade <#> <item choice>");
+							Help.learnPrinter(player, "fo help upgrade");
+						}
 					}
-					else player.sendMessage("Syntax: /fo upgrade <1-3> <armor/weapon>");
+					else{
+						Help.warningPrinter(player, "Invalid integer!");
+						Help.syntaxPrinter(player, "fo mission <type> <follower #> confirm");
+						Help.learnPrinter(player, "fo help mission");
+					}
 				}
-				else player.sendMessage("Syntax: /fo upgrade <1-3> <armor/weapon>");
+				else{
+					Help.upgrade(player);
+				}
 			}
 			// recall (<empty>,<help>,<list>,<list><#>,<#>,<#><confirm>)
 			else if (args[0].equalsIgnoreCase("recall") && args.length==1){
