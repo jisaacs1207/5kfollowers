@@ -300,9 +300,10 @@ public class Commands implements Listener, CommandExecutor{
 			//        <delete>,<delete><pname>,<delete><pname><#>,<create>,
 			//        <create><pname>,<create><pname><fname>,<set>,<set><pname>,
 			//        <set><pname><#>,<set><pname><#><attribute>)
+			 */
 			else if ((args[0].equalsIgnoreCase("admin")) && (args.length==1)&&((player.hasPermission("followers.admin"))||(player.isOp()))){
-				player.sendMessage("help on admin");
-			}*/
+				Help.admin(player);
+			}
 			else if ((args[0].equalsIgnoreCase("admin")) && (args.length==2)&&((player.hasPermission("followers.admin"))||(player.isOp()))){
 				if(args[1].equalsIgnoreCase("wipelist")){
 					Followers.availableFollowers.clear();	
@@ -318,7 +319,7 @@ public class Commands implements Listener, CommandExecutor{
 					Methods.populateFollowers();
 					player.sendMessage("Available followers repopulated.");
 				}
-				else player.sendMessage("admin options");
+				else Help.admin(player);
 			}
 			else if ((args[0].equalsIgnoreCase("admin")) && (args.length==3)&&((player.hasPermission("followers.admin"))||(player.isOp()))){
 				if(args[1].equalsIgnoreCase("wipe")){
@@ -329,9 +330,15 @@ public class Commands implements Listener, CommandExecutor{
 									(String.valueOf(listNumber)).follower1Name+".");
 							Methods.wipeAvailableFollower(player, listNumber);
 						}
-						else player.sendMessage("Correct syntax: /fo admin wipe <#> (1-3)");
+						else{
+							Help.warningPrinter(player, "Incorrect argument.");
+							Help.syntaxPrinter(player, "fo admin wipe <#> (1-3)");
+						}
 					}
-					else player.sendMessage("Correct syntax: /fo admin wipe <#>");
+					else{
+						Help.warningPrinter(player, "Incorrect argument.");
+						Help.syntaxPrinter(player, "fo admin wipe <#> (1-3)");
+					}
 				}
 			}
 			else if ((args[0].equalsIgnoreCase("admin"))&& (args.length==4)&&((player.hasPermission("followers.admin"))||(player.isOp()))){
@@ -348,21 +355,21 @@ public class Commands implements Listener, CommandExecutor{
 										pConfig.follower1MissionTimeLeft=System.currentTimeMillis();
 										saveMe=true;
 									}
-									else player.sendMessage("That follower isn't on a mission.");
+									else Help.warningPrinter(player, "That follower isn't on a mission.");
 								}
 								else if(fChoice==2){
 									if(pConfig.follower2MissionTimeLeft!=0){
 										pConfig.follower2MissionTimeLeft=System.currentTimeMillis();
 										saveMe=true;
 									}
-									else player.sendMessage("That follower isn't on a mission.");
+									else Help.warningPrinter(player, "That follower isn't on a mission.");
 								}
 								else{
 									if(pConfig.follower3MissionTimeLeft!=0){
 										pConfig.follower3MissionTimeLeft=System.currentTimeMillis();
 										saveMe=true;
 									}
-									else player.sendMessage("That follower isn't on a mission.");
+									else Help.warningPrinter(player, "That follower isn't on a mission.");
 								}
 								if(saveMe){
 									player.sendMessage("Their mission will end within a minute.");
@@ -370,11 +377,20 @@ public class Commands implements Listener, CommandExecutor{
 									Methods.saveMapToPFile(playerName);
 								}					
 							}
-							else player.sendMessage("Follower choice must be 1-3.");
+							else{
+								Help.warningPrinter(player, "Incorrect argument.");
+								Help.syntaxPrinter(player, "fo admin finish <player> <follower #>");
+							}
 						}
-						else player.sendMessage(args[2]+" is not a valid integer.");
+						else{
+							Help.warningPrinter(player, "Incorrect argument.");
+							Help.syntaxPrinter(player, "fo admin finish <player> <follower #>");
+						}
 					}
-					else player.sendMessage("Player '" + args[2] + "' does not exist.");
+					else{
+						Help.warningPrinter(player, "Player '" + args[2] + "' does not exist.");
+						Help.syntaxPrinter(player, "fo admin finish <player> <follower #>");
+					}
 				}
 			}
 			// admin set pname follower stat value
@@ -392,15 +408,30 @@ public class Commands implements Listener, CommandExecutor{
 										Methods.setOwnedStat(playerName, fChoice, args[4], args[5]);
 										player.sendMessage("Successfully set " + stat + " to " + statValue + ".");
 									}
-									else player.sendMessage("Invalid stat/value combination.");
+									else{
+										Help.warningPrinter(player, "Invalid stat/value combination.");
+										Help.learnPrinter(player, "fo help set");
+									}
 								}
-								else player.sendMessage("Follower does not exist.");
+								else{
+									Help.warningPrinter(player, "Follower does not exist.");
+									Help.learnPrinter(player, "fo help set");
+								}
 							}
-							else player.sendMessage("Not a valid follower number (1-3).");
+							else{
+								Help.warningPrinter(player, "Not a valid follower number (1-3).");
+								Help.learnPrinter(player, "fo help set");
+							}
 						}
-						else player.sendMessage(args[2]+ " is not a valid integer.");
+						else{
+							Help.warningPrinter(player, args[2]+ " is not a valid integer.");
+							Help.learnPrinter(player, "fo help set");
+						}
 					}
-					else player.sendMessage("That player doesn't exist.");
+					else{
+						Help.warningPrinter(player, "That player doesn't exist.");
+						Help.learnPrinter(player, "fo help set");
+					}
 				}
 			}
 			else if ((args[0].equalsIgnoreCase("admin"))&& (args.length==7)&&((player.hasPermission("followers.admin"))||(player.isOp()))){
@@ -417,15 +448,30 @@ public class Commands implements Listener, CommandExecutor{
 										Methods.setOwnedStat(playerName, fChoice, stat, statValue);
 										player.sendMessage("Successfully set " + stat + " to " + statValue + ".");
 									}
-									else player.sendMessage("Invalid stat/value combination.");
+									else{
+										Help.warningPrinter(player, "Invalid stat/value combination.");
+										Help.learnPrinter(player, "fo help set");
+									}
 								}
-								else player.sendMessage("Follower does not exist.");
+								else{
+									Help.warningPrinter(player, "Follower does not exist.");
+									Help.learnPrinter(player, "fo help set");
+								}
 							}
-							else player.sendMessage("Not a valid follower number (1-3).");
+							else{
+								Help.warningPrinter(player, "Not a valid follower number (1-3).");
+								Help.learnPrinter(player, "fo help set");
+							}
 						}
-						else player.sendMessage(args[2]+ " is not a valid integer.");
+						else{
+							Help.warningPrinter(player, args[2]+ " is not a valid integer.");
+							Help.learnPrinter(player, "fo help set");
+						}
 					}
-					else player.sendMessage("That player doesn't exist.");
+					else{
+						Help.warningPrinter(player, "That player doesn't exist.");
+						Help.learnPrinter(player, "fo help set");
+					}
 				}
 			}
 			// list (<empty>,<help>,<away>,<home>,<#>
