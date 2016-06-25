@@ -47,6 +47,24 @@ public class Commands implements Listener, CommandExecutor{
 				else if(args[1].equalsIgnoreCase("fire")){
 					Help.fire(player);
 				}
+				else if((args[1].equalsIgnoreCase("admin"))&&((player.isOp())||(player.hasPermission("followers.admin")))){
+					Help.admin(player);
+				}
+				else if((args[1].equalsIgnoreCase("set"))&&((player.isOp())||(player.hasPermission("followers.admin")))){
+					Help.set(player);
+				}
+				else if((args[1].equalsIgnoreCase("wipelist"))&&((player.isOp())||(player.hasPermission("followers.admin")))){
+					Help.wipelist(player);
+				}
+				else if((args[1].equalsIgnoreCase("repop"))&&((player.isOp())||(player.hasPermission("followers.admin")))){
+					Help.repop(player);
+				}
+				else if((args[1].equalsIgnoreCase("finish"))&&((player.isOp())||(player.hasPermission("followers.admin")))){
+					Help.finish(player);
+				}
+				else if((args[1].equalsIgnoreCase("wipe"))&&((player.isOp())||(player.hasPermission("followers.admin")))){
+					Help.wipe(player);
+				}
 			}
 
 			// hire (<empty>,<help>,<list>,<#>,<#><confirm>,<inspect>,<inspect><#>)
@@ -264,7 +282,7 @@ public class Commands implements Listener, CommandExecutor{
 					Help.warningPrinter(player, "Invalid argument.");
 				}
 			}
-			// sell (<empty>,<help>,<list>,<#>,<#><pname>,<#><pname><confirm>,<inspect>,<inspect><#>)
+			/*// sell (<empty>,<help>,<list>,<#>,<#><pname>,<#><pname><confirm>,<inspect>,<inspect><#>)
 			else if (args[0].equalsIgnoreCase("sell") && args.length==1){
 				player.sendMessage("help on sell");
 			}
@@ -284,7 +302,7 @@ public class Commands implements Listener, CommandExecutor{
 			//        <set><pname><#>,<set><pname><#><attribute>)
 			else if ((args[0].equalsIgnoreCase("admin")) && (args.length==1)&&((player.hasPermission("followers.admin"))||(player.isOp()))){
 				player.sendMessage("help on admin");
-			}
+			}*/
 			else if ((args[0].equalsIgnoreCase("admin")) && (args.length==2)&&((player.hasPermission("followers.admin"))||(player.isOp()))){
 				if(args[1].equalsIgnoreCase("wipelist")){
 					Followers.availableFollowers.clear();	

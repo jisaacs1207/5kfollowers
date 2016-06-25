@@ -28,7 +28,7 @@ public class Help implements Listener {
 		player.sendMessage(ChatColor.GRAY+"Try one of the following topics:");
 		player.sendMessage(ChatColor.GREEN+"Hire, Stats, Inspect, Mission, Upgrade, Fire, Commands");
 		player.sendMessage("");
-		player.sendMessage(ChatColor.DARK_PURPLE+"For example, '"+ChatColor.LIGHT_PURPLE+"help commands"+ChatColor.DARK_PURPLE+"'");
+		player.sendMessage(ChatColor.DARK_PURPLE+"For example, '"+ChatColor.LIGHT_PURPLE+"fo help commands"+ChatColor.DARK_PURPLE+"'");
 		player.sendMessage("");
 	}
 	public static void hire(Player player){
@@ -106,6 +106,63 @@ public class Help implements Listener {
 		player.sendMessage(ChatColor.GRAY+"Available subcommands: "+ChatColor.GREEN+"<Armor, Weapon");
 		player.sendMessage("");
 		player.sendMessage(ChatColor.DARK_PURPLE+"For example, '"+ChatColor.LIGHT_PURPLE+"fo upgrade 1 armor"+ChatColor.DARK_PURPLE+"'");
+		player.sendMessage("");
+	}
+	public static void admin(Player player){
+		player.sendMessage("");
+		player.sendMessage(ChatColor.GRAY+"===================["+ChatColor.GREEN+"Admin Help"+ChatColor.GRAY+"]===================");
+		player.sendMessage("Players want to fuck shit up. Use these sparingly to");
+		player.sendMessage("reduce the collateral damage. If you need more, then");
+		player.sendMessage("tell Josh.");
+		player.sendMessage(ChatColor.GRAY+"Try one of the following topics:");
+		player.sendMessage(ChatColor.GREEN+"wipelist, wipe, repop, finish, set");
+		player.sendMessage("");
+		player.sendMessage(ChatColor.DARK_PURPLE+"For example, '"+ChatColor.LIGHT_PURPLE+"fo admin set jisaacs1207 1 weapon 3"+ChatColor.DARK_PURPLE+"'");
+		player.sendMessage("");
+	}
+	public static void set(Player player){
+		player.sendMessage("");
+		player.sendMessage(ChatColor.GRAY+"===================["+ChatColor.GREEN+"Set Help"+ChatColor.GRAY+"]===================");
+		player.sendMessage("This command sets a player-follower's stats. All values");
+		player.sendMessage("are integer except for strings name and missiontime,");
+		player.sendMessage("boolean insured, and long missiontimeleft.");
+		player.sendMessage(ChatColor.GRAY+"Stats: "+ChatColor.GREEN+"name, class, gene, gender, perk1, perk2,");
+		player.sendMessage(ChatColor.GREEN+"         level, armor, successes, missiontype,");
+		player.sendMessage(ChatColor.GREEN+"         missionlevel, missiontimeleft");
+		player.sendMessage("");
+		player.sendMessage(ChatColor.DARK_PURPLE+"For example, '"+ChatColor.LIGHT_PURPLE+"fo admin set jisaacs1207 1 name Potato"+ChatColor.DARK_PURPLE+"'");
+		player.sendMessage("");
+	}
+	public static void wipelist(Player player){
+		player.sendMessage("");
+		player.sendMessage(ChatColor.GRAY+"===================["+ChatColor.GREEN+"Wipelist Help"+ChatColor.GRAY+"]===================");
+		player.sendMessage("Deletes all available followers.");
+		player.sendMessage("");
+		player.sendMessage(ChatColor.DARK_PURPLE+"For example, '"+ChatColor.LIGHT_PURPLE+"fo admin wipelist"+ChatColor.DARK_PURPLE+"'");
+		player.sendMessage("");
+	}
+	public static void repop(Player player){
+		player.sendMessage("");
+		player.sendMessage(ChatColor.GRAY+"===================["+ChatColor.GREEN+"Repop Help"+ChatColor.GRAY+"]===================");
+		player.sendMessage("Repopulates missing available followers.");
+		player.sendMessage("");
+		player.sendMessage(ChatColor.DARK_PURPLE+"For example, '"+ChatColor.LIGHT_PURPLE+"fo admin repop"+ChatColor.DARK_PURPLE+"'");
+		player.sendMessage("");
+	}
+	public static void finish(Player player){
+		player.sendMessage("");
+		player.sendMessage(ChatColor.GRAY+"===================["+ChatColor.GREEN+"Finish Help"+ChatColor.GRAY+"]===================");
+		player.sendMessage("Finishes a current mission for a player-follower.");
+		player.sendMessage("");
+		player.sendMessage(ChatColor.DARK_PURPLE+"For example, '"+ChatColor.LIGHT_PURPLE+"fo admin finish jisaacs1207 1"+ChatColor.DARK_PURPLE+"'");
+		player.sendMessage("");
+	}
+	public static void wipe(Player player){
+		player.sendMessage("");
+		player.sendMessage(ChatColor.GRAY+"===================["+ChatColor.GREEN+"Wipe Help"+ChatColor.GRAY+"]===================");
+		player.sendMessage("Kills off a single available follower.");
+		player.sendMessage("");
+		player.sendMessage(ChatColor.DARK_PURPLE+"For example, '"+ChatColor.LIGHT_PURPLE+"fo admin wipe 3"+ChatColor.DARK_PURPLE+"'");
 		player.sendMessage("");
 	}
 }
