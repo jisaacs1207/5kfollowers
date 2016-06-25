@@ -909,10 +909,85 @@ public class Commands implements Listener, CommandExecutor{
 			}
 			// recall (<empty>,<help>,<list>,<list><#>,<#>,<#><confirm>)
 			else if (args[0].equalsIgnoreCase("recall") && args.length==1){
-				player.sendMessage("help on recall");
+				Help.recall(player);
 			}
 			else if (args[0].equalsIgnoreCase("recall") && args.length==2){
-				player.sendMessage(new Message().darkblue("recall help").end());
+				if(Methods.isInt(args[1])){
+					PlayerConfig pConfig=Followers.playerStats.get(player.getName());
+					int followerChoice=Integer.parseInt(args[1]);
+					int followerCount=Methods.ownedfollowerCount(pConfig);
+					if(followerChoice<=followerCount){
+						if(Methods.isOnMission(pConfig, followerChoice)){
+							player.sendMessage("");
+							player.sendMessage(ChatColor.RED+"Are you sure you would like to recall "+ 
+									ChatColor.GREEN+Methods.findOwnedStat(pConfig, followerChoice, "name")
+									+ChatColor.RED+"?");
+							player.sendMessage("They are currently on a mission to "
+									+ChatColor.GREEN+Methods.findOwnedStat(pConfig, followerChoice, "missiontype")+".");
+							player.sendMessage(ChatColor.RED+"The fee is 1000 shards to recall them.");
+							player.sendMessage(ChatColor.DARK_PURPLE+"Type: '"+ChatColor.LIGHT_PURPLE+"/fo recall "+followerChoice+" confirm"+ChatColor.LIGHT_PURPLE+"'");
+							player.sendMessage("");
+						}
+						else{
+							Methods.listPlayerFollowers(player, pConfig);
+							Help.warningPrinter(player, "That follower is not on a mission!");
+						}
+					}
+					else{
+						Help.warningPrinter(player, "Invalid follower!");
+						Help.syntaxPrinter(player, "fo upgrade <#> <item choice>");
+						Help.learnPrinter(player, "fo help upgrade");
+					}
+				}
+				else{
+					Help.warningPrinter(player, "Invalid integer!");
+					Help.syntaxPrinter(player, "fo mission <type> <follower #> confirm");
+					Help.learnPrinter(player, "fo help mission");
+				}
+			}
+			else if (args[0].equalsIgnoreCase("recall") && args.length==3){
+				if(args[2].equalsIgnoreCase("confirm")){
+					if(Methods.isInt(args[1])){
+						PlayerConfig pConfig=Followers.playerStats.get(player.getName());
+						int followerChoice=Integer.parseInt(args[1]);
+						int followerCount=Methods.ownedfollowerCount(pConfig);
+						if(followerChoice<=followerCount){
+							if(Methods.isOnMission(pConfig, followerChoice)){
+								double playerBalance = Followers.econ.getBalance(player.getName());
+								if(playerBalance>=1000){
+									Followers.econ.withdrawPlayer(player, 1000);
+									Methods.setOwnedStat(player.getName(), followerChoice, "missiontype", "filler");
+									Methods.setOwnedStat(player.getName(), followerChoice, "missionlevel", "0");
+									Methods.setOwnedStat(player.getName(), followerChoice, "missiontimeleft", "0");
+									player.sendMessage("");
+									player.sendMessage(ChatColor.YELLOW+ "You've successfully recalled " +ChatColor.GREEN+Methods.findOwnedStat(pConfig, followerChoice, "name")+ ChatColor.YELLOW+".");
+									player.sendMessage(ChatColor.RED+"You've been charged $1000.");
+									player.sendMessage("");
+								}
+								else{
+									Help.warningPrinter(player, "You don't have enough shards to do that!");
+								}
+							}
+							else{
+								Methods.listPlayerFollowers(player, pConfig);
+								Help.warningPrinter(player, "That follower is not on a mission!");
+							}
+						}
+						else{
+							Help.warningPrinter(player, "Invalid follower!");
+							Help.syntaxPrinter(player, "fo upgrade <#> <item choice>");
+							Help.learnPrinter(player, "fo help upgrade");
+						}
+					}
+					else{
+						Help.warningPrinter(player, "Invalid integer!");
+						Help.syntaxPrinter(player, "fo mission <type> <follower #> confirm");
+						Help.learnPrinter(player, "fo help mission");
+					}
+				}
+				else{
+					Help.recall(player);
+				}
 			}
 			// else....
 			else player.sendMessage("Huh?!");

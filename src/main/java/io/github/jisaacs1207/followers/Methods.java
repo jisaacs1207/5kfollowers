@@ -821,6 +821,30 @@ public class Methods implements Listener{
 						e.printStackTrace();
 					}
 				}
+				else if(stat.equalsIgnoreCase("MissionType")){
+					Object statObj = statValue;
+					try {
+						field.set(pConfig, statObj);
+					} catch (IllegalArgumentException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IllegalAccessException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				else if(stat.equalsIgnoreCase("MissionLevel")){
+					int statObj = Integer.valueOf(statValue);
+					try {
+						field.setInt(pConfig, statObj);
+					} catch (IllegalArgumentException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IllegalAccessException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
 				else{
 					int statObj = Integer.parseInt(statValue);
 					try {
@@ -899,6 +923,22 @@ public class Methods implements Listener{
 			}
 			if(stat.equalsIgnoreCase("weapon")){
 				if(field.getName().toString().equalsIgnoreCase("follower"+followerChoice+"Weapon")){
+					try {
+						value = field.get(pConfig).toString();
+					} catch (NumberFormatException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IllegalArgumentException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IllegalAccessException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} 
+				}
+			}
+			if(stat.equalsIgnoreCase("missiontype")){
+				if(field.getName().toString().equalsIgnoreCase("follower"+followerChoice+"MissionType")){
 					try {
 						value = field.get(pConfig).toString();
 					} catch (NumberFormatException e) {

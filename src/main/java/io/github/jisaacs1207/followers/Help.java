@@ -26,7 +26,7 @@ public class Help implements Listener {
 		player.sendMessage("");
 		player.sendMessage(ChatColor.GRAY+"===================["+ChatColor.GREEN+"Followers Help"+ChatColor.GRAY+"]===================");
 		player.sendMessage(ChatColor.GRAY+"Try one of the following topics:");
-		player.sendMessage(ChatColor.GREEN+"Hire, Stats, Inspect, Mission, Upgrade, Fire, Commands");
+		player.sendMessage(ChatColor.GREEN+"Hire, Stats, Inspect, Mission, Recall, Upgrade, Fire, Commands");
 		player.sendMessage("");
 		player.sendMessage(ChatColor.DARK_PURPLE+"For example, '"+ChatColor.LIGHT_PURPLE+"fo help commands"+ChatColor.DARK_PURPLE+"'");
 		player.sendMessage("");
@@ -106,6 +106,17 @@ public class Help implements Listener {
 		player.sendMessage(ChatColor.GRAY+"Available subcommands: "+ChatColor.GREEN+"<Armor, Weapon");
 		player.sendMessage("");
 		player.sendMessage(ChatColor.DARK_PURPLE+"For example, '"+ChatColor.LIGHT_PURPLE+"fo upgrade 1 armor"+ChatColor.DARK_PURPLE+"'");
+		player.sendMessage("");
+	}
+	public static void recall(Player player){
+		player.sendMessage("");
+		player.sendMessage(ChatColor.GRAY+"===================["+ChatColor.GREEN+"Return Help"+ChatColor.GRAY+"]===================");
+		player.sendMessage("Sending a follower out on a mistaken mission can");
+		player.sendMessage("certainly end in a very sad way. You may recall your");
+		player.sendMessage("follower for a small telegraph fee.");
+		player.sendMessage(ChatColor.GRAY+"Available subcommands: "+ChatColor.GREEN+"<follower number>");
+		player.sendMessage("");
+		player.sendMessage(ChatColor.DARK_PURPLE+"For example, '"+ChatColor.LIGHT_PURPLE+"fo recall 1"+ChatColor.DARK_PURPLE+"'");
 		player.sendMessage("");
 	}
 	public static void admin(Player player){
