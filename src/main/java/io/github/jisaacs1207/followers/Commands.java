@@ -101,7 +101,10 @@ public class Commands implements Listener, CommandExecutor{
 						}
 						
 					}
-					else player.sendMessage("Syntax: /fo hire inspect <#>");
+					else{
+						Methods.shortListAvailableFollowers(player);
+						Help.syntaxPrinter(player, "fo hire inspect <1-3>");
+					}
 				}
 				else if(args[2].equalsIgnoreCase("confirm")){
 					if(Methods.isInt(args[1])){
@@ -113,12 +116,9 @@ public class Commands implements Listener, CommandExecutor{
 								double playerBalance = Followers.econ.getBalance(player.getName());
 								int followerPrice = Modifiers.findFollowerPrice(Followers.availableFollowers.get(args[1]));
 								if(playerBalance>=followerPrice){
-									Followers.econ.withdrawPlayer(player.getName(), followerPrice);
 									AvailableFollowers fConfig=Followers.availableFollowers.get(sChoice);
 									PlayerConfig pConfig=Followers.playerStats.get(player.getName());
 									String fName = fConfig.follower1Name;
-									player.sendMessage("You've successfully hired " + fName + "!");
-									player.sendMessage("You've been charged $" +followerPrice+".");
 									if(pConfig.follower1Name.equalsIgnoreCase("filler")){
 										pConfig.follower1Name=fConfig.follower1Name;
 										pConfig.follower1Level=fConfig.follower1Level;
@@ -132,6 +132,10 @@ public class Commands implements Listener, CommandExecutor{
 										pConfig.currentFollowers=pConfig.currentFollowers++;
 										Followers.playerStats.put(player.getName(), pConfig);
 										Methods.saveMapToPFile(player.getName());
+										Methods.wipeAvailableFollower(player, choice);
+										player.sendMessage(ChatColor.GREEN+"You've successfully hired " +ChatColor.GOLD+ fName + ChatColor.GREEN+"!");
+										player.sendMessage(ChatColor.RED+"You've been charged "+ChatColor.GREEN+"$" +followerPrice+ChatColor.RED+".");
+										Followers.econ.withdrawPlayer(player.getName(), followerPrice);
 									}
 									else if(pConfig.follower2Name.equalsIgnoreCase("filler")){
 										pConfig.follower2Name=fConfig.follower1Name;
@@ -146,6 +150,10 @@ public class Commands implements Listener, CommandExecutor{
 										pConfig.currentFollowers=pConfig.currentFollowers++;
 										Followers.playerStats.put(player.getName(), pConfig);
 										Methods.saveMapToPFile(player.getName());
+										Methods.wipeAvailableFollower(player, choice);
+										player.sendMessage(ChatColor.GREEN+"You've successfully hired " +ChatColor.GOLD+ fName + ChatColor.GREEN+"!");
+										player.sendMessage(ChatColor.RED+"You've been charged "+ChatColor.GREEN+"$" +followerPrice+ChatColor.RED+".");
+										Followers.econ.withdrawPlayer(player.getName(), followerPrice);
 									}
 									else if(pConfig.follower3Name.equalsIgnoreCase("filler")){
 										pConfig.follower3Name=fConfig.follower1Name;
@@ -160,22 +168,28 @@ public class Commands implements Listener, CommandExecutor{
 										pConfig.currentFollowers=pConfig.currentFollowers++;
 										Followers.playerStats.put(player.getName(), pConfig);
 										Methods.saveMapToPFile(player.getName());
-										fName = fConfig.follower1Name;
+										player.sendMessage(ChatColor.GREEN+"You've successfully hired " +ChatColor.GOLD+ fName + ChatColor.GREEN+"!");
+										player.sendMessage(ChatColor.RED+"You've been charged "+ChatColor.GREEN+"$" +followerPrice+ChatColor.RED+".");
+										Followers.econ.withdrawPlayer(player.getName(), followerPrice);
 									}
-									
 									else{
-										player.sendMessage(ChatColor.RED+"You've no available slots for that follower!");
-										player.sendMessage(ChatColor.YELLOW+"Fire someone first, and then try again.");
+										Help.warningPrinter(player, "You've no available slots, fire someone first!");
+										Help.learnPrinter(player, "fo help fire");
 									}
-									Methods.wipeAvailableFollower(player, choice);
 								}
-								else player.sendMessage("You don't have enough shards for that follower!");
+								else Help.warningPrinter(player, "You don't have enough shards for that follower!");
 							}
-							else player.sendMessage(ChatColor.RED+"That follower doesn't exist.");
+							else{
+								Methods.shortListAvailableFollowers(player);
+								Help.warningPrinter(player, "That follower does not exist!");
+							}
 						}
-						else player.sendMessage(ChatColor.RED+"That follower doesn't exist.");
+						else{
+							Methods.shortListAvailableFollowers(player);
+							Help.warningPrinter(player, "That follower does not exist!");
+						}
 					}
-					else player.sendMessage("Syntax : /fo hire <#> confirm");
+					else Help.hire(player);
 				}
 			}
 			// fire (<empty>,<help>,<list>,<#>,<#><confirm>,<inspect>,<inspect><#>)

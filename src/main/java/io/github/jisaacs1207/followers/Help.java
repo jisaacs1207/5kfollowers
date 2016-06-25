@@ -11,6 +11,9 @@ public class Help implements Listener {
 	public static void warningPrinter(Player player,String warning){
 		player.sendMessage(ChatColor.RED+"Warning: "+ChatColor.WHITE+warning);
 	}
+	public static void learnPrinter(Player player,String syntax){
+		player.sendMessage(ChatColor.YELLOW+"Learn More: '"+ChatColor.LIGHT_PURPLE+syntax+ChatColor.YELLOW+"'");
+	}
 	public static void followers(Player player){
 		player.sendMessage("");
 		player.sendMessage(ChatColor.GREEN+"Followers "+ChatColor.WHITE+"- "+ChatColor.GRAY+"Hire followers and delegate tasks.");
